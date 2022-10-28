@@ -7,6 +7,7 @@
     "start": "node index.js",
     "db-migrations:create": "DATABASE_URL=0 node ./node_modules/db-migrate/bin/db-migrate create",
     "db-migrations:up": "node ./node_modules/db-migrate/bin/db-migrate up",
+    "db-migrations:down": "node ./node_modules/db-migrate/bin/db-migrate down",
     "test": "jest --detectOpenHandles"
   },
   "author": "",
