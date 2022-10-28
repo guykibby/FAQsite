@@ -16,19 +16,13 @@ exports.setup = function (options, seedLink) {
 
 exports.up = function (db) {
   db.runSql(`
-  CREATE TABLE questions (
-   id SERIAL PRIMARY KEY,
-   description VARCHAR(n)
-)
-CREATE TABLE answers (
-  id SERIAL PRIMARY KEY,
-  description VARCHAR(n),
-  question_id int FOREIGN KEY REFERENCES questions(id)
+  CREATE TABLE questions ( id serial PRIMARY KEY, question_description TEXT);
 
-
-)
-
-`);
+  CREATE TABLE answers (
+    id SERIAL PRIMARY KEY,
+    question_id int REFERENCES questions(id) UNIQUE,
+    answer_description  TEXT
+  );`);
 
   return null;
 };
