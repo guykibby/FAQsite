@@ -17,6 +17,8 @@ services:
     command: npm run start
     depends_on:
       - db
+    volumes:
+      - ./api:/app/
   client:
     build:
       context: ./client
