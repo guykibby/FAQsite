@@ -24,10 +24,9 @@ exports.up = function (db) {
     answer_description  TEXT
   );
   
-  INSERT INTO questions (id, question_description) VALUES (1,'what is string interpolation?'),
-  (2,'what is HTML?');
+  INSERT INTO questions (id, question_description) VALUES (1,'What is testing data?');
 
-  INSERT INTO answers (id,question_id,answer_description) VALUES (1,2,'HTML standands for Hyper Text Markup Language');
+  INSERT INTO answers (id,question_id,answer_description) VALUES (1,2,'This is testing data');
   `);
   return null;
 };
@@ -35,7 +34,7 @@ exports.down = function (db) {
   db.runSql(`
   DROP TABLE answers;
   DROP TABLE questions;
-  `)
+  `);
   return null;
 };
 
