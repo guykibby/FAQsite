@@ -24,7 +24,6 @@ exports.up = function (db) {
 };
 exports.down = function (db) {
   db.runSql(`
-  DROP TABLE answers;
   DROP TABLE questions;
   `);
   return null;
