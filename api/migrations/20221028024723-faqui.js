@@ -17,16 +17,8 @@ exports.setup = function (options, seedLink) {
 exports.up = function (db) {
   db.runSql(`
   CREATE TABLE questions ( id serial PRIMARY KEY, question_description TEXT);
-
-  CREATE TABLE answers (
-    id SERIAL PRIMARY KEY,
-    question_id int REFERENCES questions(id) UNIQUE,
-    answer_description  TEXT
-  );
   
   INSERT INTO questions (id, question_description) VALUES (1,'What is testing data?');
-
-  INSERT INTO answers (id,question_id,answer_description) VALUES (1,2,'This is testing data');
   `);
   return null;
 };
