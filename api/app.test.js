@@ -15,7 +15,7 @@ describe("Q&A API", () => {
     //     question_description: "what is HTML?",
     //   },
     // ]);
-    expect(response.status).toBe(200);
-    // expect(true).toBe(false);
+    // expect(response.status).toBe(200);
+    expect(true).toBe(false);
   });
 });
