@@ -1,8 +1,10 @@
 name: CI Pipeline
 
 on:
+  push:
+    branches: ["main", "ci-pipeline"]
   pull_request:
-    branches: ["main"]
+    branches: ["Skeleton", "ci-pipeline"]  
 
 jobs:
   ci-pipeline:
