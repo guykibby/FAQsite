@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 
 const App = () => {
   const [questionsList, setQuestionsList] = useState([
-    { question_description: "Waiting for DATA" },
+    { id: 2, question_description: "waiting for data!" },
   ]);
 
   useEffect(() => {
