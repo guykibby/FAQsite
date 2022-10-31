@@ -19,12 +19,10 @@ jobs:
         shell: bash
 
       - name: run migrations
-        run: docker compose exec api npm run db-migrations:up
+        run: docker compose exec -t api npm run db-migrations:up
 
       - name: run tests on the api
-        run: docker-compose exec -T api npm test
+        run: docker-compose exec -t api npm test
 
       - name: run tests on the client
-        run: docker-compose exec -T client npm test
-
-
+        run: docker-compose exec -t client npm test
