@@ -1,11 +1,9 @@
 name: CI Pipeline
 
 on:
-  push:
-    branches: ["main", "ci-pipeline"]
   pull_request:
-    branches: ["Skeleton", "ci-pipeline"]  
-    
+    branches: ["main"]
+
 jobs:
   ci-pipeline:
     runs-on: ubuntu-latest
@@ -19,16 +17,16 @@ jobs:
       - name: start containers
         run: docker-compose -f "docker-compose.yaml" up -d --build
 
-      # use this step to give time for containers to start
       - name: wait for containers to be ready
         run: sleep 5s
         shell: bash
 
       - name: run migrations
-        run: docker-compose exec -t api npm run db-migrations:up
+        run: docker-compose exec -T api npm run db-migrations:up
 
       - name: run tests on the api
-        run: docker-compose exec -t api npm test
+        run: docker-compose exec -T api npm test
 
       - name: run tests on the client
-        run: docker-compose exec -t client npm test
+        run: docker-compose exec -T client npm test
+
