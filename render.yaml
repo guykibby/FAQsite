@@ -27,7 +27,6 @@ services:
           name: db
           property: connectionString
     plan: free
-    plan: free
 # Database
 databases:
   - name: db
