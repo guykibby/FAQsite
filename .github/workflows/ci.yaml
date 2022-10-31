@@ -4,7 +4,7 @@ on:
   push:
     branches: ["main", "ci-pipeline"]
   pull_request:
-    branches: ["Skeleton", "ci-pipeline"]
+    branches: ["Skeleton", "ci-pipeline"]  
     
 jobs:
   ci-pipeline:
