@@ -1,5 +1,5 @@
 services:
-# React - Client
+  # React - Client
   - type: web
     name: client
     env: static
@@ -7,30 +7,29 @@ services:
     buildCommand: npm run build
     staticPublishPath: ./build
     envVars:
-    # Getting enVars from api
+      # Getting enVars from api
       - key: REACT_APP_API_URL
-        fromServices: 
+        fromService:
           type: web
           name: api
           envVarKey: RENDER_EXTERNAL_URL
-# API - Server
+  # Api - Server
   - type: web
     name: api
-    env: docker
+    env: docker # Will read api Dockerfile?
     rootDir: api
     region: singapore
-    envVars: 
+    envVars:
       - key: API_PORT
-        value: 80 # Any port will do
+        value: 80 # Any port will do.
       - key: DATABASE_URL
-        fromDatabase: 
+        fromDatabase:
           name: db
           property: connectionString
-    plan: free
     plan: free
 # Database
 databases:
   - name: db
     region: singapore
     plan: free
-    ipAllowList: []    
+    ipAllowList: []
