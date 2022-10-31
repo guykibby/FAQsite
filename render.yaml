@@ -1,5 +1,4 @@
 services:
-  # React - Client
   - type: web
     name: client
     env: static

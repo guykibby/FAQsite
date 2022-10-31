@@ -10,19 +10,25 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-
+      - name: Install node
+        uses: actions/setup-node@v1
+        with:
+          node_version: 14.x
       - name: start containers
-        run: docker-compose up -detach
+        run: docker-compose -f "docker-compose.yaml" up -d --build
 
+      # use this step to give time for containers to start
       - name: wait for containers to be ready
         run: sleep 5s
         shell: bash
 
       - name: run migrations
         run: docker compose exec -t api npm run db-migrations:up
-
+      
       - name: run tests on the api
         run: docker-compose exec -t api npm test
 
       - name: run tests on the client
         run: docker-compose exec -t client npm test
+
+
