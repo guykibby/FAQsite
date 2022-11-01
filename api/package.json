@@ -5,10 +5,11 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
+    "start:dev": "nodemon index.js",
     "db-migrations:create": "DATABASE_URL=0 node ./node_modules/db-migrate/bin/db-migrate create",
     "db-migrations:up": "node ./node_modules/db-migrate/bin/db-migrate up",
     "db-migrations:down": "node ./node_modules/db-migrate/bin/db-migrate down",
-    "test": "jest --detectOpenHandles --colors --verbose --watch"
+    "test": "jest --detectOpenHandles"
   },
   "author": "",
   "license": "ISC",
@@ -16,9 +17,10 @@
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "jest": "^29.1.2",
+    "jest-ci": "^0.1.1",
+    "nodemon": "^2.0.20",
     "pg": "^8.8.0",
     "supertest": "^6.3.0"
-
   },
   "devDependencies": {
     "db-migrate": "^0.11.13",
