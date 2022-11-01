@@ -10,18 +10,17 @@ describe("Q&A API", () => {
 
   test("GET /getData should return list of questions and answers with status code of 200", async () => {
     const response = await request(app).get("/getData");
-    // .set("Accept", "application/json");
-    // expect(response.body).toEqual([
-    //   {
-    //     id: 1,
-    //     question_description: "what is string interpolation?",
-    //   },
-    //   {
-    //     id: 2,
-    //     question_description: "what is HTML?",
-    //   },
-    // ]);
-    // expect(response.status).toBe(200);
-    expect(true).toBe(true);
+    .set("Accept", "application/json");
+    expect(response.body).toEqual([
+      {
+        id: 1,
+        question_description: "what is string interpolation?",
+      },
+      {
+        id: 2,
+        question_description: "what is HTML?",
+      },
+    ]);
+    expect(response.status).toBe(200);
   });
 });
