@@ -1,5 +1,6 @@
 const request = require("supertest");
 const app = require("./app");
+const get_db = require("./db");
 
 describe("Q&A API", () => {
   afterAll(async () => {
