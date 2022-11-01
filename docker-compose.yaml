@@ -17,8 +17,6 @@ services:
     command: npm run start
     depends_on:
       - db
-    volumes:
-      - ./api:/app
   client:
     build:
       context: ./client
@@ -26,8 +24,6 @@ services:
       - "3000:3000"
     environment:
       - REACT_APP_API_URL=http://localhost:5001
+      - CI=true
     depends_on:
       - api
-    volumes:
-      - ./client:/app/
-      - /app/node_modules
