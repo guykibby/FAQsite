@@ -3,7 +3,7 @@ WORKDIR /app
 
 COPY . /app
 
-EXPOSE 5000
+EXPOSE 5001
 
 # run these commands
 RUN ["npm", "ci"]
