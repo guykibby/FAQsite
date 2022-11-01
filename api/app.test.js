@@ -9,8 +9,9 @@ describe("Q&A API", () => {
   });
 
   test("GET /getData should return list of questions and answers with status code of 200", async () => {
-    const response = await request(app).get("/getData");
-    .set("Accept", "application/json");
+    const response = await request(app)
+      .get("/getData")
+      .set("Accept", "application/json");
     expect(response.body).toEqual([
       {
         id: 1,
