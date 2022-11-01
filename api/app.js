@@ -12,6 +12,7 @@ app.get("/getData", async (req, res) => {
     console.log(result.rows);
     res.json(result.rows);
   } catch (e) {
+    console.log(e.message);
     return res.status(500).json({ error: e.message });
   }
 });
