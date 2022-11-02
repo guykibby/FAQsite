@@ -9,6 +9,7 @@ import "./App.css";
 import EditQuestion from "./components/EditQuestion";
 import EditAnswer from "./components/EditAnswer";
 import AnswersPage from "./components/AnswersPage";
+import LogInPage from "./components/LogInPage";
 
 const App = () => {
   // const [questionsList, setQuestionsList] = useState([
@@ -41,9 +42,10 @@ const App = () => {
           />
           <Route path="/answers/:questionId" element={<AnswersPage />} />
           <Route path="/postanswer/:questionId" element={<PostAnswersPage />} />
-          <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/editquestion/:questionId" element={<EditQuestion />} />
           <Route path="/editanswer/:answerId" element={<EditAnswer />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/login" element={<LogInPage />} />
         </Routes>
       </div>
 
