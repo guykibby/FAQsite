@@ -26,7 +26,7 @@ exports.up = function (db) {
     CREATE TABLE term (
       id SERIAL PRIMARY KEY,
       name varchar,
-      level int
+      year varchar
     );
 
 

@@ -22,14 +22,14 @@ exports.up = function (db) {
    
   
    INSERT INTO term (id,name,level) values (1, 'Client Side', 5), 
-    (2, 'Server Side', 5), 
-    (3, 'Full Stack', 5), 
-    (4, 'Agile Dev-ops', 5), 
-    (5, 'Projects', 5), 
-    (6, 'App sec', 6), 
-    (7, 'Mobile app development', 6), 
-    (8, 'Machine learning intro', 6), 
-    (9, 'Capstone', 6);
+    (2, 'Server Side', 'Year 1'), 
+    (3, 'Full Stack', 'Year 1'), 
+    (4, 'Agile Dev-ops', 'Year 1'), 
+    (5, 'Projects', 'Year 1'), 
+    (6, 'App sec', 'Year 2'), 
+    (7, 'Mobile app development', 'Year 2'), 
+    (8, 'Machine learning intro', 'Year 2'), 
+    (9, 'Capstone', 'Year 2');
 
     
     INSERT INTO topic (id,name,termid) values 
