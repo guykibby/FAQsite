@@ -1,6 +1,11 @@
 // import { useState, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
-import AnswersPage from "./components/answersPage";
+import AnswersPage from "./components/AnswersPage";
+import Dashboard from "./components/Dashboard";
+import HomePage from "./components/HomePage";
+import PostAnswersPage from "./components/PostAnswersPage";
+import PostQuestionsPage from "./components/PostQuestionsPage";
+import QuestionsPage from "./components/QuestionsPage";
 
 const App = () => {
   // const [questionsList, setQuestionsList] = useState([
@@ -23,9 +28,16 @@ const App = () => {
 
   return (
     <>
-      <Routes>
-        <Route path="/answers/:id" element={<AnswersPage />} />
-      </Routes>
+      <div className="main-container">
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/answers/:id" element={<AnswersPage />} />
+          <Route path="/questions/:id" element={<QuestionsPage />} />
+          <Route path="/postquestion/:id" element={<PostQuestionsPage />} />
+          <Route path="/postanswer/:id" element={<PostAnswersPage />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+        </Routes>
+      </div>
 
       {/* <h1>Test data render</h1>
       {questionsList.map((question, index) => (
