@@ -21,7 +21,7 @@ exports.up = function (db) {
    (2, 'Sammy'), (3,'Deanne'), (4, 'John'), (5, 'Maximus'), (6, 'Danny') ,(7,'William'), (8, 'Lance');
    
   
-   INSERT INTO term (id,name,level) values (1, 'Client Side', 5), 
+   INSERT INTO term (id,name,year) values (1, 'Client Side', 5), 
     (2, 'Server Side', 'Year 1'), 
     (3, 'Full Stack', 'Year 1'), 
     (4, 'Agile Dev-ops', 'Year 1'), 
