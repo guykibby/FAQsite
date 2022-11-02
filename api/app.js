@@ -26,9 +26,14 @@ app.get("/getData", async (req, res) => {
     console.log(result.rows);
     res.json(result.rows);
   } catch (e) {
-    console.log(e.message);
-    return res.status(500).json({ error: e.message });
+    next(e);
   }
+});
+
+app.use((err, req, res, next) => {
+  res.status(err.status || 500).json({
+    error: err.message,
+  });
 });
 
 module.exports = app;

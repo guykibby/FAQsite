@@ -1,12 +1,12 @@
 const express = require("express");
 const router = express.Router();
 
-router.get("/", () => {
+router.use("/", (req, res, next) => {
   try {
-    throw new Error("oh no");
+    throw new Error("Route is under maintenance");
   } catch (err) {
-    res.status(500).json({
-      message: err.message,
-    });
+    next(err);
   }
 });
+
+module.exports = router;
