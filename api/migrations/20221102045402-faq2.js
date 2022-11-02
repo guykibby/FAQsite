@@ -17,11 +17,19 @@ exports.setup = function (options, seedLink) {
 exports.up = function (db) {
   db.runSql(`
 
-   INSERT INTO users (id, name) values (1, 'kitty'),
-   (2, 'Sammy'), (3,'Deanne'), (4, 'John'), (5, 'Maximus'), (6, 'Danny') ,(7,'William'), (8, 'Lance');
+   INSERT INTO users (id, name) values 
+   (1, 'kitty'),
+   (2, 'Sammy'), 
+   (3,'Deanne'), 
+   (4, 'John'), 
+   (5, 'Maximus'), 
+   (6, 'Danny'),
+   (7,'William'), 
+   (8, 'Lance');
    
   
-   INSERT INTO term (id,name,year) values (1, 'Client Side', 5), 
+   INSERT INTO term (id, name, year) values 
+    (1, 'Client Side', 'Year 1), 
     (2, 'Server Side', 'Year 1'), 
     (3, 'Full Stack', 'Year 1'), 
     (4, 'Agile Dev-ops', 'Year 1'), 
@@ -32,7 +40,7 @@ exports.up = function (db) {
     (9, 'Capstone', 'Year 2');
 
     
-    INSERT INTO topic (id,name,termid) values 
+    INSERT INTO topic (id, name, termId) values 
     (1, 'HTML',1),
     (2, 'CSS',1),
     (3, 'VSCode',3),
@@ -43,7 +51,7 @@ exports.up = function (db) {
     (8, 'Python',8);
     
     
-    INSERT INTO question (id,description,isstarred,isreviewed,createdon,topicid,userid) values 
+    INSERT INTO question (id, description, isStarred,isReviewed,createdOn,topicId,userId) values 
     (1, 'What is HTML?',false,false,'2022-11-02 00:00:00',1,1),
     (2, 'What is CSS?',false,false,'2022-11-02 00:00:00',2,2),
     (3, 'How do i pull a branch?',false,false,'2022-11-02 00:00:00',3,4),
@@ -52,7 +60,7 @@ exports.up = function (db) {
     (6, 'Is it safe to store encrypted key into DB?',false,false,'2022-11-02 00:00:00',6,7);
   
        
-    INSERT INTO answer (id,description,isstarred,isreviewed,createdon,questionid,userid) values 
+    INSERT INTO answer (id, description, isStarred, isReviewed, createdOn,questionId, userId) values 
     (1, 'Lorem ipsum dolor sit amet. Et molestias voluptatem qui doloremque soluta sit culpa porro et tenetur repellat vel beatae quas id reprehenderit esse.',false,false,'2022-11-02 00:00:00',1,1),
     (2, 'Aut quibusdam incidunt ea error aliquam 33 atque odio At corrupti Quis et recusandae impedit sit exercitationem distinctio.',false,false,'2022-11-02 00:00:00',2,2),
     (3, 'Et eaque galisum ex nisi libero ad soluta repellat a internos culpa eum repellat officiis ad ullam consequatur.',false,false,'2022-11-02 00:00:00',3,4),
