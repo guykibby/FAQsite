@@ -7,6 +7,8 @@ import PostAnswersPage from "./components/PostAnswersPage";
 import PostQuestionsPage from "./components/PostQuestionsPage";
 import QuestionsPage from "./components/QuestionsPage";
 import "./App.css";
+import EditQuestion from "./components/EditQuestion";
+import EditAnswer from "./components/EditAnswer";
 
 const App = () => {
   // const [questionsList, setQuestionsList] = useState([
@@ -31,12 +33,17 @@ const App = () => {
     <>
       <div className="main-container">
         <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/answers/:id" element={<AnswersPage />} />
-          <Route path="/questions/:id" element={<QuestionsPage />} />
-          <Route path="/postquestion/:id" element={<PostQuestionsPage />} />
-          <Route path="/postanswer/:id" element={<PostAnswersPage />} />
+          <Route path="/" element={<HomePage />} />{" "}
+          <Route path="/questions/:topicId" element={<QuestionsPage />} />
+          <Route path="/answers/:questionId" element={<AnswersPage />} />
+          <Route
+            path="/postquestion/:topicId"
+            element={<PostQuestionsPage />}
+          />
+          <Route path="/postanswer/:questionId" element={<PostAnswersPage />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/editquestion/:questionId" element={<EditQuestion />} />
+          <Route path="/editanswer/:answerId" element={<EditAnswer />} />
         </Routes>
       </div>
 
