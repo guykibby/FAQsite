@@ -5,6 +5,7 @@ const get_db = require("./db");
 app.use(cors());
 app.use(express.json());
 
+//change capital D to small
 app.get("/getData", async (req, res) => {
   try {
     const db = await get_db();

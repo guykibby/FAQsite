@@ -16,25 +16,63 @@ exports.setup = function (options, seedLink) {
 
 exports.up = function (db) {
   db.runSql(`
-  CREATE TABLE questions ( id serial PRIMARY KEY, question_description TEXT);
 
-  CREATE TABLE answers (
+    Create TABLE users (
     id SERIAL PRIMARY KEY,
-    question_id int REFERENCES questions(id) UNIQUE,
-    answer_description  TEXT
-  );
-  
-  INSERT INTO questions (id, question_description) VALUES (1,'what is string interpolation?'),
-  (2,'what is HTML?');
+    name varchar
+    );
 
-  INSERT INTO answers (id,question_id,answer_description) VALUES (1,2,'HTML standands for Hyper Text Markup Language');
+
+    CREATE TABLE term (
+      id SERIAL PRIMARY KEY,
+      name varchar,
+      level int
+    );
+
+
+    CREATE TABLE topic (
+      id SERIAL PRIMARY KEY,
+      name varchar,
+      termId int
+    );
+
+
+    CREATE TABLE question (
+      id SERIAL PRIMARY KEY,
+      description varchar,
+      isStarred bool,
+      isReviewed bool,
+      createdOn timestamp,
+      topicId int,
+      userId int
+    );
+
+
+    CREATE TABLE answer (
+      id SERIAL PRIMARY KEY,
+      description varchar,
+      isStarred bool,
+      isReviewed bool,
+      createdOn timestamp,
+      questionId int,
+      userId int
+    );
+
+  ALTER TABLE topic ADD FOREIGN KEY (termId) REFERENCES term (id);
+  ALTER TABLE answer ADD FOREIGN KEY (questionId) REFERENCES question (id);  
+  ALTER TABLE answer ADD FOREIGN KEY (userId) REFERENCES users (id);
+  ALTER TABLE question ADD FOREIGN KEY (topicId) REFERENCES topic (id);  
+  ALTER TABLE question ADD FOREIGN KEY (userId) REFERENCES users (id);  
   `);
   return null;
 };
 exports.down = function (db) {
   db.runSql(`
-  DROP TABLE answers;
-  DROP TABLE questions;
+  drop table answer;
+  drop table question;
+  drop table users;
+  drop table topic;
+  drop table term;
   `);
   return null;
 };
