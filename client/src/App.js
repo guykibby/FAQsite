@@ -1,6 +1,5 @@
 // import { useState, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
-import AnswersPage from "./components/AnswersPage";
 import Dashboard from "./components/Dashboard";
 import HomePage from "./components/HomePage";
 import PostAnswersPage from "./components/PostAnswersPage";
@@ -9,6 +8,7 @@ import QuestionsPage from "./components/QuestionsPage";
 import "./App.css";
 import EditQuestion from "./components/EditQuestion";
 import EditAnswer from "./components/EditAnswer";
+import AnswersPage from "./components/AnswersPage";
 
 const App = () => {
   // const [questionsList, setQuestionsList] = useState([
