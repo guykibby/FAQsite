@@ -16,63 +16,55 @@ exports.setup = function (options, seedLink) {
 
 exports.up = function (db) {
   db.runSql(`
-
-    Create TABLE users (
+  CREATE TABLE terms (
     id SERIAL PRIMARY KEY,
-    name varchar
-    );
-
-
-    CREATE TABLE term (
-      id SERIAL PRIMARY KEY,
-      name varchar,
-      year varchar
-    );
-
-
-    CREATE TABLE topic (
-      id SERIAL PRIMARY KEY,
-      name varchar,
-      termId int
-    );
-
-
-    CREATE TABLE question (
-      id SERIAL PRIMARY KEY,
-      description varchar,
-      isStarred bool,
-      isReviewed bool,
-      createdOn timestamp,
-      topicId int,
-      userId int
-    );
-
-
-    CREATE TABLE answer (
-      id SERIAL PRIMARY KEY,
-      description varchar,
-      isStarred bool,
-      isReviewed bool,
-      createdOn timestamp,
-      questionId int,
-      userId int
-    );
-
-  ALTER TABLE topic ADD FOREIGN KEY (termId) REFERENCES term (id);
-  ALTER TABLE answer ADD FOREIGN KEY (questionId) REFERENCES question (id);  
-  ALTER TABLE answer ADD FOREIGN KEY (userId) REFERENCES users (id);
-  ALTER TABLE question ADD FOREIGN KEY (topicId) REFERENCES topic (id);  
-  ALTER TABLE question ADD FOREIGN KEY (userId) REFERENCES users (id);  
+    name varchar NOT NULL,
+    year varchar
+  );
+  
+  CREATE TABLE topics (
+    id SERIAL PRIMARY KEY,
+    name varchar NOT NULL,
+    termId int REFERENCES terms (id)
+  );
+  
+  CREATE TABLE users (
+    id SERIAL PRIMARY KEY,
+    name varchar,
+    email varchar NOT NULL,
+    passwordKey varchar NOT NULL,
+    scope varchar     
+  );
+  
+  CREATE TABLE questions (
+    id SERIAL PRIMARY KEY,
+    description varchar NOT NULL,
+    isStarred bool DEFAULT false,
+    isReviewed bool DEFAULT false,
+    createdOn timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    topicId int REFERENCES topics (id),
+    userId int REFERENCES users (id)
+  );
+  
+  CREATE TABLE answers (
+    id SERIAL PRIMARY KEY,
+    description varchar NOT NULL,
+    isStarred bool DEFAULT false,
+    isReviewed bool DEFAULT false,
+    createdOn timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    questionId int REFERENCES questions (id),
+    userId int REFERENCES users (id)
+  );  
   `);
   return null;
 };
 exports.down = function (db) {
   db.runSql(`
-  drop table answer;
-  drop table question;
-  drop table users;
-  drop table topic;
-  drop table term;
+  drop table answers;  
+  drop table questions;  
+  drop table users;     
+  drop table topics;  
+  drop table terms;
   `);
   return null;
 };
