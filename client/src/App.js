@@ -6,6 +6,7 @@ import HomePage from "./components/HomePage";
 import PostAnswersPage from "./components/PostAnswersPage";
 import PostQuestionsPage from "./components/PostQuestionsPage";
 import QuestionsPage from "./components/QuestionsPage";
+import "./App.css";
 
 const App = () => {
   // const [questionsList, setQuestionsList] = useState([

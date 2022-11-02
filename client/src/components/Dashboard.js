@@ -1,5 +1,5 @@
 const Dashboard = () => {
-  return <p>This is the DASHBOARD page UNDER CONSTRUCTION</p>;
+  return <p className="list-item">UNDER CONSTRUCTION</p>;
 };
 
 export default Dashboard;

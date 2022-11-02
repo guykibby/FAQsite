@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 const QuestionsPage = () => {
   const { id } = useParams();
 
-  return <p>This is the QUESTIONS page UNDER CONSTRUCTION: {id}</p>;
+  return <div className="list-item">UNDER CONSTRUCTION: {id}</div>;
 };
 
 export default QuestionsPage;
