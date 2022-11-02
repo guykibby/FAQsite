@@ -3,7 +3,7 @@ const router = express.Router();
 
 router.get("/", () => {
   try {
-    throw new Error("oops");
+    throw new Error("oh no");
   } catch (err) {
     res.status(500).json({
       message: err.message,
