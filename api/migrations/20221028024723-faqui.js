@@ -54,17 +54,12 @@ exports.up = function (db) {
     createdOn timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
     questionId int REFERENCES questions (id),
     userId int REFERENCES users (id)
-  );  
+  );
   `);
   return null;
 };
 exports.down = function (db) {
   db.runSql(`
-  drop table answers;  
-  drop table questions;  
-  drop table users;     
-  drop table topics;  
-  drop table terms;
   `);
   return null;
 };
