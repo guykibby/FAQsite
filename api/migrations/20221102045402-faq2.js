@@ -152,11 +152,11 @@ exports.up = function (db) {
 
 exports.down = function (db) {
   db.runSql(`
-  drop table answers;  
-  drop table questions;  
-  drop table users;     
-  drop table topics;  
-  drop table terms;
+  delete from answers;  
+  delete from questions;  
+  delete from users;     
+  delete from topics;  
+  delete from terms;
   `);
   return null;
 };
