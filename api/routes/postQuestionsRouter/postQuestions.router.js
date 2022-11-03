@@ -8,6 +8,5 @@ router.use("/", (req, res, next) => {
     next(err);
   }
 });
-//olivers route
 
 module.exports = router;
