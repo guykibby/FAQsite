@@ -34,7 +34,7 @@ const App = () => {
     <>
       <div className="main-container">
         <Routes>
-          <Route path="/" element={<HomePage />} />{" "}
+          <Route path="/" element={<HomePage />} />
           <Route path="/questions/:topicId" element={<QuestionsPage />} />
           <Route
             path="/postquestion/:topicId"

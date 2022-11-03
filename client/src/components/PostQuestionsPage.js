@@ -1,9 +1,9 @@
 import { useParams } from "react-router-dom";
 
 const PostQuestionsPage = () => {
-  const { id } = useParams();
+  const { topicId } = useParams();
 
-  return <p className="list-item">UNDER CONSTRUCTION. CODE: {id}</p>;
+  return <p className="list-item">UNDER CONSTRUCTION. CODE: {topicId}</p>;
 };
 
 export default PostQuestionsPage;

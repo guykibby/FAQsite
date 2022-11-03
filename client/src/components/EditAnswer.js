@@ -1,9 +1,9 @@
 import { useParams } from "react-router-dom";
 
 const EditAnswer = () => {
-  const { id } = useParams();
+  const { answerId } = useParams();
 
-  return <p className="list-item">UNDER CONSTRUCTION. CODE: {id}</p>;
+  return <p className="list-item">UNDER CONSTRUCTION. CODE: {answerId}</p>;
 };
 
 export default EditAnswer;
