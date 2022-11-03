@@ -16,25 +16,55 @@ exports.setup = function (options, seedLink) {
 
 exports.up = function (db) {
   db.runSql(`
-  CREATE TABLE questions ( id serial PRIMARY KEY, question_description TEXT);
-
-  CREATE TABLE answers (
+  CREATE TABLE terms (
     id SERIAL PRIMARY KEY,
-    question_id int REFERENCES questions(id) UNIQUE,
-    answer_description  TEXT
+    name varchar NOT NULL,
+    year varchar
   );
   
-  INSERT INTO questions (id, question_description) VALUES (1,'what is string interpolation?'),
-  (2,'what is HTML?');
-
-  INSERT INTO answers (id,question_id,answer_description) VALUES (1,2,'HTML standands for Hyper Text Markup Language');
+  CREATE TABLE topics (
+    id SERIAL PRIMARY KEY,
+    name varchar NOT NULL,
+    termId int REFERENCES terms (id)
+  );
+  
+  CREATE TABLE users (
+    id SERIAL PRIMARY KEY,
+    name varchar,
+    email varchar NOT NULL,
+    passwordKey varchar NOT NULL,
+    scope varchar     
+  );
+  
+  CREATE TABLE questions (
+    id SERIAL PRIMARY KEY,
+    description varchar NOT NULL,
+    isStarred bool DEFAULT false,
+    isReviewed bool DEFAULT false,
+    createdOn timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    topicId int REFERENCES topics (id),
+    userId int REFERENCES users (id)
+  );
+  
+  CREATE TABLE answers (
+    id SERIAL PRIMARY KEY,
+    description varchar NOT NULL,
+    isStarred bool DEFAULT false,
+    isReviewed bool DEFAULT false,
+    createdOn timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    questionId int REFERENCES questions (id),
+    userId int REFERENCES users (id)
+  );
   `);
   return null;
 };
 exports.down = function (db) {
   db.runSql(`
-  DROP TABLE answers;
-  DROP TABLE questions;
+  drop table answers;  
+  drop table questions;  
+  drop table users;     
+  drop table topics;  
+  drop table terms;
   `);
   return null;
 };
