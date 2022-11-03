@@ -1,9 +1,12 @@
 const express = require("express");
 const router = express.Router();
+const repository = require("./answers.repository");
 
-router.use("/", (req, res, next) => {
+router.use("/answers/:questionId", async (req, res, next) => {
   try {
-    throw new Error("Route is under maintenance");
+    const allAnswers = await repository.getAnswers();
+    res.json(allAnswers);
+    // throw new Error("Route is under maintenance");
   } catch (err) {
     next(err);
   }
