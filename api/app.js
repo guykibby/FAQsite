@@ -1,7 +1,6 @@
 const express = require("express");
 const app = express();
 const cors = require("cors");
-const get_db = require("./db");
 const getTopicsRouter = require("./routes/topicsRoute/topics.router");
 const getQuestionsRouter = require("./routes/questionsRouter/questions.router");
 const postQuestionsRouter = require("./routes/postQuestionsRouter/postQuestions.router");
@@ -26,17 +25,7 @@ app.use("/editanswer/:answerId", editAnswersRouter);
 app.use("/dashboard", dashboardRouter);
 app.use("/users", usersRouter);
 
-app.get("/getData", async (req, res) => {
-  try {
-    const db = await get_db();
-    const result = await db.query(`SELECT * FROM questions`);
-    console.log(result.rows);
-    res.json(result.rows);
-  } catch (e) {
-    next(e);
-  }
-});
-
+//error handling middleware
 app.use((err, req, res, next) => {
   res.status(err.status || 500).json({
     message: err.message,

@@ -1,9 +1,9 @@
 import { useParams } from "react-router-dom";
 
-const AnswersPage = () => {
+const PostAnswer = () => {
   const { questionId } = useParams();
 
   return <p className="list-item">UNDER CONSTRUCTION. CODE: {questionId}</p>;
 };
 
-export default AnswersPage;
+export default PostAnswer;
