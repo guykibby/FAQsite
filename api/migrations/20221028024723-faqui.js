@@ -60,6 +60,11 @@ exports.up = function (db) {
 };
 exports.down = function (db) {
   db.runSql(`
+  drop table answers;  
+  drop table questions;  
+  drop table users;     
+  drop table topics;  
+  drop table terms;
   `);
   return null;
 };
