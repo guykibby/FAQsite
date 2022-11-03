@@ -8,14 +8,7 @@ describe("API to DB connection", () => {
 
   test("should be active", async () => {
     const db = await get_db();
-    let response = false;
-    db.connect((err) => {
-      if (err) {
-        response = false;
-      } else {
-        response = true;
-      }
-      expect(response).toBe(true);
-    });
+    const result = await db.query(``);
+    expect(result.rows).toStrictEqual([]);
   });
 });
