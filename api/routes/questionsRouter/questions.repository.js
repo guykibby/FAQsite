@@ -1,8 +1,8 @@
 const db = require("../../db");
 
 const getQuestionsSQL = `
-SELECT description
-FROM questions`;
+SELECT id AS questionId, description, topicId
+    FROM questions;`;
 
 const getQuestions = {
   getQuestions: async () => {
@@ -16,3 +16,16 @@ const getQuestions = {
 };
 
 module.exports = getQuestions;
+
+// const get_db = require("../../db");
+// module.exports = {
+//   getQuestions: async (topicId) => {
+//     const { topicId } = request.params;
+//     const db = await get_db(topicId);
+//     const getQuestions = await db.query(
+//       `SELECT id AS questionId, description, topicId
+//      FROM questions;`
+//     );
+//     return getQuestions.rows;
+//   },
+// };
