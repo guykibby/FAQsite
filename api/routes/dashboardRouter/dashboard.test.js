@@ -11,13 +11,7 @@ describe("FAQ Dashboard API", () => {
   test("GET /dashboard should return all Q&As with status code of 200", async () => {
     const expectedData = await dashboardRepository.getAllFaqs();
     const response = await request(app).get("/dashboard");
-    console.log(
-      "epercted" +
-        JSON.stringify(expectedData) +
-        "    " +
-        JSON.stringify(response.body)
-    );
-    expect(response.body).toBe(expectedData);
+    expect(response.body).toEqual(expectedData);
     expect(response.status).toBe(200);
   });
 });
