@@ -23,9 +23,11 @@ const HomePage = () => {
   let displayArray = branchArray.map((x) => x[levelKeys[level]]);
 
   // Only displayying uniques values
+  
   displayArray = [...new Set(displayArray)];
 
   // Fetching the topics data from DB
+  
   useEffect(() => {
     const fetchData = async () => {
       const result = await fetch(`${process.env.REACT_APP_API_URL}/topics`);
@@ -43,6 +45,7 @@ const HomePage = () => {
   }, []);
 
   // handling menu selections
+ 
   const handleClick = (choice) => {
     if (level === 2) {
       const topic = theTopics.filter(
@@ -54,6 +57,8 @@ const HomePage = () => {
     setLevel((t) => t + 1);
   };
 
+  // Handle loading and Fetch Error
+
   if (level === -1) {
     return <p className="list-item">Loading . . .</p>;
   }
@@ -61,6 +66,8 @@ const HomePage = () => {
   if (level === -2) {
     return <p className="list-item">Oops, something went wrong!</p>;
   }
+
+  // Render using list of buttons .map method
 
   return (
     <>
