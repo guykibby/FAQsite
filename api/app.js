@@ -18,7 +18,7 @@ app.use(express.json());
 app.use("/topics", getTopicsRouter);
 app.use("/questions/:topicId", getQuestionsRouter);
 app.use("/postquestion/:topicId", postQuestionsRouter);
-app.use("/answers/", getAnswersRouter);
+app.use("/answers", getAnswersRouter);
 app.use("/postanswer/:questionId", postAnswersRouter);
 app.use("/editquestion/:questionId", editQuestionsRouter);
 app.use("/editanswer/:answerId", editAnswersRouter);
