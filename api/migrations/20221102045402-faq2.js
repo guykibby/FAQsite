@@ -24,7 +24,7 @@ exports.setup = function (options, seedLink) {
 exports.up = function (db) {
   db.runSql(`
   INSERT INTO terms (name,year) values 
-  ('Client Side', 'Year1'), 
+  ('Client Side', 'Year 1'), 
   ('Server Side', 'Year 1'), 
   ('Full Stack', 'Year 1'), 
   ('Agile Dev-ops', 'Year 1'), 
