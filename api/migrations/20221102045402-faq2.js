@@ -23,6 +23,7 @@ exports.setup = function (options, seedLink) {
 
 exports.up = function (db) {
   db.runSql(`
+
   INSERT INTO terms (name,year) values 
   ('Client Side', 'Year 1'), 
   ('Server Side', 'Year 1'), 
@@ -32,6 +33,7 @@ exports.up = function (db) {
   ('Mobile app development', 'Year 2'), 
   ('Machine learning intro', 'Year 2'), 
   ('Capstone', 'Year 2');
+
 
   
   INSERT INTO topics (name,termid) values 
