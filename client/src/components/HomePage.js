@@ -75,6 +75,7 @@ const HomePage = () => {
         </button>
       ))}
     </>
+
   );
 };
 export default HomePage;
