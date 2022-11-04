@@ -11,8 +11,8 @@ const levelKeys = ["year", "term", "topic"];
 let branch = "";
 
 const HomePage = () => {
-  const [level, setLevel] = useState(1);
-  const navigate = useNavigate();
+  const [level, setLevel] = useState(-1);
+  const navigate = useNavigate(10);
 
   // Filtering through the array depending on the level and branch the user is on
   const branchArray = theTopics.filter((x) =>
@@ -29,6 +29,12 @@ const HomePage = () => {
   useEffect(() => {
     const fetchData = async () => {
       const result = await fetch(`${process.env.REACT_APP_API_URL}/topics`);
+      
+      if (result.ok === false) {
+        setLevel(-2)
+        return;
+      }
+      
       const data = await result.json();
       theTopics = data;
       setLevel(0);
@@ -47,6 +53,14 @@ const HomePage = () => {
     branch = choice;
     setLevel((t) => t + 1);
   };
+
+  if (level === -1) {
+    return <p className="list-item">Loading . . .</p>;
+  }
+
+  if (level === -2) {
+    return <p className="list-item">Oops, something went wrong!</p>;
+  }
 
   return (
     <>
