@@ -29,12 +29,12 @@ const HomePage = () => {
   useEffect(() => {
     const fetchData = async () => {
       const result = await fetch(`${process.env.REACT_APP_API_URL}/topics`);
-      
+
       if (result.ok === false) {
-        setLevel(-2)
+        setLevel(-2);
         return;
       }
-      
+
       const data = await result.json();
       theTopics = data;
       setLevel(0);
@@ -64,6 +64,7 @@ const HomePage = () => {
 
   return (
     <>
+      <p className="title">Home Page</p>
       {displayArray.map((e, i) => (
         <button
           value={e}
@@ -75,7 +76,6 @@ const HomePage = () => {
         </button>
       ))}
     </>
-
   );
 };
 export default HomePage;
