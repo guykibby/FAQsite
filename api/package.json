@@ -20,10 +20,11 @@
     "jest-ci": "^0.1.1",
     "nodemon": "^2.0.20",
     "pg": "^8.8.0",
-    "supertest": "^6.3.0"
+    "useparams": "^0.0.2"
   },
   "devDependencies": {
     "db-migrate": "^0.11.13",
-    "db-migrate-pg": "^1.2.2"
+    "db-migrate-pg": "^1.2.2",
+    "supertest": "^6.3.1"
   }
 }
