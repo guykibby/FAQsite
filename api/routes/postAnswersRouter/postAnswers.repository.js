@@ -13,24 +13,4 @@ module.exports = {
 
     return result.rows;
   },
-
-  // gets an updated list of all the answers related to the given questionId
-  // ordered based on the most recently posted answers
-  getNewAnswers: async (questionId, description) => {
-    const db = await get_db();
-    const result = await db.query(
-      `SELECT 
-            answers.id AS answer_id, 
-            answers.description, 
-            answers.isstarred, 
-            answers.isreviewed, 
-            answers.createdon, 
-            questionid 
-        FROM answers
-        ORDER BY answers.createdon DESC`,
-      [questionId, description]
-    );
-
-    return result.rows;
-  },
 };

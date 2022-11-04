@@ -8,9 +8,7 @@ router.post("/postanswer/:questionId", async (req, res, next) => {
 
     const postedAnswer = await repository.postAnswer(questionid, description);
 
-    const newAnswerList = await repository.getNewAnswers();
-
-    return res.send(postedAnswer).json(newAnswerList).status(201);
+    return res.send(postedAnswer).status(201);
   } catch (error) {
     error.status = 400;
     next(error);
