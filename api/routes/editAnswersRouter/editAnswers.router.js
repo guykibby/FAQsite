@@ -50,18 +50,22 @@ router.delete(
   "/:answerId",
   pathParamValidationMiddleware(pathParamsSchema),
   async (request, response, next) => {
-    const { answerId } = request.params;
-    const db = await get_db();
-    const answer = await db.query(`SELECT * FROM answers WHERE id = $1`, [
-      answerId,
-    ]);
-    if (answer.rows[0]) {
-      await answerRepo.deleteAnswer(answerId);
-      return response.status(200).json({ message: "Answer Deleted" });
-    } else {
-      return response
-        .status(400)
-        .json({ message: "Invalid request. Answer does not exists" });
+    try {
+      const { answerId } = request.params;
+      const db = await get_db();
+      const answer = await db.query(`SELECT * FROM answers WHERE id = $1`, [
+        answerId,
+      ]);
+      if (answer.rows[0]) {
+        await answerRepo.deleteAnswer(answerId);
+        return response.status(200).json({ message: "Answer Deleted" });
+      } else {
+        return response
+          .status(400)
+          .json({ message: "Invalid request. Answer does not exists" });
+      }
+    } catch (error) {
+      next(error);
     }
   }
 );

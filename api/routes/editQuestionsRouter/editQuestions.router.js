@@ -46,8 +46,8 @@ router.put(
           .status(400)
           .json({ message: "Invalid request. Question does not exists" });
       }
-    } catch (err) {
-      next(err);
+    } catch (error) {
+      next(error);
     }
   }
 );
