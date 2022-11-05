@@ -1,27 +1,27 @@
 const request = require("supertest");
 const app = require("../../app");
 const get_db = require("../../db");
-const answerRepo = require("./editAnswers.respository");
+const questionRepo = require("./editQuestions.respository");
 
-describe("Given that the PUT /editAnswer/:answerId route exists", () => {
+describe("Given that the PUT /editquestion/:questionId route exists", () => {
   afterAll(async () => {
     const db = await get_db();
     db.end();
   });
 
-  test("WHEN the starFlag is set and isStarred value of the answer for a valid answerId = 1 is edited THEN return status 200. The value of isStarred has been complemented", async () => {
+  test("WHEN the starFlag is set and isStarred value of the question for a valid answerId = 1 is edited THEN return status 200. The value of isStarred has been complemented", async () => {
     const db = await get_db();
     //setting the starFlag to true and isStarred to true manually so that the test can prove that it gets changed after the put request
-    await answerRepo.editAnswer(1, true, true, true);
+    await questionRepo.editQuestion(1, true, true, true);
 
     // fetching the isStarred value before the put request
     const isStarredBeforeEdit = await db.query(
-      `SELECT isStarred FROM answers WHERE id = 1`
+      `SELECT isStarred FROM questions WHERE id = 1`
     );
 
     // fetching the isReviewed value before the put request
     const isReviewedBeforeEdit = await db.query(
-      `SELECT isStarred FROM answers WHERE id = 1`
+      `SELECT isStarred FROM questions WHERE id = 1`
     );
 
     // body that needs to be sent with the put request
@@ -33,19 +33,19 @@ describe("Given that the PUT /editAnswer/:answerId route exists", () => {
 
     // put request made to edit the isStarred value
     await request(app)
-      .put("/editanswer/1")
+      .put("/editquestion/1")
       .send(body)
       .set("Accept", "application/json")
       .expect(200);
 
     // fetching the isStarred value after the put request has been completed
     const isStarredAfterEdit = await db.query(
-      `SELECT isStarred FROM answers WHERE id = 1`
+      `SELECT isStarred FROM questions WHERE id = 1`
     );
 
     // fetching the isReviewed value after the put request
     const isReviewedAfterEdit = await db.query(
-      `SELECT isStarred FROM answers WHERE id = 1`
+      `SELECT isStarred FROM questions WHERE id = 1`
     );
 
     // test to show that the edit actually changed the isStarred field form true to false
@@ -62,15 +62,15 @@ describe("Given that the PUT /editAnswer/:answerId route exists", () => {
   test("WHEN the starFlag is set to false THEN the isStarred value should not change isReviewed value should change.", async () => {
     const db = await get_db();
     //setting the isReviewed to true, starFlag to false, manually so that the test can prove that it is changed after the put request
-    await answerRepo.editAnswer(1, false, true, true);
+    await questionRepo.editQuestion(1, false, true, true);
 
     // fetching the isReviewed value before the put request
     const isReviewedBeforeEdit = await db.query(
-      `SELECT isReviewed FROM answers WHERE id = 1`
+      `SELECT isReviewed FROM questions WHERE id = 1`
     );
     // fetching the isStarred value before the put request
     const isStarredBeforeEdit = await db.query(
-      `SELECT isStarred FROM answers WHERE id = 1`
+      `SELECT isStarred FROM questions WHERE id = 1`
     );
 
     // body for the put request
@@ -82,7 +82,7 @@ describe("Given that the PUT /editAnswer/:answerId route exists", () => {
 
     // making a put request by sending the body
     await request(app)
-      .put("/editanswer/1")
+      .put("/editquestion/1")
       .send(body)
       .set("Accept", "application/json")
       .expect(200);
@@ -108,26 +108,10 @@ describe("Given that the PUT /editAnswer/:answerId route exists", () => {
     );
   });
 
-  test("WHEN the path parameter for answerId is not a number, respond with 400 error code and an appropriate error message", async () => {
+  test("WHEN the path parameter for questionId is not a number, respond with 400 error code and an appropriate error message", async () => {
     const db = await get_db();
     await request(app)
-      .put("/editanswer/notAnumber")
-      .set("Accept", "application/json")
-      .send({
-        isStarred: true,
-        isReviewed: true,
-        starFlad: false,
-      })
-      .expect(400)
-      .expect((response) => {
-        expect(response.body.message[0]).toBe(`\"answerId\" must be a number`);
-      });
-  });
-
-  test("WHEN the path parameter for answerId is less than 1, respond with 400 error code and an appropriate error message", async () => {
-    const db = await get_db();
-    await request(app)
-      .put("/editanswer/0")
+      .put("/editquestion/notAnumber")
       .set("Accept", "application/json")
       .send({
         isStarred: true,
@@ -137,15 +121,15 @@ describe("Given that the PUT /editAnswer/:answerId route exists", () => {
       .expect(400)
       .expect((response) => {
         expect(response.body.message[0]).toBe(
-          `\"answerId\" must be greater than or equal to 1`
+          `\"questionId\" must be a number`
         );
       });
   });
 
-  test("WHEN the path parameter for answerId is greater than 999999998 as it is not a normal integer anymore, respond with 400 error code and an appropriate error message", async () => {
+  test("WHEN the path parameter for questionId is less than 1, respond with 400 error code and an appropriate error message", async () => {
     const db = await get_db();
     await request(app)
-      .put("/editanswer/999999999")
+      .put("/editquestion/0")
       .set("Accept", "application/json")
       .send({
         isStarred: true,
@@ -155,15 +139,33 @@ describe("Given that the PUT /editAnswer/:answerId route exists", () => {
       .expect(400)
       .expect((response) => {
         expect(response.body.message[0]).toBe(
-          `\"answerId\" must be less than or equal to 999999998`
+          `\"questionId\" must be greater than or equal to 1`
         );
       });
   });
 
-  test("WHEN the path parameter for answerId is not mention. It should give a 404 error status code", async () => {
+  test("WHEN the path parameter for questionId is greater than 999999998 as it is not a normal integer anymore, respond with 400 error code and an appropriate error message", async () => {
     const db = await get_db();
     await request(app)
-      .put("/editanswer/")
+      .put("/editquestion/999999999")
+      .set("Accept", "application/json")
+      .send({
+        isStarred: true,
+        isReviewed: true,
+        starFlad: false,
+      })
+      .expect(400)
+      .expect((response) => {
+        expect(response.body.message[0]).toBe(
+          `\"questionId\" must be less than or equal to 999999998`
+        );
+      });
+  });
+
+  test("WHEN the path parameter for questionId is not mention. It should give a 404 error status code", async () => {
+    const db = await get_db();
+    await request(app)
+      .put("/editquestion/")
       .set("Accept", "application/json")
       .send({
         isStarred: true,
