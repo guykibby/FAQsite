@@ -17,6 +17,8 @@ describe("Given that the PUT /editAnswer/:answerId route exists", () => {
     const answerBeforeEdit = await db.query(
       `SELECT isStarred FROM answers WHERE id = 1`
     );
+
+    // body that needs to be sent with the put request
     const body = {
       isStarred: false,
       isReviewed: false,
@@ -27,7 +29,7 @@ describe("Given that the PUT /editAnswer/:answerId route exists", () => {
     await request(app)
       .put("/editanswer/1")
       .send(body)
-      .set("Accept", "aaplication/json")
+      .set("Accept", "application/json")
       .expect(200)
       .expect((response) => {
         response.body = "Edit Successful";
@@ -36,7 +38,7 @@ describe("Given that the PUT /editAnswer/:answerId route exists", () => {
     const answerAfterEdit = await db.query(
       `SELECT isStarred FROM answers WHERE id = 1`
     );
-    // test to show that the edit actually toggled the field
+    // test to show that the edit actually toggled the isStarred field form true to false
     expect(answerAfterEdit.rows[0].isstarred).toBe(
       !answerBeforeEdit.rows[0].isstarred
     );
