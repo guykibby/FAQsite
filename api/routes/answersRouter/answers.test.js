@@ -10,14 +10,14 @@ describe("GIVEN that the GET /answers route exist", () => {
     db.end();
   });
 
-  test("GET /answers/:questionId for answers with 200", async () => {
-    const showAnswers = await repository.getAnswers();
+  test("GET /:questionId for answers with 200", async () => {
+    const showAllAnswers = await repository.getAnswers();
 
     const response = await request(app)
-      .get("/api/answers")
+      .get("/answers/1")
       .set("Accept", "application/json");
 
     expect(response.status).toBe(200);
-    expect(response.body).toEqual(showAnswers);
+    expect(response.body).toEqual(showAllAnswers);
   });
 });
