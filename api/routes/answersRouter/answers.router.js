@@ -5,7 +5,7 @@ const repository = require("./answers.repository");
 router.get("/:questionId", async (req, res, next) => {
   try {
     const { questionId } = req.params;
-    console.log(questionId);
+
     const allAnswers = await repository.getAnswers(questionId);
 
     return res.json(allAnswers).status(200);

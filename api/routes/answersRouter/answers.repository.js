@@ -4,7 +4,7 @@ module.exports = {
   getAnswers: async (questionId) => {
     const db = await get_db();
     const getAnswers = await db.query(
-      `SELECT  questions.description AS questionDescription, answers.questionId,   answers.description AS answerDescription, answers.createdon
+      `SELECT  answers.id AS answerid, questions.createdon, questions.description AS questionDescription, questions.createdon AS questioncreated, answers.questionId, answers.description AS answerDescription, answers.createdon
       FROM questions 
       LEFT JOIN answers 
       ON questions.id = answers.questionid 
