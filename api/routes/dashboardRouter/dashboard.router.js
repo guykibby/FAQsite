@@ -6,8 +6,8 @@ dashboardRouter.get("/", async (req, res, next) => {
   try {
     const result = await dashboardRepository.getAllFaqs();
     res.json(result);
-  } catch (e) {
-    return res.status(500).json({ error: e.message });
+  } catch (err) {
+    next(err);
   }
 });
 
