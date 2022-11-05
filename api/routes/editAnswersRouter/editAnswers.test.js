@@ -172,4 +172,22 @@ describe("Given that the PUT /editAnswer/:answerId route exists", () => {
       })
       .expect(404);
   });
+
+  test("WHEN the path parameter for answerId is valid but not correct as it does not exist in the database THEN It should give a 400 error status code with message", async () => {
+    const db = await get_db();
+    await request(app)
+      .put("/editanswer/999999")
+      .set("Accept", "application/json")
+      .send({
+        isStarred: true,
+        isReviewed: true,
+        starFlad: false,
+      })
+      .expect(400)
+      .expect((response) => {
+        expect(response.body.message).toEqual(
+          "Invalid request. Answer does not exists"
+        );
+      });
+  });
 });
