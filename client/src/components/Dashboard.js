@@ -1,7 +1,5 @@
 import { useEffect, useState } from "react";
 import dashboardStyles from "./Dashboard.module.css";
-// import Popup from "reactjs-popup";
-import "reactjs-popup/dist/index.css";
 
 const Dashboard = () => {
   const [faqs, setFaqs] = useState([]);
