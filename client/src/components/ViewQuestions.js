@@ -31,9 +31,15 @@ const ViewQuestions = () => {
   // const ViewQuestions = ({ topicId, description }) => {
   return (
     <>
-      <Link to={"/answers/1"} className="list-item">
-        {questions[0].description}
-      </Link>
+      <p>{questions[0].name}</p>
+      {questions.map((e, i) => {
+        return (
+          <Link key={i} to={"/answers/" + e.id} className="list-item">
+            {e.description}
+          </Link>
+        );
+      })}
+
       {/* <p className="list-item">{description}</p> */}
     </>
   );

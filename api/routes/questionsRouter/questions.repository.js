@@ -4,7 +4,11 @@ module.exports = {
   getQuestions: async (topicId) => {
     const db = await get_db();
     const getQuestions = await db.query(
-      `SELECT id, description FROM questions WHERE topicId = ${topicId}`
+      `SELECT questions.id, description, topics.name 
+      FROM questions
+      JOIN topics
+      ON questions.topicId = topics.id
+      WHERE topicId = ${topicId}`
     );
     return getQuestions.rows;
   },
