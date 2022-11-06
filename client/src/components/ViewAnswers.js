@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 
 const ViewAnswers = () => {
@@ -16,27 +16,25 @@ const ViewAnswers = () => {
     };
     fetchData();
   }, [questionId]);
-
+  console.log(answers[0].questiondescription);
   return (
-    <div>
-      <h1>Answers</h1>
+    <>
+      <div>
+        {/* <div>{answers[0].questiondescription}</div> */}
+        {answers[0].questiondescription}
+      </div>
       {answers.map((answer) => {
         return (
-          <div key={answer.answerid} className="list">
-            <li>
-              <div>
-                <strong>{answer.questiondescription}</strong>
-                <div>Asked: {answer.questioncreated}</div>
-                <br />
-                <div>{answer.answerdescription}</div>
-                <div>Answered: {answer.createdon}</div>
-              </div>
-              <br />
-            </li>
-          </div>
+          <Link
+            key={answer.answerid}
+            to={"/editanswers/" + answer.answerid}
+            className="list-item"
+          >
+            {answer.answerdescription}
+          </Link>
         );
       })}
-    </div>
+    </>
   );
 };
 

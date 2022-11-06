@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 const HomePage = () => {
   return (
     <div>
-      <Link to={"/questions/" + 1} className="list-item">
+      <Link to={"/e/" + 1} className="list-item">
         View Questions
       </Link>
     </div>

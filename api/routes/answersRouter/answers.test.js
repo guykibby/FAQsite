@@ -17,32 +17,48 @@ describe("GIVEN that the GET /answers route exist", () => {
     expect(response.status).toBe(200);
   });
 
-  //   test("GET /:questionId for answers with 200", async () => {
-  //     await request(app)
-  //       .get("/answers")
-  //       .expect((response) => {
-  //         const expectedBody = [
-  //           {
-  //             answerid: 1,
-  //             createdon: "2022-11-04T13:42:17.615Z",
-  //             questiondescription: "What is HTML?",
-  //             questioncreated: "2022-11-04T13:42:17.615Z",
-  //             questionid: 1,
-  //             answerdescription:
-  //               "Lorem ipsum dolor sit amet. Et molestias voluptatem qui doloremque soluta sit culpa porro et tenetur repellat vel beatae quas id reprehenderit esse.",
-  //           },
-  //           {
-  //             answerid: 2,
-  //             createdon: "2022-11-04T13:42:17.615Z",
-  //             questiondescription: "What is HTML?",
-  //             questioncreated: "2022-11-04T13:42:17.615Z",
-  //             questionid: 1,
-  //             answerdescription:
-  //               "Aut quibusdam incidunt ea error aliquam 33 atque odio At corrupti Quis et recusandae impedit sit exercitationem distinctio.",
-  //           },
-  //         ];
-  //         expect(response.body).toEqual(expectedBody);
-  //         expect(response.status).toBe(200);
-  //       });
-  //   });
+  test("GET /:questionId full list of answers with 200", async () => {
+    await request(app)
+      .get("/answers/1")
+      .expect((response) => {
+        const expectedBody = [
+          {
+            answerid: 1,
+            createdon: "2022-11-04T13:42:17.615Z",
+            questiondescription: "What is HTML?",
+            questioncreated: "2022-11-04T13:42:17.615Z",
+            questionid: 1,
+            answerdescription:
+              "Lorem ipsum dolor sit amet. Et molestias voluptatem qui doloremque soluta sit culpa porro et tenetur repellat vel beatae quas id reprehenderit esse.",
+          },
+          {
+            answerid: 2,
+            createdon: "2022-11-04T13:42:17.615Z",
+            questiondescription: "What is HTML?",
+            questioncreated: "2022-11-04T13:42:17.615Z",
+            questionid: 1,
+            answerdescription:
+              "Aut quibusdam incidunt ea error aliquam 33 atque odio At corrupti Quis et recusandae impedit sit exercitationem distinctio.",
+          },
+        ];
+        expect(response.body).toEqual(expectedBody);
+        expect(response.status).toBe(200);
+      });
+  });
+
+  test("WHEN there are no answers THEN return status 200 and an empty array", async () => {
+    const getAllAnswers = await answersRepository.getAnswers();
+
+    const expectedResponseData = {
+      questionId: [],
+      allTheAnswers: getAllAnswers,
+    };
+
+    const response = await request(app)
+      .get("/answers/:questionid")
+      .set("Accept", "application/json");
+
+    expect(response.status).toBe(200);
+    expect(response.body).toEqual(expectedResponseData);
+  });
 });

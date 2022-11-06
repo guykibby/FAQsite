@@ -14,5 +14,4 @@ router.get("/:questionId", async (req, res, next) => {
     next(err);
   }
 });
-
 module.exports = router;
