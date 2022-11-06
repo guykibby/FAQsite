@@ -1,7 +1,7 @@
 const request = require("supertest");
 const app = require("../../app");
 const get_db = require("../../db");
-const answersRepository = require("./answers.repository");
+// const answersRepository = require("./answers.repository");
 
 describe("GIVEN that the GET /answers route exist", () => {
   afterAll(async () => {
