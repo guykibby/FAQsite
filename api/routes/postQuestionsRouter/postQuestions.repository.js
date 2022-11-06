@@ -1,7 +1,7 @@
 const db = require("../../db");
 
-const postQuestionSql = `INSERT INTO questions (id,description,topicid) values 
-(34, 'What is SQL?',1)`;
+const postQuestionSql = `INSERT INTO questions (description,topicid) values 
+($1, $2)`;
 
 module.exports = {
   postQuestion: async () => {

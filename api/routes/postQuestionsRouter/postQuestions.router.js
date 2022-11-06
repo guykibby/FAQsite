@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const postQuestion = require("./postQuestions.repository");
 
-router.post("/postquestion/:topicId", async (req, res, next) => {
+router.post(`/:topicId`, async (req, res, next) => {
   try {
     const question = await postQuestion();
 
