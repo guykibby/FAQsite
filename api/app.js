@@ -16,7 +16,7 @@ app.use(express.json());
 
 //routes
 app.use("/topics", getTopicsRouter);
-app.use("/questions/:topicId", getQuestionsRouter);
+app.use("/questions", getQuestionsRouter);
 app.use("/postquestion/:topicId", postQuestionsRouter);
 app.use("/answers/:questionId", getAnswersRouter);
 app.use("/postanswer/:questionId", postAnswersRouter);
@@ -30,7 +30,6 @@ app.use((err, req, res, next) => {
   res.status(err.status || 500).json({
     message: err.message,
   });
-
 });
 
 module.exports = app;

@@ -2,11 +2,11 @@ const express = require("express");
 const router = express.Router();
 const questionsRepository = require("./questions.repository");
 
-router.get("/", async (req, res, next) => {
+router.get("/:topicId", async (req, res, next) => {
   try {
-    const { topicId } = request.params;
+    const { topicId } = req.params;
     const response = await questionsRepository.getQuestions(topicId);
-    return res.json(response);
+    return res.json(response).status(200);
   } catch (err) {
     next(err);
   }
