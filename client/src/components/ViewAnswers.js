@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 const ViewAnswers = () => {
   const { questionId } = useParams();
 
-  const [answers, setAnswers] = useState([]);
+  const [answers, setAnswers] = useState([{}]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -19,10 +19,7 @@ const ViewAnswers = () => {
   console.log(answers[0].questiondescription);
   return (
     <>
-      <div>
-        {/* <div>{answers[0].questiondescription}</div> */}
-        {answers[0].questiondescription}
-      </div>
+      <div>{answers[0].questiondescription}</div>
       {answers.map((answer) => {
         return (
           <Link
