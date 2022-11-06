@@ -6,9 +6,34 @@ import {
 } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import HomePage from "./HomePage";
-import { unmountComponentAtNode } from "react-dom";
 import { BrowserRouter as Router } from "react-router-dom";
-import { act } from "react-dom/test-utils";
+
+beforeEach(async () => {
+  render(
+    <Router>
+      <HomePage />
+    </Router>
+  );
+  // await waitForElementToBeRemoved(() => screen.getByTitle(/loading/i));
+});
+
+describe("ProductPage", () => {
+  test("WHEN", () => {
+    expect(true).toBe(true);
+  });
+});
+
+// import {
+//   render,
+//   screen,
+//   waitForElementToBeRemoved,
+//   waitFor,
+// } from "@testing-library/react";
+// import userEvent from "@testing-library/user-event";
+// import HomePage from "./HomePage";
+// import { unmountComponentAtNode } from "react-dom";
+// import { BrowserRouter as Router } from "react-router-dom";
+// import { act } from "react-dom/test-utils";
 
 // let container = null;
 // beforeEach(async () => {
@@ -42,21 +67,26 @@ import { act } from "react-dom/test-utils";
 //   await waitForElementToBeRemoved(() => screen.queryByText("Loading"));
 //   });
 
-test("Renders the list of years for the user to select from", async () => {
-  render(
-    <Router>
-      <HomePage />
-    </Router>
-    //   ,
-    //   container
-  );
-  // expect(screen.getByText(/Loading/i)).toBeInTheDocument();
-  await waitForElementToBeRemoved(() => screen.queryByText("Loading"));
-  const yearButton = screen.getByRole("button", {
-    name: "Year 1",
-  });
-  expect(yearButton).toBeInTheDocument();
-});
+// test("Renders the list of years for the user to select from", async () => {
+//   render(
+//     <Router>
+//       <HomePage />
+//     </Router>
+//   ,
+//   container
+// );
+// expect(screen.getByText(/Loading/i)).toBeInTheDocument();
+// await waitForElementToBeRemoved(() => screen.queryByText("Loading"));
+// jest.setTimeout(3000);
+// expect(screen.getByRole("button")).toBeEnabled();
+// const yearButton = screen.getByText(/Year/i);
+// const yearButton = screen.getByRole(/Year/i);
+// const yearButton = screen.getByRole("button", {
+//   name: "Year 1",
+// });
+
+// expect(yearButton).toBeInTheDocument();
+// });
 // });
 //   test("WHEN a user views the first page of the Products page, THEN the previous page button will be disabled", () => {
 //     const previousPageButton = screen.getByRole("button", {
