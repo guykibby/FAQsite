@@ -67,6 +67,7 @@ const HomePage = () => {
       <p className="title">Home Page</p>
       {displayArray.map((e, i) => (
         <button
+          aria-label={e}
           value={e}
           key={i}
           onClick={(e) => handleClick(e.target.value)}
