@@ -1,12 +1,16 @@
 const express = require("express");
+
 const router = express.Router();
-const postQuestion = require("./postQuestions.repository");
+const repository = require("./postQuestions.repository");
 
 router.post(`/:topicId`, async (req, res, next) => {
   try {
-    const question = await postQuestion();
+    const { description } = req.params;
+    const { topicid } = req.params;
 
-    throw new Error("Route is under maintenance");
+    const postedQuestion = await repository.postQuestion(description, topicid);
+
+    return res.send(postedQuestion).status(201);
   } catch (err) {
     next(err);
   }

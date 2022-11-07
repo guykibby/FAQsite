@@ -2,11 +2,14 @@ import { useParams } from "react-router-dom";
 
 const PostQuestion = () => {
   const { topicId } = useParams();
+  const handelSubmit = async (event) => {
+    event.preventDefault();
+  };
 
   return (
     <>
       <p className="list-item">UNDER CONSTRUCTION. CODE: {topicId}</p>;
-      <form>
+      <form onSubmit={handelSubmit}>
         <label>
           Question Title
           <input type="text" name="name" />
