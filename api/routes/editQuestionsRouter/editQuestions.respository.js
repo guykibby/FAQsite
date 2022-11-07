@@ -25,6 +25,8 @@ module.exports = {
   deleteQuestion: async (questionId) => {
     try {
       const db = await get_db();
+      await db.query(`
+      DELETE FROM answers WHERE questionid = $1`, [questionId]);
       await db.query(`DELETE FROM questions WHERE id = $1`, [questionId]);
     } catch (error) {
       throw Error(error);
