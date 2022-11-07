@@ -40,7 +40,7 @@ describe("app", () => {
 
     // comparing the body's question id with the answer's questionid of the first item in the array
     await request(app)
-      .post(`/postanswer/${body.questionid}`)
+      .post(`/postanswer/${body.questionId}`)
       .send(body)
       .expect(expectedStatus)
       .expect((response) => {
