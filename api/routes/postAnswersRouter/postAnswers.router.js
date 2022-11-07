@@ -4,15 +4,21 @@ const repository = require("./postAnswers.repository");
 
 router.post("/:questionId", async (req, res, next) => {
   try {
-    const { questionid } = req.params;
+    const { questionId } = req.params;
     const { description } = req.body;
 
-    console.log(description);
-    console.log(req.body);
+    console.log("description", description);
+    console.log(questionId);
+    console.log("req.body", req.body);
 
-    const postedAnswer = await repository.postAnswer(questionid, description);
+    const postedAnswer = await repository.postAnswer(questionId, description);
 
-    return res.send(postedAnswer).status(201);
+    console.log(postedAnswer);
+
+    return res
+      .send(postedAnswer)
+      .status(201)
+      .send({ message: "Post has been submitted successfully" });
   } catch (error) {
     error.status = 400;
     next(error);

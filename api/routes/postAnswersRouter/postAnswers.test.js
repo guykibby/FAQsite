@@ -9,11 +9,13 @@ describe("app", () => {
     db.end();
   });
 
-  test("POST /postanswer/:questionId creates a newly post answer for a question", async () => {
+  test("POST /postanswer/:questionId creates a newly posted answer for a question", async () => {
     const db = await get_db();
 
     // creating a new post that has a question id of 65 and a description of 'test'
-    await postAnswer(65, "test");
+    await postAnswer(3, "test");
+
+    console.log(postAnswer);
 
     // selects all the answers with the newly posted answer to be showing in the first array at [0]
     const updatedAnswersList = await db.query(
@@ -32,18 +34,18 @@ describe("app", () => {
 
     // body to be compared with the newly posted answer
     const body = {
-      questionid: 65,
+      questionId: 3,
       description: "test",
     };
 
     // comparing the body's question id with the answer's questionid of the first item in the array
     await request(app)
-      .post(`/postanswer/${body.questionid}`)
+      .post(`/postanswer/${body.questionId}`)
       .send(body)
       .expect(expectedStatus)
       .expect((response) => {
-        expect(response.body[0].questionid).toBe(
-          updatedAnswersList.rows[0].questionid
+        expect(response.body[0].questionId).toBe(
+          updatedAnswersList.rows[0].questionId
         );
       });
   });
@@ -54,7 +56,7 @@ describe("app", () => {
     const expectedStatus = 400;
 
     const body = {
-      questionid: 65,
+      questionId: 3,
       description: "test",
     };
 

@@ -38,11 +38,7 @@ const PostAnswer = () => {
         TESTING - UNDER CONSTRUCTION. CODE: {questionId}
       </p>
 
-      <form
-        onSubmit={(e) => {
-          handleSubmit(e);
-        }}
-      >
+      <form onSubmit={handleSubmit}>
         <label htmlFor="question-heading" className="question-heading">
           {questionId.description}
         </label>
@@ -51,7 +47,6 @@ const PostAnswer = () => {
           required
           id="answer-description"
           name="answer-description"
-          // placeholder="Please type in your answer"
           className="answer-description"
           value={answer}
           onChange={(e) => {
