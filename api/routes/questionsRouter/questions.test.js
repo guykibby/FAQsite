@@ -9,13 +9,14 @@ describe("GIVEN that the GET /questions route exists", () => {
     db.end();
   });
 
-  test("GET /questions returns a list of questions and a status 200", async () => {
-    const questions = await questionsRepository.getQuestions();
+  test("GET /questions/1 returns questions by topic and a status 200", async () => {
+    const getQuestions = await questionsRepository.getQuestions(1);
+
     const response = await request(app)
-      .get("/questions")
+      .get("/questions/1")
       .set("Accept", "application/json");
 
     expect(response.status).toBe(200);
-    expect(response.body).toEqual(questions);
+    expect(response.body).toEqual(getQuestions);
   });
 });

@@ -10,6 +10,7 @@ module.exports = {
       ON questions.topicId = topics.id
       WHERE topicId = ${topicId}`
     );
+
     return getQuestions.rows;
   },
 };
