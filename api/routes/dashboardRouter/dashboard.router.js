@@ -4,8 +4,11 @@ const dashboardRepository = require("./dashboard.repository");
 
 dashboardRouter.get("/", async (req, res, next) => {
   try {
-    const result = await dashboardRepository.getAllFaqs();
-    res.json(result);
+    const newQuestions = await dashboardRepository.getNewQuestions();
+    const newAnswers = await dashboardRepository.getNewAnswers();
+    const newPosts = [newQuestions, newAnswers];
+    console.log("AAAAA : " + JSON.stringify(newPosts));
+    res.json(newPosts);
   } catch (err) {
     next(err);
   }

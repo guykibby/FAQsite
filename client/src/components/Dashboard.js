@@ -1,11 +1,14 @@
 import { useEffect, useState } from "react";
-import dashboardStyles from "./Dashboard.module.css";
+import { Link } from "react-router-dom";
+// import dashboardStyles from "./Dashboard.module.css";
 
 const Dashboard = () => {
-  const [faqs, setFaqs] = useState([]);
-  const [open, setOpen] = useState(false);
-  const [index, setIndex] = useState(0);
-  const [answer, setAnswer] = useState("");
+  const [newPosts, setNewPosts] = useState([[]]);
+  //  const [newQuestions, setNewQuestions] = useState([[]]);
+  //  const [newAnswers, setNewAnswers] = useState([[]]);
+  // const [render, setIsRender] = useState(false);
+  // const [index, setIndex] = useState(0);
+  // const [answer, setAnswer] = useState("");
 
   // Fetch all Q&As from DB which are waiting for review by instructor
   useEffect(() => {
@@ -15,69 +18,46 @@ const Dashboard = () => {
           `${process.env.REACT_APP_API_URL}/dashboard`
         );
         const data = await result.json();
-        setFaqs(data);
+        setNewPosts(data);
       } catch (error) {
         console.log("Error fetching products");
       }
     };
     fetchData();
   }, []);
-
-  const Popup = ({ closePopup }) => {
-    return (
-      <div className={dashboardStyles.popupContainer}>
-        <div className={dashboardStyles.popupBody}>
-          <p>
-            <span className={dashboardStyles.bold}>Answer {index + 1}: </span>{" "}
-            {answer}
-          </p>
-          <button onClick={closePopup}>Close X</button>
-        </div>
-      </div>
-    );
-  };
-
   return (
-    <div className={dashboardStyles.dashboardContainer}>
-      <h1 className={dashboardStyles.dashboardTitle}>DASH BOARD</h1>
-      <div className={dashboardStyles.dashboardQAContainer}>
-        {faqs.map((faq, index) => (
-          <div key={index} className={dashboardStyles.dashboardQA}>
-            <div className={dashboardStyles.dashboardQuestionContainer}>
-              <p className={dashboardStyles.dashboardQuestion}>
-                {faq.description}
-              </p>
-              {faq.json_build_object.answers.length > 0 && (
-                <p className={dashboardStyles.dashboardQuestionCount}>
-                  {faq.json_build_object.answers.length} Answers
-                </p>
-              )}
-            </div>
-            <div className={dashboardStyles.dashboardAnswerContainer}>
-              {faq.json_build_object.answers.map((answer, index) => (
-                <div>
-                  <p
-                    key={index}
-                    className={dashboardStyles.dashboardAnswer}
-                    onClick={() => {
-                      setOpen(true);
-                      setIndex(index);
-                      setAnswer(answer);
-                    }}
-                  >
-                    <span className={dashboardStyles.bold}>
-                      Answer {index + 1}:
-                    </span>
-                    {answer}
-                  </p>
-                  {open ? <Popup closePopup={() => setOpen(false)} /> : null}
-                </div>
-              ))}
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
+    <>
+      <h1> dash board</h1>
+      {newPosts[0].map((newPost, index) => (
+        <Link
+          to={"/editquestion/" + newPost.questionid}
+          state={{
+            questionId: newPost.questionid,
+            questiondescription: newPost.questiondesc,
+            questionstarred: newPost.isstarred,
+            questionreviewed: newPost.isreviewed,
+          }}
+          className="list-item"
+        >
+          {newPost.questiondesc}
+        </Link>
+      ))}
+      {/* {newPosts[1].map((newPost, index) => (
+        <Link
+          to={"/editanswer/" + newPost.answerid}
+          state={{
+            answerId: newPost.answerid,
+            questionid: newPost.questionid,
+            answerdescription: newPost.answerdesc,
+            answerstarred: newPost.isstarred,
+            answerreviewed: newPost.isreviewed,
+          }}
+          className="list-item"
+        >
+          {newPost.answerdesc}
+        </Link>
+      ))} */}
+    </>
   );
 };
 
