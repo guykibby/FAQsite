@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useParams, Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import styles from "./EditQuestion.module.css";
 
 const EditQuestion = () => {
@@ -7,7 +7,6 @@ const EditQuestion = () => {
   const [star, setStar] = useState(false);
   const [review, setReview] = useState(false);
   const [starFlag, setStarFlag] = useState(false);
-  const navigate = useNavigate();
   const handleChange = (e) => {
     e.preventDefault();
     if (e.target.id === "star") {
@@ -89,6 +88,7 @@ const EditQuestion = () => {
             checked={review}
             className={styles.checkbox}
             onChange={(e) => handleChange(e)}
+            data-testid="review-checkbox"
           />
         </div>
         <div>
@@ -99,6 +99,7 @@ const EditQuestion = () => {
             checked={star}
             className={styles.checkbox}
             onChange={(e) => handleChange(e)}
+            data-testid="star-checkbox"
           />
         </div>
         <button onClick={handleDelete}>Delete Question</button>
