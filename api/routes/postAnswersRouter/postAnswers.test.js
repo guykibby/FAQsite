@@ -40,18 +40,18 @@ describe("app", () => {
 
     // comparing the body's question id with the answer's questionid of the first item in the array
     await request(app)
-      .post(`/postanswer/${body.questionId}`)
+      .post(`/postanswer/${body.questionid}`)
       .send(body)
       .expect(expectedStatus)
       .expect((response) => {
-        expect(response.body[0].questionId).toBe(
-          updatedAnswersList.rows[0].questionId
+        expect(response.body[0].questionid).toBe(
+          updatedAnswersList.rows[0].questionid
         );
       });
   });
 
   test("WHEN the path parameter for /:questionId is invalid, respond with status code 400", async () => {
-    await postAnswer(65, "test");
+    await postAnswer(3, "test");
 
     const expectedStatus = 400;
 
@@ -61,7 +61,7 @@ describe("app", () => {
     };
 
     await request(app)
-      .put("/postanswer/incorrectId")
+      .post("/postanswer/incorrectId")
       .set("Accept", "application/json")
       .send(body)
       .expect(expectedStatus);
