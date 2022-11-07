@@ -22,13 +22,17 @@ const ViewAnswers = () => {
       <div>{answers[0].questiondescription}</div>
       {answers.map((answer) => {
         return (
-          <Link
-            key={answer.answerid}
-            to={"/editanswers/" + answer.answerid}
-            className="list-item"
-          >
-            {answer.answerdescription}
-          </Link>
+          <>
+            <Link
+              key={answer.answerid}
+              to={"/editanswers/" + answer.answerid}
+              className="list-item"
+            >
+              {answer.answerdescription}
+              <br />
+              <button>Edit Answer</button>
+            </Link>
+          </>
         );
       })}
     </>
