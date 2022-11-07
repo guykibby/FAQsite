@@ -2,10 +2,13 @@ const express = require("express");
 const router = express.Router();
 const repository = require("./postAnswers.repository");
 
-router.post("/postanswer/:questionId", async (req, res, next) => {
+router.post("/:questionId", async (req, res, next) => {
   try {
     const { questionid } = req.params;
     const { description } = req.body;
+
+    console.log(description);
+    console.log(req.body);
 
     const postedAnswer = await repository.postAnswer(questionid, description);
 
