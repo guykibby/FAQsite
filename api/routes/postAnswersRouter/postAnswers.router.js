@@ -4,7 +4,8 @@ const repository = require("./postAnswers.repository");
 
 router.post("/postanswer/:questionId", async (req, res, next) => {
   try {
-    const { questionid, description } = req.params;
+    const { questionid } = req.params;
+    const { description } = req.body;
 
     const postedAnswer = await repository.postAnswer(questionid, description);
 
