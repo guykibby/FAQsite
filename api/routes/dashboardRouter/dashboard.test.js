@@ -8,10 +8,17 @@ describe("FAQ Dashboard API", () => {
     const db = await get_db();
     db.end();
   });
-  test("GET /dashboard should return all Q&As with status code of 200", async () => {
-    const expectedData = await dashboardRepository.getAllFaqs();
+  test("GET /dashboard should return all questions & answers with status code of 200", async () => {
+    const expectedData = await dashboardRepository.getNewQuestions();
     const response = await request(app).get("/dashboard");
-    expect(response.body).toEqual(expectedData);
+    expect(response.body[0]).toEqual(expectedData);
+    expect(response.status).toBe(200);
+  });
+
+  test("GET /dashboard should return all answers with status code of 200", async () => {
+    const expectedData = await dashboardRepository.getNewAnswers();
+    const response = await request(app).get("/dashboard");
+    expect(response.body[1]).toEqual(expectedData);
     expect(response.status).toBe(200);
   });
 });

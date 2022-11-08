@@ -7,7 +7,6 @@ dashboardRouter.get("/", async (req, res, next) => {
     const newQuestions = await dashboardRepository.getNewQuestions();
     const newAnswers = await dashboardRepository.getNewAnswers();
     const newPosts = [newQuestions, newAnswers];
-    console.log("AAAAA : " + JSON.stringify(newPosts));
     res.json(newPosts);
   } catch (err) {
     next(err);

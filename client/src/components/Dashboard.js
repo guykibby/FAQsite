@@ -3,21 +3,23 @@ import { Link } from "react-router-dom";
 // import dashboardStyles from "./Dashboard.module.css";
 
 const Dashboard = () => {
-  const [newPosts, setNewPosts] = useState([[]]);
-  //  const [newQuestions, setNewQuestions] = useState([[]]);
-  //  const [newAnswers, setNewAnswers] = useState([[]]);
-  // const [render, setIsRender] = useState(false);
-  // const [index, setIndex] = useState(0);
-  // const [answer, setAnswer] = useState("");
-
+  const [newPosts, setNewPosts] = useState([[], []]);
+  const [error, setError] = useState(true);
+  const [errorMessage, setErrorMessage] = useState("Loading . . .");
   // Fetch all Q&As from DB which are waiting for review by instructor
   useEffect(() => {
     const fetchData = async () => {
       try {
+        setError(false);
         const result = await fetch(
           `${process.env.REACT_APP_API_URL}/dashboard`
         );
+        if (!result.ok) {
+          throw new Error("API Error");
+        }
+        setErrorMessage("");
         const data = await result.json();
+        console.log("AAAAA : " + JSON.stringify(data));
         setNewPosts(data);
       } catch (error) {
         console.log("Error fetching products");
@@ -27,7 +29,9 @@ const Dashboard = () => {
   }, []);
   return (
     <>
-      <h1> dash board</h1>
+      <h1>DashBoard</h1>
+      {error && <p>{errorMessage}</p>}
+      <h2>Questions</h2>
       {newPosts[0].map((newPost, index) => (
         <Link
           to={"/editquestion/" + newPost.questionid}
@@ -42,7 +46,8 @@ const Dashboard = () => {
           {newPost.questiondesc}
         </Link>
       ))}
-      {/* {newPosts[1].map((newPost, index) => (
+      <h2>Answers</h2>
+      {newPosts[1].map((newPost, index) => (
         <Link
           to={"/editanswer/" + newPost.answerid}
           state={{
@@ -56,7 +61,7 @@ const Dashboard = () => {
         >
           {newPost.answerdesc}
         </Link>
-      ))} */}
+      ))}
     </>
   );
 };
