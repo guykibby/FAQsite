@@ -4,39 +4,73 @@ import { useNavigate } from "react-router-dom";
 
 const PostQuestion = () => {
   const { topicId } = useParams();
-
-  const [question, setQuestion] = useState("");
+  // const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  // const [topicId, setTopicId] = useState("");
+  // const [question, setQuestion] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [isError, setIsError] = useState(false);
+  const [errorStatus, setErrorStatus] = useState("");
 
   const navigate = useNavigate();
 
   const handelSubmit = async (event) => {
     event.preventDefault();
+    setIsLoading(true);
+    const body = {
+      //title,
+      description,
+      //topicId,
+    };
+    try {
+      const response = await fetch(
+        `http://localhost:5001/postquestion/${topicId}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(body),
+        }
+      );
+      console.log(body);
 
-    const response = await fetch(
-      `http://localhost:5001/postquestion/${topicId}`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ description: question }),
+      /*const response = await fetch(
+        `http://localhost:5001/postquestion/${topicId}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ description: question }),
+        }
+      );
+      console.log({ description: question });*/
+
+      if (!response.ok) {
+        console.log("Fetch not ok");
+        setIsError(true);
+        setErrorStatus(response.status);
+      } else {
+        setIsLoading(false);
+        navigate(`/question/${topicId}`);
       }
-    );
-    console.log({ description: question });
-
-    if (!response.ok) {
-      console.log("Fetch not ok");
-    } else {
-      navigate(`/question/${topicId}`);
+    } catch (error) {
+      setIsError(true);
+      setErrorStatus("unknown");
     }
   };
+
+  // if (isError) {
+  //   return <>An error has occurred. {errorStatus}.</>;
+  // }
 
   return (
     <>
       <p className="list-item">UNDER CONSTRUCTION. CODE: {topicId}</p>;
       <form onSubmit={handelSubmit}>
         <label htmlFor="topic-heading" className="topic-heading">
-          Topic
+          {topicId}
         </label>
         <input
           type="text"
@@ -44,13 +78,20 @@ const PostQuestion = () => {
           id="question-description"
           name="question-description"
           className="question-description"
-          value={question}
+          /*value={question}
           onChange={(e) => {
             setQuestion(e.target.value);
+          }}*/
+          value={description}
+          onChange={(event) => {
+            const value = event.target.value;
+            setDescription(value);
           }}
         />
 
-        <button className="submit-button">Submit</button>
+        <button className="submit-button" disabled={isLoading}>
+          Submit
+        </button>
       </form>
     </>
   );

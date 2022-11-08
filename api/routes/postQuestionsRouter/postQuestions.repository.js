@@ -1,12 +1,12 @@
 const get_db = require("../../db");
 
 module.exports = {
-  postQuestion: async (description, topicid) => {
+  postQuestion: async (description, topicId) => {
     const db = await get_db();
     const result = await db.query(
-      `INSERT INTO answers (description, topicid)
+      `INSERT INTO answers (description, topicId)
         VALUES($1, $2)`,
-      [description, topicid]
+      [description, topicId]
     );
 
     return result.rows;
