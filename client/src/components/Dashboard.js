@@ -35,13 +35,7 @@ const Dashboard = () => {
       {newPosts[0].map((newPost, index) => (
         <Link
           to={"/editquestion/" + newPost.questionid}
-          state={{
-            questionId: newPost.questionid,
-            questiondescription: newPost.questiondesc,
-            questionstarred: newPost.isstarred,
-            questionreviewed: newPost.isreviewed,
-            topicId: newPost.topicId,
-          }}
+          state={newPosts[0]}
           className="list-item"
         >
           {newPost.questiondesc}
@@ -51,13 +45,7 @@ const Dashboard = () => {
       {newPosts[1].map((newPost, index) => (
         <Link
           to={"/editanswer/" + newPost.answerid}
-          state={{
-            answerId: newPost.answerid,
-            questionid: newPost.questionid,
-            answerdescription: newPost.answerdesc,
-            answerstarred: newPost.isstarred,
-            answerreviewed: newPost.isreviewed,
-          }}
+          state={newPosts[1]}
           className="list-item"
         >
           {newPost.answerdesc}
