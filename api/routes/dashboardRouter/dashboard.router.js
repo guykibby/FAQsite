@@ -1,15 +1,16 @@
 const express = require("express");
 const dashboardRouter = express();
-const dashboardRepository = require("./dashboard.repository");
+const { getNewQuestions, getNewAnswers } = require("./dashboard.repository");
 
-dashboardRouter.get("/", async (req, res, next) => {
+dashboardRouter.get("/", async (req, res) => {
   try {
-    const newQuestions = await dashboardRepository.getNewQuestions();
-    const newAnswers = await dashboardRepository.getNewAnswers();
+    const newQuestions = await getNewQuestions();
+    const newAnswers = await getNewAnswers();
     const newPosts = [newQuestions, newAnswers];
     res.json(newPosts);
   } catch (err) {
-    next(err);
+    console.log("AAA");
+    return res.status(500).json(err.message);
   }
 });
 
