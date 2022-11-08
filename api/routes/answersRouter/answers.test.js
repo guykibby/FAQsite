@@ -41,40 +41,11 @@ describe("GIVEN that the GET /answers route exist", () => {
     expect(response.status).toBe(400);
   });
 
-  // it("if GET /answers/:wrongId should return 404", async () => {
-  //   const response = await request(app).get("/answers/600");
-  //   expect((response) => {
-  //     expect(response.body.error).toBe("ID not found");
-  //   });
-  //   expect(response.status).toEqual(404);
-  // });
-
-  // test("GET /:questionId full list of answers with 200", async () => {
-  //   await request(app)
-  //     .get("/answers/1")
-  //     .expect((response) => {
-  //       const expectedBody = [
-  //         {
-  //           answerid: 1,
-  //           createdon: "2022-11-04T13:42:17.615Z",
-  //           questiondescription: "What is HTML?",
-  //           questioncreated: "2022-11-04T13:42:17.615Z",
-  //           questionid: 1,
-  //           answerdescription:
-  //             "Lorem ipsum dolor sit amet. Et molestias voluptatem qui doloremque soluta sit culpa porro et tenetur repellat vel beatae quas id reprehenderit esse.",
-  //         },
-  //         {
-  //           answerid: 2,
-  //           createdon: "2022-11-04T13:42:17.615Z",
-  //           questiondescription: "What is HTML?",
-  //           questioncreated: "2022-11-04T13:42:17.615Z",
-  //           questionid: 1,
-  //           answerdescription:
-  //             "Aut quibusdam incidunt ea error aliquam 33 atque odio At corrupti Quis et recusandae impedit sit exercitationem distinctio.",
-  //         },
-  //       ];
-  //       expect(response.body).toEqual(expectedBody);
-  //       expect(response.status).toBe(200);
-  //     });
-  // });
+  it("if GET /answers/:wrongId should return 404", async () => {
+    const response = await request(app).get("/answers/600");
+    expect((response) => {
+      expect(response.body.error).toBe("ID not found");
+    });
+    expect(response.status).toEqual(404);
+  });
 });

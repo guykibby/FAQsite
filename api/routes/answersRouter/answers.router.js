@@ -33,8 +33,15 @@ router.get(
         [questionId]
       );
 
-      if (!checkQuestionId[0]) {
-        return res.json({ error: "ID not found" }).status(404);
+      //   const error = new Error(`page ${page} of ${totalPages} does not exist`);
+      // error.status = 404;
+      // throw error;
+
+      // if (!checkQuestionId) {
+      //   return res.json({ error: "ID not found" }).status(404);
+      // }
+      if (checkQuestionId.rows.length === 0) {
+        return res.status(404).json({ error: "ID not found" });
       }
 
       const allAnswers = await repository.getAnswers(questionId);
