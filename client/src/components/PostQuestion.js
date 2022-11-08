@@ -53,7 +53,7 @@ const PostQuestion = () => {
         setErrorStatus(response.status);
       } else {
         setIsLoading(false);
-        navigate(`/question/${topicId}`);
+        navigate(`/questions/${topicId}`);
       }
     } catch (error) {
       setIsError(true);

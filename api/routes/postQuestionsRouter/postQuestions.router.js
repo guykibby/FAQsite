@@ -11,9 +11,9 @@ router.post(`/:topicId`, async (req, res, next) => {
     const postedQuestion = await repository.postQuestion(description, topicId);
 
     return res
-      .send(postedQuestion)
       .status(201)
-      .send({ message: "Question has been Posted" });
+      .send({ message: "Question has been Posted" })
+      .send(postedQuestion);
   } catch (error) {
     error.status = 400;
     next(error);
