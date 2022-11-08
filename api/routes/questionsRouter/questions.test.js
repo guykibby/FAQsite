@@ -11,12 +11,28 @@ describe("GIVEN that the GET /questions route exists", () => {
 
   test("GET /questions/1 returns questions by topic and a status 200", async () => {
     const getQuestions = await questionsRepository.getQuestions(1);
-
-    const response = await request(app)
-      .get("/questions/1")
-      .set("Accept", "application/json");
+    const response = await request(app).get("/questions/1");
 
     expect(response.status).toBe(200);
     expect(response.body).toEqual(getQuestions);
+  });
+
+  test("GET /questions/one returns a 400 not found error", async () => {
+    const response = await request(app).get("/questions/one");
+
+    expect(response.status).toBe(400);
+    expect(response.body).toEqual({
+      message: "topic id is not an integer",
+    });
+  });
+
+  test("GET /questions/id-not-found should return a 404 error message saying question not found", async () => {
+    await request(app)
+      .get("/questions/1000")
+      .expect((response) => {
+        const expected = { error: "ID not found" };
+        expect(response.body).toEqual(expected);
+        expect(response.status).toBe(404);
+      });
   });
 });
