@@ -29,7 +29,7 @@ const Dashboard = () => {
   }, []);
   return (
     <>
-      <h1>DashBoard</h1>
+      <h1>Dashboard</h1>
       {error && <p>{errorMessage}</p>}
       <h2>Questions</h2>
       {newPosts[0].map((newPost, index) => (
@@ -40,6 +40,7 @@ const Dashboard = () => {
             questiondescription: newPost.questiondesc,
             questionstarred: newPost.isstarred,
             questionreviewed: newPost.isreviewed,
+            topicId: newPost.topicId,
           }}
           className="list-item"
         >

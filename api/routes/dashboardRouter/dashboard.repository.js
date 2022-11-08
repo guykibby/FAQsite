@@ -8,6 +8,7 @@ module.exports = {
         await db.query(`SELECT q.id AS questionId,  q.description AS questionDesc, q.isStarred, q.isReviewed, q.topicId
         FROM questions q
         WHERE q.isReviewed = FALSE`);
+      console.log("AAAA : " + JSON.stringify(newQuestions.rows));
       return newQuestions.rows;
     } catch (err) {
       return err.message;
