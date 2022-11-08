@@ -7,7 +7,7 @@ let theTopics = [];
 // theTopics will be filtered with the use of keys
 const levelKeys = ["year", "term", "topic"];
 
-// the branchs will be determined by the users menu selections
+// the branch will be determined by the users menu selections
 let branch = "";
 
 const HomePage = () => {
@@ -22,8 +22,7 @@ const HomePage = () => {
   // Mapping to get the data we wish to display
   let displayArray = branchArray.map((x) => x[levelKeys[level]]);
 
-  // Only displayying uniques values
-  
+  // To only display unique values
   displayArray = [...new Set(displayArray)];
 
   // Fetching the topics data from DB
@@ -67,7 +66,7 @@ const HomePage = () => {
     return <p className="list-item">Oops, something went wrong!</p>;
   }
 
-  // Render using list of buttons .map method
+  // Render a list of buttons using .map method
 
   return (
     <>
