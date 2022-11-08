@@ -24,6 +24,8 @@ it("renders topic data", async () => {
     { id: 1, year: "Year 1", term: "Client Side", topic: "HTML" },
     { id: 9, year: "Year 1", term: "Client Side", topic: "Project1" },
   ];
+
+  //Mock a succesful fetch response (ie status 200)
   jest.spyOn(global, "fetch").mockImplementation(() =>
     Promise.resolve({
       json: () => Promise.resolve(fakeTopicsData),
@@ -40,34 +42,38 @@ it("renders topic data", async () => {
     );
   });
 
+  // Test year list is rendered
   let button = container.querySelector("button");
   expect(button.textContent).toBe("Year 1");
 
+  // select a year
   act(() => {
     button.dispatchEvent(new MouseEvent("click", { bubbles: true }));
   });
 
+  // Test term list is rendered
   button = container.querySelector("button");
   expect(button.textContent).toBe("Client Side");
 
+  // select a term
   act(() => {
     button.dispatchEvent(new MouseEvent("click", { bubbles: true }));
   });
 
+  // Test topics list is rendered
   button = container.querySelector("button");
   expect(button.textContent).toBe("HTML");
 
   // remove the mock to ensure tests are completely isolated
   global.fetch.mockRestore();
 });
+
 it("renders topic data", async () => {
-  const fakeTopicsData = [
-    { id: 1, year: "Year 1", term: "Client Side", topic: "HTML" },
-    { id: 9, year: "Year 1", term: "Client Side", topic: "Project1" },
-  ];
+ 
+  //Mock an unsuccesful fetch response (ie status 500, internal server error)
   jest.spyOn(global, "fetch").mockImplementation(() =>
     Promise.resolve({
-      json: () => Promise.resolve(fakeTopicsData),
+      ok: false,
     })
   );
 
@@ -82,21 +88,7 @@ it("renders topic data", async () => {
   });
 
   let button = container.querySelector("button");
-  expect(button.textContent).toBe("Year 1");
-
-  act(() => {
-    button.dispatchEvent(new MouseEvent("click", { bubbles: true }));
-  });
-
-  button = container.querySelector("button");
-  expect(button.textContent).toBe("Client Side");
-
-  act(() => {
-    button.dispatchEvent(new MouseEvent("click", { bubbles: true }));
-  });
-
-  button = container.querySelector("button");
-  expect(button.textContent).toBe("HTML");
+  expect(button.textContent).toBe("Oops, something went wrong!");
 
   // remove the mock to ensure tests are completely isolated
   global.fetch.mockRestore();
