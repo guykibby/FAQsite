@@ -23,8 +23,6 @@ const PostAnswer = () => {
       }
     );
 
-    console.log({ description: answer });
-
     if (!response.ok) {
       console.log("Fetch not ok");
     } else {

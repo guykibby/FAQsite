@@ -7,13 +7,7 @@ router.post("/:questionId", async (req, res, next) => {
     const { questionId } = req.params;
     const { description } = req.body;
 
-    console.log("description", description);
-    console.log(questionId);
-    console.log("req.body", req.body);
-
-    const postedAnswer = await repository.postAnswer(questionId, description);
-
-    console.log(postedAnswer);
+    await repository.postAnswer(questionId, description);
 
     return res
       .status(201)
