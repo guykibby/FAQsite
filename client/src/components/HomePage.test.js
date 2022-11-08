@@ -87,8 +87,8 @@ it("renders topic data", async () => {
     );
   });
 
-  let button = container.querySelector("button");
-  expect(button.textContent).toBe("Oops, something went wrong!");
+  let errorMessage = container.querySelector(".list-item");
+  expect(errorMessage.textContent).toBe("Oops, something went wrong!");
 
   // remove the mock to ensure tests are completely isolated
   global.fetch.mockRestore();
