@@ -27,12 +27,10 @@ describe("GIVEN that the GET /questions route exists", () => {
   });
 
   test("GET /questions/id-not-found should return a 404 error message saying question not found", async () => {
-    await request(app)
-      .get("/questions/1000")
-      .expect((response) => {
-        const expected = { error: "ID not found" };
-        expect(response.body).toEqual(expected);
-        expect(response.status).toBe(404);
-      });
+    const response = await request(app).get("/questions/1000");
+    const expected = { error: "ID not found" };
+
+    expect(response.status).toBe(404);
+    expect(response.body).toEqual(expected);
   });
 });
