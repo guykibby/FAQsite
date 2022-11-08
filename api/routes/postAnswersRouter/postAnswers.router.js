@@ -16,7 +16,6 @@ router.post("/:questionId", async (req, res, next) => {
     console.log(postedAnswer);
 
     return res
-      .send(postedAnswer)
       .status(201)
       .send({ message: "Post has been submitted successfully" });
   } catch (error) {

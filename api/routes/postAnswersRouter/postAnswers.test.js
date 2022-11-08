@@ -1,7 +1,6 @@
 const request = require("supertest");
 const app = require("../../app");
 const get_db = require("../../db");
-const { postAnswer } = require("./postAnswers.repository");
 
 describe("app", () => {
   afterAll(async () => {
@@ -12,10 +11,24 @@ describe("app", () => {
   test("POST /postanswer/:questionId creates a newly posted answer for a question", async () => {
     const db = await get_db();
 
-    // creating a new post that has a question id of 65 and a description of 'test'
-    await postAnswer(3, "test");
+    // body to be compared with the newly posted answer
+    const body = {
+      questionId: 3,
+      description: "test",
+    };
 
-    console.log(postAnswer);
+    const expectedStatus = 201;
+
+    // comparing the body's question id with the answer's questionid of the first item in the array
+    await request(app)
+      .post(`/postanswer/${body.questionId}`)
+      .send(body)
+      .expect(expectedStatus)
+      .expect((response) => {
+        expect(response.body).toStrictEqual({
+          message: "Post has been submitted successfully",
+        });
+      });
 
     // selects all the answers with the newly posted answer to be showing in the first array at [0]
     const updatedAnswersList = await db.query(
@@ -30,28 +43,11 @@ describe("app", () => {
         ORDER BY answers.createdon DESC`
     );
 
-    const expectedStatus = 201;
-
-    // body to be compared with the newly posted answer
-    const body = {
-      questionId: 3,
-      description: "test",
-    };
-
-    // comparing the body's question id with the answer's questionid of the first item in the array
-    await request(app)
-      .post(`/postanswer/${body.questionId}`)
-      .send(body)
-      .expect(expectedStatus)
-      .expect((response) => {
-        expect(response.body[0].questionid).toBe(
-          updatedAnswersList.rows[0].questionid
-        );
-      });
+    expect(updatedAnswersList.rows[0].description).toBe("test");
   });
 
   test("WHEN the path parameter for /:questionId is invalid, respond with status code 400", async () => {
-    await postAnswer(3, "test");
+    // await postAnswer(3, "test");
 
     const expectedStatus = 400;
 
@@ -60,10 +56,6 @@ describe("app", () => {
       description: "test",
     };
 
-    await request(app)
-      .post("/postanswer/incorrectId")
-      .set("Accept", "application/json")
-      .send(body)
-      .expect(expectedStatus);
+    await request(app).post("/postanswer/incorrectId").expect(expectedStatus);
   });
 });
