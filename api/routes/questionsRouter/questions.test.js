@@ -22,7 +22,7 @@ describe("GIVEN that the GET /questions route exists", () => {
 
     expect(response.status).toBe(400);
     expect(response.body).toEqual({
-      message: "topic id is not an integer",
+      message: ['"topicId" must be a number'],
     });
   });
 
