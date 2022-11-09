@@ -1,15 +1,36 @@
-import { render, screen } from "@testing-library/react";
+import React from "react";
+import { unmountComponentAtNode, render } from "react-dom";
+import { BrowserRouter as Router } from "react-router-dom";
+import { act } from "react-dom/test-utils";
 import ViewQuestions from "./ViewQuestions";
 
-describe("ViewQuestions", () => {
-  test("Renders a list of questions", () => {
-    render(<ViewQuestions />);
-
-    expect().to();
-  });
+let container = null;
+beforeEach(() => {
+  container = document.createElement("div");
+  document.body.appendChild(container);
 });
 
-// render(<ViewQuestions description="Test description" />);
-// expect(screen.getByTestId("question-description")).toHaveTextContent(
-//     "Test description"
-//   );
+afterEach(() => {
+  unmountComponentAtNode(container);
+  container.remove();
+  container = null;
+});
+
+it("renders a topic and a question", async () => {
+  const fakeData = [{ topic: "CSS", description: "What is CSS?" }];
+  jest.spyOn(global, "fetch").mockImplementation(() =>
+    Promise.resolve({
+      json: () => Promise.resolve(fakeData),
+    })
+  );
+
+  await act(async () => {
+    render(
+      <Router>
+        <ViewQuestions />
+      </Router>,
+      container
+    );
+    global.fetch.mockRestore();
+  });
+});
