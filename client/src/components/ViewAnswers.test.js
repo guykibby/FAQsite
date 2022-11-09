@@ -11,5 +11,6 @@ describe("ViewAnswers", () => {
       </Router>
     );
     expect(screen.getByRole("button", { name: /edit answer/i })).toBeEnabled();
+    expect(screen.getByRole("link", { name: /Edit Answer/i })).toBeEnabled();
   });
 });
