@@ -44,7 +44,6 @@ describe("app", () => {
 
     expect(updatedQuestionsList.rows[0].description).toBe("test");
   });
-
   test("WHEN the path parameter for /:topicid is invalid, respond with status code 400", async () => {
     const expectedStatus = 400;
 
