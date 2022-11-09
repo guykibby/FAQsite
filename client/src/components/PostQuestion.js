@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 const PostQuestion = () => {
   const { topicId } = useParams();
+
   // const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   // const [topicId, setTopicId] = useState("");
