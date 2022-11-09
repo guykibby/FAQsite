@@ -8,5 +8,5 @@ test("renders learn react link", () => {
       <App />
     </Router>
   );
-  expect(screen.getByText(/ /i)).toBeInTheDocument();
+  expect(screen.getByText(/Home/i)).toBeInTheDocument();
 });
