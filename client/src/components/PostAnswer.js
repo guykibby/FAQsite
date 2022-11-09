@@ -2,10 +2,15 @@ import { useParams } from "react-router-dom";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const PostAnswer = () => {
+const PostAnswer = ({ answerObject }) => {
+  // const { questiondescription } = answerObject;
+  const questiondescription = "What is HTML?";
+
   const { questionId } = useParams();
 
   const [answer, setAnswer] = useState("");
+  const [error, setError] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const navigate = useNavigate();
 
@@ -13,7 +18,7 @@ const PostAnswer = () => {
     event.preventDefault();
 
     const response = await fetch(
-      `${process.env.REACT_APP_API_URL}${questionId}`,
+      `${process.env.REACT_APP_API_URL}/postanswer/${questionId}`,
       {
         method: "POST",
         headers: {
@@ -25,6 +30,8 @@ const PostAnswer = () => {
 
     if (!response.ok) {
       console.log("Fetch not ok");
+      setError(true);
+      return;
     } else {
       navigate(`/answers/${questionId}`);
     }
@@ -32,14 +39,16 @@ const PostAnswer = () => {
 
   return (
     <>
-      <p className="list-item">
-        TESTING - UNDER CONSTRUCTION. CODE: {questionId}
-      </p>
+      <p className="title">{questiondescription}</p>
+
+      {/* can only get this to appear when i change something in the fetch url (const response) 
+      as the error would only trigger once I push the submit button */}
+      {error && (
+        <p className="error-list-item list-item">Oops, something went wrong!</p>
+      )}
 
       <form onSubmit={handleSubmit}>
-        <label htmlFor="question-heading" className="question-heading">
-          {/* {questionId.description} */}
-        </label>
+        <label htmlFor="answer-form" className="answer-form"></label>
         <input
           type="text"
           required
