@@ -56,20 +56,24 @@ describe("app", () => {
 
     await request(app).post("/postquestion/incorrectId").expect(expectedStatus);
   });
+  test("WHEN the path parameter for topicId is 0, respond with status code 400 and an appropriate error message", async () => {
+    const expectedStatus = 400;
+
+    await request(app).post("/postquestion/0").expect(expectedStatus);
+  });
+  test("WHEN the path parameter for topicId is a negative value, respond with status code 400 and an appropriate error message", async () => {
+    const expectedStatus = 400;
+
+    await request(app).post("/postquestion/-6").expect(expectedStatus);
+  });
+  test("WHEN the path parameter for topicId is great than the max value defined in Joi scheme, respond with status code 404 and an appropriate error message", async () => {
+    const expectedStatus = 400;
+
+    await request(app).post("/postquestion/7").expect(expectedStatus);
+  });
+  test("WHEN the path parameter for topicId is not provided, respond with status code 404 and an appropriate error message", async () => {
+    const expectedStatus = 404;
+
+    await request(app).post("/postquestion/").expect(expectedStatus);
+  });
 });
-//404 test
-/*
-test("WHEN the path parameter for /:topicid is invalid, respond with status code 400", async () => {
-  // await postAnswer(3, "test");
-
-  const expectedStatus = 400;
-
-  const body = {
-    //title,
-    description: "test",
-    topicId: 3,
-  };
-
-  await request(app).post("/postquestion/incorrectId").expect(expectedStatus);
-});
-*/
