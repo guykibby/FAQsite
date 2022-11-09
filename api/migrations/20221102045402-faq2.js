@@ -154,9 +154,6 @@ exports.up = function (db) {
   (32, 'Ut harum facilis quo adipisci temporibus 33 numquam illum sed galisum eius quo veritatis nemo. Id illo fugit et laboriosam repudiandae ut omnis deleniti.') ,
   (32, 'Et eaque galisum ex nisi libero ad soluta repellat a internos culpa eum repellat officiis ad ullam consequatur.');
 
-  update answers 
-  SET isReviewed = true
-  where questionid > 5;
 `);
   return null;
 };
