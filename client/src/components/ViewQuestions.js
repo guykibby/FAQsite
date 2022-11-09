@@ -28,7 +28,7 @@ const ViewQuestions = () => {
     };
 
     fetchData();
-  }, []);
+  }, [topicId]);
 
   if (error) {
     return <p className="list-item">Oops, something went wrong!</p>;

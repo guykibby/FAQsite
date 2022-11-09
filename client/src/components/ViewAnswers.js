@@ -49,7 +49,7 @@ const ViewAnswers = () => {
             key={key}
             to={"/editanswers/" + answer.answerid}
             className="list-item"
-            style={{ pointerEvents: false ? "" : "none" }}
+            style={{ pointerEvents: scope ? "" : "none" }}
           >
             {answer.answerdescription}
           </Link>
