@@ -11,16 +11,16 @@ import ViewAnswers from "./components/ViewAnswers";
 import LogInPage from "./components/LogInPage";
 
 const App = () => {
+  const [questionObject, setQuestionObject] = useState({});
+  const [answerObject, setAnswersObject] = useState({});
+
   return (
     <>
       <div className="main-container">
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/questions/:topicId" element={<ViewQuestions />} />
-          <Route
-            path="/postquestion/:topicId"
-            element={<PostQuestion />}
-          />
+          <Route path="/postquestion/:topicId" element={<PostQuestion />} />
           <Route path="/answers/:questionId" element={<ViewAnswers />} />
           <Route path="/postanswer/:questionId" element={<PostAnswer />} />
           <Route path="/editquestion/:questionId" element={<EditQuestion />} />
