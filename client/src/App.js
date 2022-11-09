@@ -27,7 +27,7 @@ const App = () => {
           <Route path="/postquestion/:topicId" element={<PostQuestion />} />
           <Route
             path="/answers/:questionId"
-            element={<ViewAnswers setAnswersObject={setAnswerObject} />}
+            element={<ViewAnswers setAnswerObject={setAnswerObject} />}
           />
           <Route
             path="/postanswer/:questionId"
