@@ -43,7 +43,7 @@ it("renders a fake answer with a questionId and description ", async () => {
   });
 });
 
-it("renders question data", async () => {
+it("renders an error if fetched url is not valid", async () => {
   jest.spyOn(global, "fetch").mockImplementation(() =>
     Promise.resolve({
       ok: false,
