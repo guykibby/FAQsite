@@ -55,19 +55,24 @@ describe("GIVEN that the POST /postanswer/:questionId route exists", () => {
   test("WHEN the path parameter for questionId is 0, respond with status code 400 and an appropriate error message", async () => {
     const expectedStatus = 400;
 
-    await request(app).post(`/postanswer/0`).expect(expectedStatus);
+    await request(app).post("/postanswer/0").expect(expectedStatus);
   });
 
-  // test below is giving me a "Jest has detected the following 1 open handle potentially keeping Jest from exiting: "
+  test("WHEN the path parameter for questionId is a negative value, respond with status code 400 and an appropriate error message", async () => {
+    const expectedStatus = 400;
+
+    await request(app).post("/postanswer/-5").expect(expectedStatus);
+  });
+
+  test("WHEN the path parameter for questionId is 9999, respond with status code 404 and an appropriate error message", async () => {
+    const expectedStatus = 400;
+
+    await request(app).post("/postanswer/9999").expect(expectedStatus);
+  });
+
   test("WHEN the path parameter for questionId is not provided, respond with status code 404 and an appropriate error message", async () => {
     const expectedStatus = 404;
 
-    await request(app).post(`/postanswer/`).expect(expectedStatus);
-  });
-
-  test("WHEN the path parameter for questionId is a valid but does not exist within the database, respond with status code 404 and an appropriate error message", async () => {
-    const expectedStatus = 404;
-
-    await request(app).post(`/postanswer/9999999999`).expect(expectedStatus);
+    await request(app).post("/postanswer/").expect(expectedStatus);
   });
 });
