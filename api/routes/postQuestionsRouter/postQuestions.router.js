@@ -3,6 +3,8 @@ const express = require("express");
 const router = express.Router();
 const repository = require("./postQuestions.repository");
 
+//add joi validation
+
 router.post(`/:topicId`, async (req, res, next) => {
   try {
     const { description } = req.body;

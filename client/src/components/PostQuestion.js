@@ -26,6 +26,7 @@ const PostQuestion = () => {
     try {
       const response = await fetch(
         `http://localhost:5001/postquestion/${topicId}`,
+        //`${process.env.REACT_APP_API_URL}/${topicId}`,
         {
           method: "POST",
           headers: {

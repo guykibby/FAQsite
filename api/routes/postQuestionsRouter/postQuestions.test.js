@@ -46,8 +46,6 @@ describe("app", () => {
   });
 
   test("WHEN the path parameter for /:topicid is invalid, respond with status code 400", async () => {
-    // await postAnswer(3, "test");
-
     const expectedStatus = 400;
 
     const body = {
@@ -59,3 +57,19 @@ describe("app", () => {
     await request(app).post("/postquestion/incorrectId").expect(expectedStatus);
   });
 });
+//404 test
+/*
+test("WHEN the path parameter for /:topicid is invalid, respond with status code 400", async () => {
+  // await postAnswer(3, "test");
+
+  const expectedStatus = 400;
+
+  const body = {
+    //title,
+    description: "test",
+    topicId: 3,
+  };
+
+  await request(app).post("/postquestion/incorrectId").expect(expectedStatus);
+});
+*/

@@ -1,4 +1,4 @@
-import React from "react";
+/*import React from "react";
 import { unmountComponentAtNode, render } from "react-dom";
 import { BrowserRouter as Router } from "react-router-dom";
 import { act } from "react-dom/test-utils";
@@ -34,3 +34,5 @@ it("renders a topic and a question", async () => {
     global.fetch.mockRestore();
   });
 });
+*/
+//react testing
