@@ -1,30 +1,46 @@
 import { Link, useParams } from "react-router-dom";
 import React, { useState, useEffect } from "react";
+let scope = false;
 
 const ViewAnswers = () => {
   const { questionId } = useParams();
 
   const [answers, setAnswers] = useState([{ answerdescription: "Loading" }]);
 
+  const [error, setError] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch(
-        `http://localhost:5001/answers/${questionId}`
-      );
-      const data = await response.json();
-      if (response.ok === false) {
-        setAnswers([{ answerdescription: "Oops, something went wrong!" }]);
-        return;
-      } else {
+      try {
+        const result = await fetch(
+          `${process.env.REACT_APP_API_URL}/answers/${questionId}`
+        );
+
+        if (result.ok === false) {
+          setError(true);
+          return;
+        }
+        setIsLoading(false);
+        const data = await result.json();
         setAnswers(data);
+      } catch (error) {
+        console.log("Error fetching products");
       }
     };
     fetchData();
-  }, [questionId]);
+  }, []);
 
   return (
     <>
-      <div className="title">{answers[0].questiondescription}</div>
+      <h1>Answers</h1>
+      {isLoading && <p className="loading-list-item list-item">Loading....</p>}
+      {error && (
+        <p className="error-list-item list-item">Oops, something went wrong!</p>
+      )}
+
+      <p className="question-title">{answers[0].questiondescription}</p>
+
       {answers.map((answer, key) => {
         return (
           <Link
@@ -34,7 +50,7 @@ const ViewAnswers = () => {
           >
             {answer.answerdescription}
             <br />
-            <button>Edit Answer</button>
+            {scope ? <button>Edit Answer</button> : <></>}
           </Link>
         );
       })}
