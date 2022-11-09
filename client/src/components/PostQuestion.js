@@ -25,8 +25,7 @@ const PostQuestion = () => {
     };
     try {
       const response = await fetch(
-        `http://localhost:5001/postquestion/${topicId}`,
-        //`${process.env.REACT_APP_API_URL}/${topicId}`,
+        `${process.env.REACT_APP_API_URL}/${topicId}`,
         {
           method: "POST",
           headers: {
@@ -35,19 +34,6 @@ const PostQuestion = () => {
           body: JSON.stringify(body),
         }
       );
-      console.log(body);
-
-      /*const response = await fetch(
-        `http://localhost:5001/postquestion/${topicId}`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ description: question }),
-        }
-      );
-      console.log({ description: question });*/
 
       if (!response.ok) {
         console.log("Fetch not ok");
