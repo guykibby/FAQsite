@@ -14,4 +14,18 @@ module.exports = {
       return err.message;
     }
   },
+  /*  to fetch answers which are waiting for review by instructor  */
+  getNewAnswers: async () => {
+    try {
+      const db = await get_db();
+      const newAnswers =
+        await db.query(`SELECT a.id, q.id AS questionId, q.description AS questionDescription, a.description AS answerDescription, a.isStarred, a.isReviewed
+        FROM answers a
+        INNER JOIN questions q ON a.questionid = q.id
+        WHERE a.isReviewed = FALSE`);
+      return newAnswers.rows;
+    } catch (err) {
+      return err.message;
+    }
+  },
 };
