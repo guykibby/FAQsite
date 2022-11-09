@@ -17,7 +17,7 @@ describe("GIVEN that the GET /questions route exists", () => {
     expect(response.body).toEqual(getQuestions);
   });
 
-  test("GET /questions/one returns a 400 not found error", async () => {
+  test("GET /questions/one returns a 400 bad request error", async () => {
     const response = await request(app).get("/questions/one");
 
     expect(response.status).toBe(400);

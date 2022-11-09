@@ -34,3 +34,28 @@ it("renders a topic and a question", async () => {
     global.fetch.mockRestore();
   });
 });
+
+it("renders an error message when fetch fails", async () => {
+  //Mock an unsuccesful fetch response (ie status 500, internal server error)
+  jest.spyOn(global, "fetch").mockImplementation(() =>
+    Promise.resolve({
+      ok: false,
+    })
+  );
+
+  // Use the asynchronous version of act to apply resolved promises
+  await act(async () => {
+    render(
+      <Router>
+        <ViewQuestions />
+      </Router>,
+      container
+    );
+  });
+
+  let errorMessage = container.querySelector(".list-item");
+  expect(errorMessage.textContent).toBe("Oops, something went wrong!");
+
+  // remove the mock to ensure tests are completely isolated
+  global.fetch.mockRestore();
+});
