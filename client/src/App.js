@@ -17,10 +17,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/questions/:topicId" element={<ViewQuestions />} />
-          <Route
-            path="/postquestion/:topicId"
-            element={<PostQuestion />}
-          />
+          <Route path="/postquestion/:topicId" element={<PostQuestion />} />
           <Route path="/answers/:questionId" element={<ViewAnswers />} />
           <Route path="/postanswer/:questionId" element={<PostAnswer />} />
           <Route path="/editquestion/:questionId" element={<EditQuestion />} />
