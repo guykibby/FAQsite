@@ -3,7 +3,7 @@ const app = require("../../app");
 const get_db = require("../../db");
 const answerRepo = require("./editAnswers.respository");
 
-describe("Given that the PUT /editAnswer/:answerId route exists", () => {
+describe("Given that the PUT and DELETE /editAnswer/:answerId route exists", () => {
   afterAll(async () => {
     const db = await get_db();
     db.end();
@@ -183,7 +183,66 @@ describe("Given that the PUT /editAnswer/:answerId route exists", () => {
         isReviewed: true,
         starFlad: false,
       })
+      .expect(404)
+      .expect((response) => {
+        expect(response.body.message).toEqual(
+          "Invalid request. Answer does not exists"
+        );
+      });
+  });
+
+  //test for DELETE request
+  test("WHEN the path parameter for answerId is not a number, respond with 400 error code and an appropriate error message", async () => {
+    const db = await get_db();
+    await request(app)
+      .delete("/editanswer/notAnumber")
+      .set("Accept", "application/json")
       .expect(400)
+      .expect((response) => {
+        expect(response.body.message[0]).toBe(`\"answerId\" must be a number`);
+      });
+  });
+
+  test("WHEN the path parameter for answerId is less than 1, respond with 400 error code and an appropriate error message", async () => {
+    const db = await get_db();
+    await request(app)
+      .delete("/editanswer/0")
+      .set("Accept", "application/json")
+      .expect(400)
+      .expect((response) => {
+        expect(response.body.message[0]).toBe(
+          `\"answerId\" must be greater than or equal to 1`
+        );
+      });
+  });
+
+  test("WHEN the path parameter for answerId is greater than 999999998 as it is not a normal integer anymore, respond with 400 error code and an appropriate error message", async () => {
+    const db = await get_db();
+    await request(app)
+      .delete("/editanswer/999999999")
+      .set("Accept", "application/json")
+      .expect(400)
+      .expect((response) => {
+        expect(response.body.message[0]).toBe(
+          `\"answerId\" must be less than or equal to 999999998`
+        );
+      });
+  });
+
+  test("WHEN the path parameter for answerId is not mention. It should give a 404 error status code", async () => {
+    const db = await get_db();
+    await request(app)
+      .delete("/editanswer/")
+      .set("Accept", "application/json")
+      .expect(404);
+  });
+
+  test("WHEN the path parameter for answerId is valid but not correct as it does not exist in the database THEN It should give a 400 error status code with message", async () => {
+    const db = await get_db();
+    await request(app)
+      .delete("/editanswer/999999")
+      .set("Accept", "application/json")
+      .expect(404)
       .expect((response) => {
         expect(response.body.message).toEqual(
           "Invalid request. Answer does not exists"

@@ -35,9 +35,10 @@ router.put(
         const { starFlag, isStarred, isReviewed } = request.body;
         await answerRepo.editAnswer(answerId, starFlag, isStarred, isReviewed);
         return response.status(200).json({ message: "Edit Successful" });
-      } else {
+      }
+      if (!answer.rows.length) {
         return response
-          .status(400)
+          .status(404)
           .json({ message: "Invalid request. Answer does not exists" });
       }
     } catch (error) {
@@ -59,9 +60,10 @@ router.delete(
       if (answer.rows[0]) {
         await answerRepo.deleteAnswer(answerId);
         return response.status(200).json({ message: "Answer Deleted" });
-      } else {
+      }
+      if (!answer.rows.length) {
         return response
-          .status(400)
+          .status(404)
           .json({ message: "Invalid request. Answer does not exists" });
       }
     } catch (error) {

@@ -41,9 +41,10 @@ router.put(
           isReviewed
         );
         return response.status(200).json({ message: "Edit Successful" });
-      } else {
+      }
+      if (!question.rows.length) {
         return response
-          .status(400)
+          .status(404)
           .json({ message: "Invalid request. Question does not exists" });
       }
     } catch (error) {
@@ -65,9 +66,10 @@ router.delete(
       if (question.rows[0]) {
         await questionsRepo.deleteQuestion(questionId);
         return response.status(200).json({ message: "Question Deleted" });
-      } else {
+      }
+      if (!question.rows.length) {
         return response
-          .status(400)
+          .status(404)
           .json({ message: "Invalid request. Question does not exists" });
       }
     } catch (error) {
