@@ -58,7 +58,7 @@ test("renders answers data using fakeQuestionsData", async () => {
     );
   });
 
-  const questionButton = container.querySelector(".question-title");
+  const questionButton = container.querySelector(".title");
 
   expect(questionButton.textContent).toBe("What is HTML?");
 

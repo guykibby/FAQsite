@@ -42,7 +42,7 @@ const ViewAnswers = () => {
       {error && (
         <p className="error-list-item list-item">Oops, something went wrong!</p>
       )}
-      <p className="question-title">{answers[0].questiondescription}</p>
+      <p className="title">{answers[0].questiondescription}</p>
       {answers.map((answer, key) => {
         return (
           <Link
@@ -51,8 +51,6 @@ const ViewAnswers = () => {
             className="list-item"
           >
             {answer.answerdescription}
-            <br />
-            {scope ? <button>Edit Answer</button> : <></>}
           </Link>
         );
       })}
