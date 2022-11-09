@@ -1,20 +1,3 @@
-// import React from "react";
-// import { render, screen } from "@testing-library/react";
-// import ViewAnswers from "./ViewAnswers";
-// import { BrowserRouter as Router } from "react-router-dom";
-
-// describe("ViewAnswers", () => {
-//   test("Renders the ViewAnswers page", () => {
-//     render(
-//       <Router>
-//         <ViewAnswers />
-//       </Router>
-//     );
-//     expect(screen.getByRole("button", { name: /edit answer/i })).toBeEnabled();
-//     // expect(screen.getByRole("link", { name: /Edit Answer/i })).toBeEnabled();
-//   });
-// });
-
 import React from "react";
 import { render, unmountComponentAtNode } from "react-dom";
 import { act } from "react-dom/test-utils";
@@ -35,9 +18,9 @@ afterEach(() => {
   container = null;
 });
 
-/** HAPPY Paths - if server able to fetch data using API,
+/** HAPPY Paths - fetch data using API,
  */
-it("renders answers data using fakeQuestionsData", async () => {
+test("renders answers data using fakeQuestionsData", async () => {
   const fakeQuestionsData = [
     {
       id: 1,
@@ -82,7 +65,7 @@ it("renders answers data using fakeQuestionsData", async () => {
   // remove the mock to ensure tests are completely isolated
   global.fetch.mockRestore();
 });
-it("renders answers data using fakeAnswersData", async () => {
+test("renders answers data using fakeAnswersData", async () => {
   const fakeAnswersData = [
     {
       id: 1,
@@ -122,7 +105,7 @@ it("renders answers data using fakeAnswersData", async () => {
 /** UNHAPPY Path - if server is down or API fetch fails,
 it need to display "Oops, something went wrong!" error message 
 */
-it(`renders "Oops, something went wrong!" unable to fetch data from api`, async () => {
+test(`renders "Oops, something went wrong!" unable to fetch data from api`, async () => {
   //Mock an unsuccesful fetch response (ie status 500, internal server error)
   jest.spyOn(global, "fetch").mockImplementation(() =>
     Promise.resolve({

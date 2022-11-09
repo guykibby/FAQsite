@@ -1,12 +1,12 @@
 import { Link, useParams } from "react-router-dom";
 import React, { useState, useEffect } from "react";
+// the scope of the user
 let scope = false;
 
 const ViewAnswers = () => {
   const { questionId } = useParams();
 
   const [answers, setAnswers] = useState([{ answerdescription: "Loading" }]);
-
   const [error, setError] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -16,6 +16,8 @@ const ViewAnswers = () => {
         const result = await fetch(
           `${process.env.REACT_APP_API_URL}/answers/${questionId}`
         );
+
+        // fetch error handling
 
         if (result.ok === false) {
           setError(true);
@@ -29,7 +31,9 @@ const ViewAnswers = () => {
       }
     };
     fetchData();
-  }, []);
+  }, [questionId]);
+
+  // Render a list of answers
 
   return (
     <>
@@ -38,9 +42,7 @@ const ViewAnswers = () => {
       {error && (
         <p className="error-list-item list-item">Oops, something went wrong!</p>
       )}
-
       <p className="question-title">{answers[0].questiondescription}</p>
-
       {answers.map((answer, key) => {
         return (
           <Link

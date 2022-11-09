@@ -9,8 +9,8 @@ describe("GIVEN that the GET /answers route exist", () => {
 
     db.end();
   });
-
-  test("GET /answers/:questionId should return all answers with status code of 200", async () => {
+  // Happy path
+  test("GET /answers/:questionId should return all answers with status code 200", async () => {
     const expectedData = await answersRepository.getAnswers(1);
     const response = await request(app).get("/answers/1");
     expect(response.body.rows).toEqual(expectedData.rows);
@@ -22,16 +22,16 @@ describe("GIVEN that the GET /answers route exist", () => {
     expect(response.body.rows).toEqual(expectedData.rows);
     expect(response.status).toBe(200);
   });
-
-  it("if GET /answers/:wrongId should return 400", async () => {
-    const response = await request(app).get("/answers/abd");
+  // Unhappy path
+  test("if GET /answers/:wrongId should return 400 when user input is NOT a number", async () => {
+    const response = await request(app).get("/answers/:wrongId");
     expect((response) => {
       expect(response.body[0]).toBe('"questionId" must be a number');
     });
     expect(response.status).toBe(400);
   });
 
-  it("if GET /answers/:wrongId should return 400", async () => {
+  test("if GET /answers/:wrongId should return 400 when user input is less than 1", async () => {
     const response = await request(app).get("/answers/0");
     expect((response) => {
       expect(response.body[0]).toBe(
@@ -41,8 +41,8 @@ describe("GIVEN that the GET /answers route exist", () => {
     expect(response.status).toBe(400);
   });
 
-  it("if GET /answers/:wrongId should return 404", async () => {
-    const response = await request(app).get("/answers/600");
+  test("if GET /answers/:invalidId should return 404", async () => {
+    const response = await request(app).get("/answers/123456");
     expect((response) => {
       expect(response.body.error).toBe("ID not found");
     });
