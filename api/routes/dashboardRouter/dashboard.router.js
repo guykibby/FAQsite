@@ -9,7 +9,6 @@ dashboardRouter.get("/", async (req, res) => {
     const newPosts = [newQuestions, newAnswers];
     res.json(newPosts);
   } catch (err) {
-    console.log("AAA");
     return res.status(500).json(err.message);
   }
 });

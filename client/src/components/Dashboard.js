@@ -38,27 +38,25 @@ const Dashboard = () => {
         <p className="error-list-item list-item">Oops, something went wrong!</p>
       )}
       <h2>Questions</h2>
-      {newPosts[0].map((question, questionIndex) => (
-        <div className="question-list">
-          <Link
-            key={questionIndex}
-            to={"/editquestion/" + question.questionid}
-            state={question}
-            className="question-list-item list-item"
-          >
-            {question.questiondesc}
-          </Link>
-        </div>
+      {newPosts[0].map((question, index) => (
+        <Link
+          key={index}
+          to={"/editquestion/" + question.id}
+          state={question}
+          className="question-list-item list-item"
+        >
+          {question.description}
+        </Link>
       ))}
       <h2>Answers</h2>
-      {newPosts[1].map((answer, answerIndex) => (
+      {newPosts[1].map((answer, index) => (
         <Link
-          key={answerIndex}
-          to={"/editanswer/" + answer.answerid}
+          key={index}
+          to={"/editanswer/" + answer.id}
           state={answer}
           className="answer-list-item list-item"
         >
-          {answer.answerdesc}
+          {answer.answerdescription}
         </Link>
       ))}
     </>

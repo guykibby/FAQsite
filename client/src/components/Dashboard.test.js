@@ -25,16 +25,18 @@ it("renders questions data using fakeQuestionsData", async () => {
   const fakeQuestionsData = [
     [
       {
-        questionid: 1,
-        questiondesc: "What is HTML?",
+        id: 1,
+        description: "What is HTML?",
         isstarred: false,
         isreviewed: false,
+        topicid: 1,
       },
       {
-        questionid: 2,
+        id: 2,
         questiondesc: "What is CSS?",
         isstarred: false,
         isreviewed: false,
+        topicid: 2,
       },
     ],
     [],
@@ -67,20 +69,29 @@ it("renders answers data using fakeAnswersData", async () => {
     [],
     [
       {
-        questionid: 5,
-        answerid: 10,
-        questiondesc: "When do i run npm Install?",
-        answerdesc:
+        id: 3,
+        questionid: 1,
+        questiondescription: "What is HTML?",
+        answerdescription:
           "Et eaque galisum ex nisi libero ad soluta repellat a internos culpa eum repellat officiis ad ullam consequatur.",
         isstarred: false,
         isreviewed: false,
       },
       {
-        questionid: 5,
-        answerid: 9,
-        questiondesc: "When do i run npm Install?",
-        answerdesc:
-          "Ut harum facilis quo adipisci temporibus 33 numquam illum sed galisum eius quo veritatis nemo. Id illo fugit et laboriosam repudiandae ut omnis deleniti.",
+        id: 2,
+        questionid: 1,
+        questiondescription: "What is HTML?",
+        answerdescription:
+          "Aut quibusdam incidunt ea error aliquam 33 atque odio At corrupti Quis et recusandae impedit sit exercitationem distinctio.",
+        isstarred: false,
+        isreviewed: false,
+      },
+      {
+        id: 1,
+        questionid: 1,
+        questiondescription: "What is HTML?",
+        answerdescription:
+          "Lorem ipsum dolor sit amet. Et molestias voluptatem qui doloremque soluta sit culpa porro et tenetur repellat vel beatae quas id reprehenderit esse.",
         isstarred: false,
         isreviewed: false,
       },
@@ -115,34 +126,45 @@ it("renders questions & answers data using fakeQuestionsAnswersData", async () =
   const fakeQuestionsAnswersData = [
     [
       {
-        questionid: 1,
-        questiondesc: "What is HTML?",
+        id: 1,
+        description: "What is HTML?",
         isstarred: false,
         isreviewed: false,
+        topicid: 1,
       },
       {
-        questionid: 2,
+        id: 2,
         questiondesc: "What is CSS?",
         isstarred: false,
         isreviewed: false,
+        topicid: 2,
       },
     ],
     [
       {
-        questionid: 5,
-        answerid: 10,
-        questiondesc: "When do i run npm Install?",
-        answerdesc:
+        id: 3,
+        questionid: 1,
+        questiondescription: "What is HTML?",
+        answerdescription:
           "Et eaque galisum ex nisi libero ad soluta repellat a internos culpa eum repellat officiis ad ullam consequatur.",
         isstarred: false,
         isreviewed: false,
       },
       {
-        questionid: 5,
-        answerid: 9,
-        questiondesc: "When do i run npm Install?",
-        answerdesc:
-          "Ut harum facilis quo adipisci temporibus 33 numquam illum sed galisum eius quo veritatis nemo. Id illo fugit et laboriosam repudiandae ut omnis deleniti.",
+        id: 2,
+        questionid: 1,
+        questiondescription: "What is HTML?",
+        answerdescription:
+          "Aut quibusdam incidunt ea error aliquam 33 atque odio At corrupti Quis et recusandae impedit sit exercitationem distinctio.",
+        isstarred: false,
+        isreviewed: false,
+      },
+      {
+        id: 1,
+        questionid: 1,
+        questiondescription: "What is HTML?",
+        answerdescription:
+          "Lorem ipsum dolor sit amet. Et molestias voluptatem qui doloremque soluta sit culpa porro et tenetur repellat vel beatae quas id reprehenderit esse.",
         isstarred: false,
         isreviewed: false,
       },
