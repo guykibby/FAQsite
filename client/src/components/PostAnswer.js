@@ -13,7 +13,7 @@ const PostAnswer = () => {
     event.preventDefault();
 
     const response = await fetch(
-      `http://localhost:5001/postanswer/${questionId}`,
+      `${process.env.REACT_APP_API_URL}${questionId}`,
       {
         method: "POST",
         headers: {
@@ -38,7 +38,7 @@ const PostAnswer = () => {
 
       <form onSubmit={handleSubmit}>
         <label htmlFor="question-heading" className="question-heading">
-          {questionId.description}
+          {/* {questionId.description} */}
         </label>
         <input
           type="text"
