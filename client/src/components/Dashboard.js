@@ -11,7 +11,7 @@ import { Link } from "react-router-dom";
 const Dashboard = () => {
   /* */
   const [questions, setQuestions] = useState([]);
-  const [answers, setAnswers] = useState([]);
+  const [isQuestionsEmpty, setIsQuestionsEmpty] = useState(false);
   const [error, setError] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
@@ -28,7 +28,7 @@ const Dashboard = () => {
         } else {
           const data = await result.json();
           setQuestions(data.questions);
-          setAnswers(data.answers);
+          data.questions.length > 0 && setIsQuestionsEmpty(true);
           console.log("questions : " + JSON.stringify(data.questions));
           setIsLoading(false);
         }
@@ -53,18 +53,21 @@ const Dashboard = () => {
        * to <Question /> component to reuse it in other modules
        * but implmented to keep it in sync with other usestories
        */}
-
-      <h2>Questions</h2>
-      {questions.map((question, index) => (
-        <Link
-          key={index}
-          to={"/editquestion/" + question.id}
-          state={question}
-          className="question-list-item list-item"
-        >
-          {question.description}
-        </Link>
-      ))}
+      {isQuestionsEmpty && (
+        <>
+          <h2>Questions</h2>
+          {questions.map((question, index) => (
+            <Link
+              key={index}
+              to={"/editquestion/" + question.id}
+              state={question}
+              className="question-list-item list-item"
+            >
+              {question.description}
+            </Link>
+          ))}
+        </>
+      )}
     </>
   );
 };
