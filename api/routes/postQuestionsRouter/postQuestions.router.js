@@ -28,11 +28,22 @@ router.post(
       const { description } = req.body;
       const { topicId } = req.params;
 
-      await repository.postQuestion(description, topicId);
+      const db = await get_db();
+      const checkTopicId = await db.query(
+        `SELECT id FROM topics WHERE id = $1`,
+        [topicId]
+      );
 
-      return res.status(201).send({ message: "Question has been Posted" });
+      if (checkTopicId.rows.length === 0) {
+        return res.status(404).json({ error: "ID not found" });
+      }
+
+      const response = await repository.postQuestion(description, topicId);
+      return res
+        .json(response)
+        .status(201)
+        .send({ message: "Question has been Posted" });
     } catch (error) {
-      error.status = 400;
       next(error);
     }
   }
