@@ -55,6 +55,9 @@ const ViewAnswers = () => {
           </Link>
         );
       })}
+      <Link to={`/postanswer/${questionId}`} className="list-item">
+        <b>POST ANSWERS</b>
+      </Link>
     </>
   );
 };

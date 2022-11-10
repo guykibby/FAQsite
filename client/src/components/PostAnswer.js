@@ -10,43 +10,53 @@ const PostAnswer = ({ answerObject }) => {
 
   const [answer, setAnswer] = useState("");
   const [error, setError] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
+  const [errorStatus, setErrorStatus] = useState("");
 
   const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setIsLoading(true);
 
-    const response = await fetch(
-      `${process.env.REACT_APP_API_URL}/postanswer/${questionId}`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ description: answer }),
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_API_URL}/postanswer/${questionId}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ description: answer }),
+        }
+      );
+
+      if (!response.ok) {
+        console.log("Fetch not ok");
+        setError(true);
+        setErrorStatus(response.status);
+        return;
+      } else {
+        setIsLoading(false);
+        navigate(`/answers/${questionId}`);
       }
-    );
-
-    if (!response.ok) {
-      console.log("Fetch not ok");
-      setError(true);
-      return;
-    } else {
-      navigate(`/answers/${questionId}`);
+    } catch {
+      setIsError(true);
+      setErrorStatus("unknown");
     }
   };
+
+  if (error) {
+    return (
+      <p className="error-list-item">
+        Oops, something went wrong! {errorStatus}
+      </p>
+    );
+  }
 
   return (
     <>
       <p className="title">{questiondescription}</p>
-
-      {/* can only get this to appear when i change something in the fetch url (const response) 
-      as the error would only trigger once I push the submit button */}
-      {error && (
-        <p className="error-list-item list-item">Oops, something went wrong!</p>
-      )}
-
       <form onSubmit={handleSubmit}>
         <label htmlFor="answer-form" className="answer-form"></label>
         <input
@@ -60,7 +70,9 @@ const PostAnswer = ({ answerObject }) => {
             setAnswer(e.target.value);
           }}
         />
-        <button className="submit-button">Submit</button>
+        <button className="list-item" disabled={isLoading}>
+          Submit
+        </button>
       </form>
     </>
   );
