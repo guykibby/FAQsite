@@ -14,4 +14,17 @@ module.exports = {
 
     return getQuestions.rows;
   },
+
+  checkTopicId: async (topicId) => {
+    const db = await get_db();
+    const checkTopicId = await db.query(`SELECT id FROM topics WHERE id = $1`, [
+      topicId,
+    ]);
+
+    // if (checkTopicId.rows.length === 0) {
+    //   return res.status(404).json({ error: "ID not found" });
+    // }
+
+    return checkTopicId;
+  },
 };
