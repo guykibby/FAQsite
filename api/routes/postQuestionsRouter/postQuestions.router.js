@@ -16,7 +16,7 @@ const pathParamValidationMiddleware = (schema) => (request, response, next) => {
 };
 // path parameter schema
 const pathParamsSchema = Joi.object().keys({
-  description: Joi.string() /*.required()*/,
+  description: Joi.string(),
   topicId: Joi.number().integer().min(1).max(6),
 });
 

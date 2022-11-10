@@ -12,7 +12,6 @@ describe("app", () => {
     const db = await get_db();
 
     const body = {
-      //title,
       description: "test",
       topicId: 3,
     };
