@@ -189,3 +189,33 @@ test("renders questions & answers data using fakeQuestionsAnswersData", async ()
   // remove the mock to ensure tests are completely isolated
   global.fetch.mockRestore();
 });
+
+/** UNHAPPY Path - if server is down or API fetch fails,
+it need to display "Oops, something went wrong!" error message 
+*/
+
+/* if fetch API fails */
+test(`renders "Oops, something went wrong!" unable to fetch data from api`, async () => {
+  //Mock an unsuccesful fetch response (ie status 500, internal server error)
+  jest.spyOn(global, "fetch").mockImplementation(() =>
+    Promise.resolve({
+      ok: false,
+    })
+  );
+
+  // Use the asynchronous version of act to apply resolved promises
+  await act(async () => {
+    render(
+      <Router>
+        <Dashboard />
+      </Router>,
+      container
+    );
+  });
+
+  let errorMessage = container.querySelector(".error-list-item");
+  expect(errorMessage.textContent).toBe("Oops, something went wrong!");
+
+  // remove the mock to ensure tests are completely isolated
+  global.fetch.mockRestore();
+});
