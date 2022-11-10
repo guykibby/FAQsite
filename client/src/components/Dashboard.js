@@ -9,10 +9,10 @@ import { Link } from "react-router-dom";
  * to display it on dashboard to review by instructor
  * */
 const Dashboard = () => {
-  /* */
-  const [questions, setQuestions] = useState([]);
+  const [newPosts, setNewPosts] = useState({ questions: [] }, { answers: [] });
+  // const [questions, setQuestions] = useState({ questions: [] });
   const [isQuestionsEmpty, setIsQuestionsEmpty] = useState(false);
-  const [answers, setAnswers] = useState([]);
+  // const [answers, setAnswers] = useState({ answers: [] });
   const [isAnswersEmpty, setIsAnswersEmpty] = useState(false);
   const [error, setError] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
@@ -29,20 +29,21 @@ const Dashboard = () => {
         if (result.ok === false) {
           setIsLoading(false);
           setError(true);
-        } else {
-          const data = await result.json();
-          setQuestions(data.questions);
-          console.log("questions : " + JSON.stringify(data.questions));
-          console.log("Questions Array length : " + data.questions.length);
-          data.questions.length > 0 && setIsQuestionsEmpty(true);
-          setAnswers(data.answers);
-          data.answers.length > 0 && setIsAnswersEmpty(true);
-          console.log("Answers Array length : " + data.answers.length);
-          console.log("answers : " + JSON.stringify(data.answers));
-          setIsLoading(false);
+          return;
         }
+        setIsLoading(false);
+        const data = await result.json();
+        setNewPosts(data);
+        // setQuestions(data["questions"]);
+        // console.log("questions : " + JSON.stringify(questions));
+        // console.log("Questions Array length : " + questions.length);
+        data.questions.length > 0 && setIsQuestionsEmpty(true);
+        // setAnswers(data["answers"]);
+        data.answers.length > 0 && setIsAnswersEmpty(true);
+        // console.log("Answers Array length : " + answers.length);
+        // console.log("answers : " + JSON.stringify(answers));
       } catch (error) {
-        setError(true);
+        // setError(true);
         setIsLoading(false);
         console.log("Error fetching products");
       }
@@ -52,7 +53,7 @@ const Dashboard = () => {
 
   return (
     <>
-      <h1>Dashboard</h1>
+      <h1 className="dashboard-title">Dashboard</h1>
       {isLoading && <p className="loading-list-item">Loading....</p>}
       {error && <p className="error-list-item">Oops, something went wrong!</p>}
       {/**  questions waiting for review by instructor
@@ -62,36 +63,30 @@ const Dashboard = () => {
        * to <Question /> component to reuse it in other modules
        * but implmented to keep it in sync with other usestories
        */}
-      {isQuestionsEmpty && (
-        <>
-          <h2>Questions</h2>
-          {questions.map((question, index) => (
-            <Link
-              key={index}
-              to={"/editquestion/" + question.id}
-              state={question}
-              className="question-list-item list-item"
-            >
-              {question.description}
-            </Link>
-          ))}
-        </>
-      )}
-      {isAnswersEmpty && (
-        <>
-          <h2>Answers</h2>
-          {answers.map((answer, index) => (
-            <Link
-              key={index}
-              to={"/editanswer/" + answer.id}
-              state={answer}
-              className="answer-list-item list-item"
-            >
-              {answer.answerdescription}
-            </Link>
-          ))}
-        </>
-      )}
+      {isQuestionsEmpty && <h2>Questions</h2>}
+      {isQuestionsEmpty &&
+        newPosts["questions"].map((question, index) => (
+          <Link
+            key={index}
+            to={"/editquestion/" + question.id}
+            state={question}
+            className="question-list-item list-item"
+          >
+            {question.description}
+          </Link>
+        ))}
+      {isAnswersEmpty && <h2>Answers</h2>}
+      {isAnswersEmpty &&
+        newPosts["answers"].map((answer, index) => (
+          <Link
+            key={index}
+            to={"/editanswer/" + answer.answerid}
+            state={answer}
+            className="answer-list-item list-item"
+          >
+            {answer.answerdescription}
+          </Link>
+        ))}
     </>
   );
 };
