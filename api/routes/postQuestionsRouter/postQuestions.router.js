@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const Joi = require("joi");
 const repository = require("./postQuestions.repository");
+const get_db = require("../../db");
 
 // path parameters validation middleware
 const pathParamValidationMiddleware = (schema) => (request, response, next) => {
@@ -38,12 +39,11 @@ router.post(
         return res.status(404).json({ error: "ID not found" });
       }
 
-      const response = await repository.postQuestion(description, topicId);
-      return res
-        .json(response)
-        .status(201)
-        .send({ message: "Question has been Posted" });
+      await repository.postQuestion(description, topicId);
+
+      return res.status(201).send({ message: "Question has been Posted" });
     } catch (error) {
+      error.status = 400;
       next(error);
     }
   }

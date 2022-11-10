@@ -8,7 +8,7 @@ describe("app", () => {
     db.end();
   });
 
-  test("POST /postQuestion/:topicid inserts a new question into the questions table", async () => {
+  test("POST /postQuestion/:topicId inserts a new question into the questions table", async () => {
     const db = await get_db();
 
     const body = {
@@ -43,7 +43,7 @@ describe("app", () => {
 
     expect(updatedQuestionsList.rows[0].description).toBe("test");
   });
-  test("WHEN the path parameter for /:topicid is invalid, respond with status code 400", async () => {
+  test("WHEN the path parameter for /:topicId is invalid, respond with status code 400", async () => {
     const expectedStatus = 400;
 
     await request(app).post("/postquestion/incorrectId").expect(expectedStatus);
