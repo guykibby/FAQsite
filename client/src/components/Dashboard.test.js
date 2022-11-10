@@ -71,3 +71,53 @@ test("renders questions data using fakeQuestionsData", async () => {
   // remove the mock to ensure tests are completely isolated
   global.fetch.mockRestore();
 });
+
+/* using - only answers table (answers fake table), no questions waiting for review */
+test("renders answers data using fakeAnswersData", async () => {
+  const fakeAnswersData = {
+    questions: [],
+    answers: [
+      {
+        id: 3,
+        questionid: 1,
+        questiondescription: "What is HTML?",
+        answerdescription:
+          "Et eaque galisum ex nisi libero ad soluta repellat a internos culpa eum repellat officiis ad ullam consequatur.",
+        isstarred: false,
+        isreviewed: false,
+      },
+      {
+        id: 2,
+        questionid: 1,
+        questiondescription: "What is HTML?",
+        answerdescription:
+          "Aut quibusdam incidunt ea error aliquam 33 atque odio At corrupti Quis et recusandae impedit sit exercitationem distinctio.",
+        isstarred: false,
+        isreviewed: false,
+      },
+    ],
+  };
+
+  jest.spyOn(global, "fetch").mockImplementation(() =>
+    Promise.resolve({
+      json: () => Promise.resolve(fakeAnswersData),
+    })
+  );
+
+  // Use the asynchronous version of act to apply resolved promises
+  await act(async () => {
+    render(
+      <Router>
+        <Dashboard />
+      </Router>,
+      container
+    );
+  });
+
+  const answerButton = container.querySelector(".answer-list-item");
+  expect(answerButton.textContent).toBe(
+    "Et eaque galisum ex nisi libero ad soluta repellat a internos culpa eum repellat officiis ad ullam consequatur."
+  );
+  // remove the mock to ensure tests are completely isolated
+  global.fetch.mockRestore();
+});
