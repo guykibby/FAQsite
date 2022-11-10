@@ -29,13 +29,9 @@ router.post(
       const { description } = req.body;
       const { topicId } = req.params;
 
-      const db = await get_db();
-      const checkTopicId = await db.query(
-        `SELECT id FROM topics WHERE id = $1`,
-        [topicId]
-      );
+      const checkId = await repository.checkTopicId(topicId);
 
-      if (checkTopicId.rows.length === 0) {
+      if (checkId.length === 0) {
         return res.status(404).json({ error: "ID not found" });
       }
 
