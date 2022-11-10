@@ -121,3 +121,71 @@ test("renders answers data using fakeAnswersData", async () => {
   // remove the mock to ensure tests are completely isolated
   global.fetch.mockRestore();
 });
+
+/* using both tables - for both questions & answers with mocking data */
+test("renders questions & answers data using fakeQuestionsAnswersData", async () => {
+  const fakeQuestionsAnswersData = {
+    questions: [
+      {
+        id: 1,
+        description: "What is HTML?",
+        isstarred: false,
+        isreviewed: false,
+        topicid: 1,
+      },
+      {
+        id: 2,
+        description: "What is CSS?",
+        isstarred: false,
+        isreviewed: false,
+        topicid: 2,
+      },
+    ],
+    answers: [
+      {
+        id: 3,
+        questionid: 1,
+        questiondescription: "What is HTML?",
+        answerdescription:
+          "Et eaque galisum ex nisi libero ad soluta repellat a internos culpa eum repellat officiis ad ullam consequatur.",
+        isstarred: false,
+        isreviewed: false,
+      },
+      {
+        id: 2,
+        questionid: 1,
+        questiondescription: "What is HTML?",
+        answerdescription:
+          "Aut quibusdam incidunt ea error aliquam 33 atque odio At corrupti Quis et recusandae impedit sit exercitationem distinctio.",
+        isstarred: false,
+        isreviewed: false,
+      },
+    ],
+  };
+
+  jest.spyOn(global, "fetch").mockImplementation(() =>
+    Promise.resolve({
+      json: () => Promise.resolve(fakeQuestionsAnswersData),
+    })
+  );
+
+  // Use the asynchronous version of act to apply resolved promises
+  await act(async () => {
+    render(
+      <Router>
+        <Dashboard />
+      </Router>,
+      container
+    );
+  });
+
+  const questionButton = container.querySelector(".question-list-item");
+  expect(questionButton.textContent).toBe("What is HTML?");
+
+  const answerButton = container.querySelector(".answer-list-item");
+  expect(answerButton.textContent).toBe(
+    "Et eaque galisum ex nisi libero ad soluta repellat a internos culpa eum repellat officiis ad ullam consequatur."
+  );
+  // remove the mock to ensure tests are completely isolated
+  global.fetch.mockRestore();
+});
