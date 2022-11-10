@@ -59,8 +59,8 @@ it("renders question data", async () => {
     );
   });
 
-  let heading = container.querySelector(".list-item");
-  expect(heading.textContent).toBe("UNDER CONSTRUCTION. CODE: ");
+  let h1 = container.querySelector("h1");
+  expect(h1.textContent).toBe("Post Question");
 
   global.fetch.mockRestore();
 });
