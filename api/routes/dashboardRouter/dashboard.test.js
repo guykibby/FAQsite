@@ -14,4 +14,10 @@ describe("FAQ Dashboard API", () => {
     expect(response.body.questions).toEqual(expectedData);
     expect(response.status).toBe(200);
   });
+  test("GET /dashboard should return answers waiting for review, with status code of 200", async () => {
+    const expectedData = await getNewAnswers();
+    const response = await request(app).get("/dashboard");
+    expect(response.body.answers).toEqual(expectedData);
+    expect(response.status).toBe(200);
+  });
 });
