@@ -45,27 +45,62 @@ describe("app", () => {
   });
   test("WHEN the path parameter for /:topicId is invalid, respond with status code 400", async () => {
     const expectedStatus = 400;
+    const body = {
+      description: "test",
+      topicId: "incorrectId",
+    };
 
-    await request(app).post("/postquestion/incorrectId").expect(expectedStatus);
+    await request(app)
+      .post(`/postquestion/${body.topicId}`)
+      .send(body)
+      .expect(expectedStatus);
   });
   test("WHEN the path parameter for topicId is 0, respond with status code 400 and an appropriate error message", async () => {
     const expectedStatus = 400;
 
-    await request(app).post("/postquestion/0").expect(expectedStatus);
+    const body = {
+      description: "test",
+      topicId: 0,
+    };
+
+    await request(app)
+      .post(`/postquestion/${body.topicId}`)
+      .send(body)
+      .expect(expectedStatus);
   });
   test("WHEN the path parameter for topicId is a negative value, respond with status code 400 and an appropriate error message", async () => {
     const expectedStatus = 400;
 
-    await request(app).post("/postquestion/-6").expect(expectedStatus);
+    const body = {
+      description: "test",
+      topicId: -5,
+    };
+
+    await request(app)
+      .post(`/postquestion/${body.topicId}`)
+      .send(body)
+      .expect(expectedStatus);
   });
   test("WHEN the path parameter for topicId is great than the max value defined in Joi scheme, respond with status code 404 and an appropriate error message", async () => {
     const expectedStatus = 400;
 
-    await request(app).post("/postquestion/7").expect(expectedStatus);
+    const body = {
+      description: "test",
+      topicId: 99999,
+    };
+
+    await request(app)
+      .post(`/postquestion/${body.topicId}`)
+      .send(body)
+      .expect(expectedStatus);
   });
   test("WHEN the path parameter for topicId is not provided, respond with status code 404 and an appropriate error message", async () => {
     const expectedStatus = 404;
+    const body = {
+      description: "test",
+      topicId: "",
+    };
 
-    await request(app).post("/postquestion/").expect(expectedStatus);
+    await request(app).post(`/postquestion/`).send(body).expect(expectedStatus);
   });
 });
