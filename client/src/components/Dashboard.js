@@ -32,6 +32,7 @@ const Dashboard = () => {
         } else {
           const data = await result.json();
           setQuestions(data.questions);
+          console.log("questions : " + JSON.stringify(data.questions));
           console.log("Questions Array length : " + data.questions.length);
           data.questions.length > 0 && setIsQuestionsEmpty(true);
           setAnswers(data.answers);
