@@ -12,10 +12,14 @@ const Dashboard = () => {
   /* */
   const [questions, setQuestions] = useState([]);
   const [isQuestionsEmpty, setIsQuestionsEmpty] = useState(false);
+  const [answers, setAnswers] = useState([]);
+  const [isAnswersEmpty, setIsAnswersEmpty] = useState(false);
   const [error, setError] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
     setIsLoading(true);
+    setIsQuestionsEmpty(false);
+    setIsAnswersEmpty(false);
     const fetchData = async () => {
       try {
         const result = await fetch(
@@ -28,8 +32,11 @@ const Dashboard = () => {
         } else {
           const data = await result.json();
           setQuestions(data.questions);
+          console.log("Questions Array length : " + data.questions.length);
           data.questions.length > 0 && setIsQuestionsEmpty(true);
-          console.log("questions : " + JSON.stringify(data.questions));
+          setAnswers(data.answers);
+          data.answers.length > 0 && setIsAnswersEmpty(true);
+          console.log("answers : " + JSON.stringify(data.answers));
           setIsLoading(false);
         }
       } catch (error) {
@@ -64,6 +71,21 @@ const Dashboard = () => {
               className="question-list-item list-item"
             >
               {question.description}
+            </Link>
+          ))}
+        </>
+      )}
+      {isAnswersEmpty && (
+        <>
+          <h2>Answers</h2>
+          {answers.map((answer, index) => (
+            <Link
+              key={index}
+              to={"/editanswer/" + answer.id}
+              state={answer}
+              className="answer-list-item list-item"
+            >
+              {answer.answerdescription}
             </Link>
           ))}
         </>
