@@ -1,11 +1,14 @@
 import { Link, useParams } from "react-router-dom";
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const ViewQuestions = () => {
   const { topicId } = useParams();
   const [questions, setQuestions] = useState([{}]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -45,8 +48,13 @@ const ViewQuestions = () => {
           </Link>
         );
       })}
+      <Link to={`/postquestion/${topicId}`} className="list-item">
+        Post Question
+      </Link>
     </>
   );
 };
 
 export default ViewQuestions;
+//onClick={navigate(`/postquestion/${topicId}`)}
+//<button>Post Question</button>
