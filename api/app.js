@@ -16,12 +16,12 @@ app.use(express.json());
 
 //routes
 app.use("/topics", getTopicsRouter);
-app.use("/questions/:topicId", getQuestionsRouter);
+app.use("/questions", getQuestionsRouter);
 app.use("/postquestion", postQuestionsRouter);
-app.use("/answers/:questionId", getAnswersRouter);
-app.use("/postanswer/:questionId", postAnswersRouter);
-app.use("/editquestion/:questionId", editQuestionsRouter);
-app.use("/editanswer/:answerId", editAnswersRouter);
+app.use("/answers", getAnswersRouter);
+app.use("/postanswer", postAnswersRouter);
+app.use("/editquestion", editQuestionsRouter);
+app.use("/editanswer", editAnswersRouter);
 app.use("/dashboard", dashboardRouter);
 app.use("/users", usersRouter);
 
