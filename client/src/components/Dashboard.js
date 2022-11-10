@@ -9,8 +9,8 @@ import { Link } from "react-router-dom";
  * */
 const Dashboard = () => {
   /* newPosts is an array viriable will holds questions in newPost[0] and answers in newPost[1] */
-  const [newPosts, setNewPosts] = useState([{}, {}]);
-  const [error, setError] = useState(false);
+  // const [newPosts, setNewPosts] = useState([{}, {}]);
+  // const [error, setError] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
     const fetchData = async () => {
@@ -21,11 +21,11 @@ const Dashboard = () => {
 
         if (result.ok === false) {
           setIsLoading(true);
-          setError(true);
+          // setError(true);
         } else {
           setIsLoading(false);
           const data = await result.json();
-          setNewPosts(data);
+          // setNewPosts(data);
           console.log("AAAA : " + JSON.stringify(data));
           setIsLoading(false);
         }
