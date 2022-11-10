@@ -36,6 +36,7 @@ const Dashboard = () => {
           data.questions.length > 0 && setIsQuestionsEmpty(true);
           setAnswers(data.answers);
           data.answers.length > 0 && setIsAnswersEmpty(true);
+          console.log("Answers Array length : " + data.answers.length);
           console.log("answers : " + JSON.stringify(data.answers));
           setIsLoading(false);
         }
