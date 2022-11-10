@@ -8,8 +8,6 @@ const ViewQuestions = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
-  const navigate = useNavigate();
-
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -49,12 +47,10 @@ const ViewQuestions = () => {
         );
       })}
       <Link to={`/postquestion/${topicId}`} className="list-item">
-        Post Question
+        <b>POST QUESTIONS</b>
       </Link>
     </>
   );
 };
 
 export default ViewQuestions;
-//onClick={navigate(`/postquestion/${topicId}`)}
-//<button>Post Question</button>

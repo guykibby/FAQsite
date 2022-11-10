@@ -5,10 +5,7 @@ import { useNavigate } from "react-router-dom";
 const PostQuestion = () => {
   const { topicId } = useParams();
 
-  // const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  // const [topicId, setTopicId] = useState("");
-  // const [question, setQuestion] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
   const [errorStatus, setErrorStatus] = useState("");
@@ -19,9 +16,7 @@ const PostQuestion = () => {
     event.preventDefault();
     setIsLoading(true);
     const body = {
-      //title,
       description,
-      //topicId,
     };
     try {
       const response = await fetch(
@@ -49,27 +44,20 @@ const PostQuestion = () => {
     }
   };
 
-  // if (isError) {
-  //   return <>An error has occurred. {errorStatus}.</>;
-  // }
+  if (isError) {
+    return <>An error has occurred. {errorStatus}.</>;
+  }
 
   return (
     <>
-      <p className="list-item">UNDER CONSTRUCTION. CODE: {topicId}</p>;
-      <form onSubmit={handelSubmit}>
-        <label htmlFor="topic-heading" className="topic-heading">
-          {topicId}
-        </label>
+      <h1>Post Question</h1>
+      <form onSubmit={handelSubmit} className="main-container">
         <input
           type="text"
           required
           id="question-description"
           name="question-description"
-          className="question-description"
-          /*value={question}
-          onChange={(e) => {
-            setQuestion(e.target.value);
-          }}*/
+          className="list-item"
           value={description}
           onChange={(event) => {
             const value = event.target.value;
@@ -77,7 +65,7 @@ const PostQuestion = () => {
           }}
         />
 
-        <button className="submit-button" disabled={isLoading}>
+        <button className="list-item" disabled={isLoading}>
           Submit
         </button>
       </form>

@@ -59,7 +59,6 @@ it("renders question data", async () => {
     );
   });
 
-  // checks what is the content of the p tag with className="list-item"
   let heading = container.querySelector(".list-item");
   expect(heading.textContent).toBe("UNDER CONSTRUCTION. CODE: ");
 
