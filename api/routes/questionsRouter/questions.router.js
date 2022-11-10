@@ -2,7 +2,6 @@ const express = require("express");
 const router = express.Router();
 const Joi = require("joi");
 const questionsRepository = require("./questions.repository");
-const get_db = require("../../db");
 
 const pathParamValidationMiddleware = (schema) => (req, res, next) => {
   const { error } = schema.validate(req.params);
@@ -34,7 +33,6 @@ router.get(
       }
 
       const response = await questionsRepository.getQuestions(topicId);
-
       return res.json(response).status(200);
     } catch (err) {
       next(err);
