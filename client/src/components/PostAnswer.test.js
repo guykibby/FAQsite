@@ -59,7 +59,7 @@ it("renders an error if fetched url is not valid", async () => {
     );
   });
 
-  let errorMessage = container.querySelector("error-list-item");
+  let errorMessage = container.querySelector(".list-item");
   expect(errorMessage.textContent).toBe("Oops, something went wrong!");
 
   global.fetch.mockRestore();
