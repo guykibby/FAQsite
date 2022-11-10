@@ -19,8 +19,3 @@ module.exports = {
     return result.rows;
   },
 };
-/*  const db = await get_db();
-      const checkTopicId = await db.query(
-        `SELECT id FROM topics WHERE id = $1`,
-        [topicId]
-      );*/

@@ -2,7 +2,6 @@ const express = require("express");
 const router = express.Router();
 const Joi = require("joi");
 const repository = require("./postQuestions.repository");
-const get_db = require("../../db");
 
 // path parameters validation middleware
 const pathParamValidationMiddleware = (schema) => (request, response, next) => {
@@ -17,7 +16,6 @@ const pathParamValidationMiddleware = (schema) => (request, response, next) => {
 };
 // path parameter schema
 const pathParamsSchema = Joi.object().keys({
-  description: Joi.string(),
   topicId: Joi.number().integer().min(1).max(9999),
 });
 
@@ -35,6 +33,9 @@ router.post(
         return res.status(404).json({ error: "ID not found" });
       }
 
+      if (!(typeof description === "string") || description === undefined) {
+        return res.status(400).json({ error: "Bad request" });
+      }
       await repository.postQuestion(description, topicId);
 
       return res.status(201).send({ message: "Question has been Posted" });

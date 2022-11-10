@@ -13,13 +13,12 @@ describe("app", () => {
 
     const body = {
       description: "test",
-      topicId: 3,
     };
 
     const expectedStatus = 201;
 
     await request(app)
-      .post(`/postquestion/${body.topicId}`)
+      .post(`/postquestion/3`)
       .send(body)
       .expect(expectedStatus)
       .expect((response) => {
@@ -47,11 +46,10 @@ describe("app", () => {
     const expectedStatus = 400;
     const body = {
       description: "test",
-      topicId: "incorrectId",
     };
 
     await request(app)
-      .post(`/postquestion/${body.topicId}`)
+      .post(`/postquestion/incorrectId`)
       .send(body)
       .expect(expectedStatus);
   });
@@ -60,11 +58,10 @@ describe("app", () => {
 
     const body = {
       description: "test",
-      topicId: 0,
     };
 
     await request(app)
-      .post(`/postquestion/${body.topicId}`)
+      .post(`/postquestion/0`)
       .send(body)
       .expect(expectedStatus);
   });
@@ -73,11 +70,10 @@ describe("app", () => {
 
     const body = {
       description: "test",
-      topicId: -5,
     };
 
     await request(app)
-      .post(`/postquestion/${body.topicId}`)
+      .post(`/postquestion/-5`)
       .send(body)
       .expect(expectedStatus);
   });
@@ -86,11 +82,10 @@ describe("app", () => {
 
     const body = {
       description: "test",
-      topicId: 99999,
     };
 
     await request(app)
-      .post(`/postquestion/${body.topicId}`)
+      .post(`/postquestion/99999`)
       .send(body)
       .expect(expectedStatus);
   });
@@ -98,7 +93,6 @@ describe("app", () => {
     const expectedStatus = 404;
     const body = {
       description: "test",
-      topicId: "",
     };
 
     await request(app).post(`/postquestion/`).send(body).expect(expectedStatus);
