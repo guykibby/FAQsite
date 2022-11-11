@@ -27,16 +27,17 @@ router.put(
   async (request, response, next) => {
     try {
       const { answerId } = request.params;
-      const db = await get_db();
-      const answer = await db.query(`SELECT * FROM answers WHERE id = $1`, [
+      const { starFlag, isStarred, isReviewed } = request.body;
+      const answer = await answerRepo.editAnswer(
         answerId,
-      ]);
-      if (answer.rows[0]) {
-        const { starFlag, isStarred, isReviewed } = request.body;
-        await answerRepo.editAnswer(answerId, starFlag, isStarred, isReviewed);
+        starFlag,
+        isStarred,
+        isReviewed
+      );
+      if (answer) {
         return response.status(200).json({ message: "Edit Successful" });
       }
-      if (!answer.rows.length) {
+      if (!answer) {
         return response
           .status(404)
           .json({ message: "Invalid request. Answer does not exists" });
@@ -53,21 +54,34 @@ router.delete(
   async (request, response, next) => {
     try {
       const { answerId } = request.params;
-      const db = await get_db();
-      const answer = await db.query(`SELECT * FROM answers WHERE id = $1`, [
-        answerId,
-      ]);
-      if (answer.rows[0]) {
-        await answerRepo.deleteAnswer(answerId);
+      const result = await answerRepo.deleteAnswer(answerId);
+      if (result) {
         return response.status(200).json({ message: "Answer Deleted" });
       }
-      if (!answer.rows.length) {
+      if (!result) {
         return response
           .status(404)
           .json({ message: "Invalid request. Answer does not exists" });
       }
     } catch (error) {
       next(error);
+    }
+  }
+);
+
+router.get(
+  "/:answerId",
+  pathParamValidationMiddleware(pathParamsSchema),
+  async (request, response, next) => {
+    const { answerId } = request.params;
+    const answer = await answerRepo.getAnswer(answerId);
+    if (answer) {
+      return response.status(200).json(answer);
+    }
+    if (!answer) {
+      return response
+        .status(400)
+        .json({ messgae: "Invalid request. Answer does not exists." });
     }
   }
 );
