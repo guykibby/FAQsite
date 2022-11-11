@@ -4,7 +4,7 @@ const EditButton = ({ information }) => {
   const handleClick = async () => {
     navigate(`/editanswer/${information.id}`);
   };
-  return <button onclick={handleClick}>Edit Post</button>;
+  return <button onClick={handleClick}>Edit Post</button>;
 };
 
 export default EditButton;
