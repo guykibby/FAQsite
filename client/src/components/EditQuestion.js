@@ -1,15 +1,14 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams, Link } from "react-router-dom";
 import styles from "./EditQuestion.module.css";
-
+import EditButton from "./EditButton";
 const EditQuestion = () => {
   const { questionId } = useParams();
   const [question, setQuestion] = useState({});
   const [star, setStar] = useState(false);
   const [review, setReview] = useState(false);
   const [starFlag, setStarFlag] = useState(false);
-  const navigate = useNavigate();
-  console.log(question);
+  
   // to update the information as per the database
   useEffect(() => {
     const getQuestion = async () => {
@@ -34,6 +33,7 @@ const EditQuestion = () => {
       setReview(e.target.checked);
     }
   };
+  const navigate = useNavigate();
   const handleDelete = async () => {
     const response = await fetch(
       `${process.env.REACT_APP_API_URL}/editquestion/${questionId}`,
@@ -118,7 +118,7 @@ const EditQuestion = () => {
             data-testid="star-checkbox"
           />
         </div>
-        <button onClick={handleDelete}>Delete Question</button>
+        <EditButton information={question} onClick={handleDelete} />
       </div>
     </>
   );

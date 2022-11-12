@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams, Link } from "react-router-dom";
+import EditButton from "./EditButton";
 import styles from "./EditQuestion.module.css";
 
 const EditAnswer = () => {
@@ -116,7 +117,7 @@ const EditAnswer = () => {
             onChange={(e) => handleChange(e)}
           />
         </div>
-        <button onClick={handleDelete}>Delete Answer</button>
+        <EditButton information={answer} onClick={handleDelete} />
       </div>
     </>
   );

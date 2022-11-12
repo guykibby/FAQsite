@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 const EditButton = ({ information }) => {
   const navigate = useNavigate();
   const handleClick = async () => {
+    
     if (information.topicid) {
       navigate(`/editquestion/${information.id}`);
     } else {
