@@ -2,8 +2,8 @@ import { render, screen } from "@testing-library/react";
 import { BrowserRouter as Router } from "react-router-dom";
 import { unmountComponentAtNode } from "react-dom";
 import { act } from "react-dom/test-utils";
-import EditQuestion from "./EditQuestion";
-describe("EditQuestion Page", () => {
+import EditAnswer from "./EditAnswer";
+describe("EditAnswer Page", () => {
   let container = null;
   beforeEach(() => {
     // setup a DOM element as a render target
@@ -17,10 +17,10 @@ describe("EditQuestion Page", () => {
     container.remove();
     container = null;
   });
-  test("Renders an EditQuestion Page with checkboxes and button", async () => {
+  test("Renders an EditAnswer Page with checkboxes and button", async () => {
     render(
       <Router>
-        <EditQuestion />
+        <EditAnswer />
       </Router>
     );
     expect(screen.getByRole("button")).toBeEnabled();
@@ -36,7 +36,7 @@ describe("EditQuestion Page", () => {
     await act(async () => {
       render(
         <Router>
-          <EditQuestion />
+          <EditAnswer />
         </Router>,
         container
       );
@@ -56,7 +56,7 @@ describe("EditQuestion Page", () => {
     await act(async () => {
       render(
         <Router>
-          <EditQuestion />
+          <EditAnswer />
         </Router>,
         container
       );
@@ -71,5 +71,5 @@ describe("EditQuestion Page", () => {
     expect(beforeClick).toBe(!afterClick);
   });
 
-
+  
 });

@@ -105,6 +105,7 @@ const EditAnswer = () => {
             checked={review}
             className={styles.checkbox}
             onChange={(e) => handleChange(e)}
+            data-testid="review-checkbox"
           />
         </div>
         <div>
@@ -115,6 +116,7 @@ const EditAnswer = () => {
             checked={star}
             className={styles.checkbox}
             onChange={(e) => handleChange(e)}
+            data-testid="star-checkbox"
           />
         </div>
         <EditButton information={answer} onClick={handleDelete} />
