@@ -94,13 +94,6 @@ test("renders answers data using fakeAnswersData", async () => {
     );
   });
 
-  const answerButton = container.querySelector(".list-item");
-  expect(answerButton.textContent).toBe(
-    "Lorem ipsum dolor sit amet. Et molestias voluptatem qui doloremque soluta sit culpa porro et tenetur repellat vel beatae quas id reprehenderit esse."
-  );
-  // remove the mock to ensure tests are completely isolated
-  global.fetch.mockRestore();
-});
 
 /** UNHAPPY Path - if server is down or API fetch fails,
 it need to display "Oops, something went wrong!" error message 

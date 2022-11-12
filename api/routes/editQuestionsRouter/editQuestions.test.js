@@ -108,7 +108,7 @@ describe("Given that the PUT, DELETE and GET /editquestion/:questionId route exi
     );
   });
 
-  test("WHEN the path parameter for questionId is not a number, respond with 400 error code and an appropriate error message", async () => {
+  test("WHEN the path parameter for questionId is not a number THEN respond with 400 error code and an appropriate error message", async () => {
     await request(app)
       .put("/editquestion/notAnumber")
       .set("Accept", "application/json")
@@ -125,7 +125,7 @@ describe("Given that the PUT, DELETE and GET /editquestion/:questionId route exi
       });
   });
 
-  test("WHEN the path parameter for questionId is less than 1, respond with 400 error code and an appropriate error message", async () => {
+  test("WHEN the path parameter for questionId is less than 1 THEN respond with 400 error code and an appropriate error message", async () => {
     await request(app)
       .put("/editquestion/0")
       .set("Accept", "application/json")
@@ -142,7 +142,7 @@ describe("Given that the PUT, DELETE and GET /editquestion/:questionId route exi
       });
   });
 
-  test("WHEN the path parameter for questionId is greater than 999999998 as it is not a normal integer anymore, respond with 400 error code and an appropriate error message", async () => {
+  test("WHEN the path parameter for questionId is greater than 999999998 as it is not a normal integer anymore THEN respond with 400 error code and an appropriate error message", async () => {
     await request(app)
       .put("/editquestion/999999999")
       .set("Accept", "application/json")
@@ -159,7 +159,7 @@ describe("Given that the PUT, DELETE and GET /editquestion/:questionId route exi
       });
   });
 
-  test("WHEN the path parameter for questionId is not mention. It should give a 404 error status code", async () => {
+  test("WHEN the path parameter for questionId is not mention THEN It should give a 404 error status code", async () => {
     await request(app)
       .put("/editquestion/")
       .set("Accept", "application/json")
@@ -189,7 +189,18 @@ describe("Given that the PUT, DELETE and GET /editquestion/:questionId route exi
   });
 
   // tests for the delete requests
-  test("WHEN the path parameter for questionId is not a number, respond with 400 error code and an appropriate error message", async () => {
+  test("WHEN the path parameter for questionId is 1 THEN respond with 200 error code and an Delete Successful", async () => {
+    await request(app)
+      .delete("/editquestion/1")
+      .expect(200)
+      .expect((response) => {
+        expect(response.body.message).toBe(
+          `Question Deleted`
+        );
+      });
+  });
+
+  test("WHEN the path parameter for questionId is not a number THEN respond with 400 error code and an appropriate error message", async () => {
     await request(app)
       .delete("/editquestion/notAnumber")
       .expect(400)
@@ -200,7 +211,7 @@ describe("Given that the PUT, DELETE and GET /editquestion/:questionId route exi
       });
   });
 
-  test("WHEN the path parameter for questionId is less than 1, respond with 400 error code and an appropriate error message", async () => {
+  test("WHEN the path parameter for questionId is less than 1 THEN respond with 400 error code and an appropriate error message", async () => {
     await request(app)
       .delete("/editquestion/0")
       .set("Accept", "application/json")
@@ -212,7 +223,7 @@ describe("Given that the PUT, DELETE and GET /editquestion/:questionId route exi
       });
   });
 
-  test("WHEN the path parameter for questionId is greater than 999999998 as it is not a normal integer anymore, respond with 400 error code and an appropriate error message", async () => {
+  test("WHEN the path parameter for questionId is greater than 999999998 as it is not a normal integer anymore THEN respond with 400 error code and an appropriate error message", async () => {
     await request(app)
       .delete("/editquestion/999999999")
       .set("Accept", "application/json")
@@ -224,14 +235,14 @@ describe("Given that the PUT, DELETE and GET /editquestion/:questionId route exi
       });
   });
 
-  test("WHEN the path parameter for questionId is not mention. It should give a 404 error status code", async () => {
+  test("WHEN the path parameter for questionId is not mention THEN it should give a 404 error status code", async () => {
     await request(app)
       .delete("/editquestion/")
       .set("Accept", "application/json")
       .expect(404);
   });
 
-  test("WHEN the path parameter for questionId is valid but not correct as it does not exist in the database THEN It should give a 400 error status code with message", async () => {
+  test("WHEN the path parameter for questionId is valid but not correct as it does not exist in the database THEN it should give a 400 error status code with message", async () => {
     await request(app)
       .delete("/editquestion/999999")
       .set("Accept", "application/json")
@@ -248,5 +259,54 @@ describe("Given that the PUT, DELETE and GET /editquestion/:questionId route exi
     const expectedOutput = await questionRepo.getQuestion(1);
     const response = await request(app).get("/editquestion/1").set("Accept", "application/json").expect(200);
     expect(response.body).toEqual(expectedOutput);
+  });
+
+  test("WHEN the path parameter for questionId is not mention THEN It should give a 404 error status code", async () => {
+    await request(app)
+      .get("/editquestion/")
+      .set("Accept", "application/json")
+      .expect(404);
+  });
+
+  test("WHEN the path parameter for questionId is valid but not correct as it does not exist in the database THEN give a 400 error status code with message", async () => {
+    await request(app)
+      .get("/editquestion/999999")
+      .set("Accept", "application/json")
+      .expect(400)
+  });
+
+  test("WHEN the path parameter for questionId is greater than 999999998 as it is not a normal integer anymore THEN respond with 400 error code and an appropriate error message", async () => {
+    await request(app)
+      .get("/editquestion/999999999")
+      .set("Accept", "application/json")
+      .expect(400)
+      .expect((response) => {
+        expect(response.body.message[0]).toBe(
+          `\"questionId\" must be less than or equal to 999999998`
+        );
+      });
+  });
+
+  test("WHEN the path parameter for questionId is not a number THEN respond with 400 error code and an appropriate error message", async () => {
+    await request(app)
+      .get("/editquestion/notAnumber")
+      .set("Accept", "application/json")
+      .expect(400)
+      .expect((response) => {
+        expect(response.body.message[0]).toBe(`\"questionId\" must be a number`);
+      });
+  });
+
+  test("WHEN the path parameter for questionId is less than 1 THEN respond with 400 error code and an appropriate error message", async () => {
+    const db = await get_db();
+    await request(app)
+      .get("/editquestion/0")
+      .set("Accept", "application/json")
+      .expect(400)
+      .expect((response) => {
+        expect(response.body.message[0]).toBe(
+          `\"questionId\" must be greater than or equal to 1`
+        );
+      });
   });
 });
