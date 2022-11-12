@@ -188,7 +188,7 @@ describe("Given that the PUT and DELETE /editAnswer/:answerId route exists", () 
 
   //test for DELETE request
 
-  test("WHEN the path parameter for answerId is 1 THEN respond with 200 and Answer Deleted message", async () => {
+  test("WHEN the path parameter for answerId is 10 THEN respond with 200 and Answer Deleted message", async () => {
     await request(app)
       .delete("/editanswer/10")
       .set("Accept", "application/json")
