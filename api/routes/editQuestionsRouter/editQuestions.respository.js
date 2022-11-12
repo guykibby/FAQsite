@@ -24,7 +24,7 @@ module.exports = {
           [isReviewed, questionId]
         );
       }
-      return true
+      return true;
     } catch (error) {
       throw Error(error);
     }
@@ -50,11 +50,11 @@ module.exports = {
   getQuestion: async (questionId) => {
     try {
       const db = await get_db();
-      const result = await db.query(`SELECT * FROM questions WHERE id = $1`, [
-        questionId,
-      ]);
+      const result = await db.query(
+        `SELECT id, description, isstarred, isreviewed, userid FROM questions WHERE id = $1`,
+        [questionId]
+      );
       return result.rows[0];
-      console.log(result.rows[0]);
     } catch (error) {
       throw Error(error);
     }

@@ -46,7 +46,7 @@ module.exports = {
   getAnswer: async (answerId) => {
     try {
       const db = await get_db();
-      const result = await db.query(`SELECT * FROM answers WHERE id = $1`, [
+      const result = await db.query(`SELECT id, description, isstarred, isreviewed, questionid, userid FROM answers WHERE id = $1`, [
         answerId,
       ]);
       return result.rows[0];

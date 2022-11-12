@@ -8,7 +8,7 @@ describe("Given that the PUT and DELETE /editAnswer/:answerId route exists", () 
     const db = await get_db();
     db.end();
   });
-
+  // test for PUT requests
   test("WHEN the starFlag is set and isStarred value of the answer for a valid answerId = 1 is edited THEN return status 200. The value of isStarred has been complemented", async () => {
     const db = await get_db();
     //setting the starFlag to true and isStarred to true manually so that the test can prove that it gets changed after the put request
@@ -109,7 +109,6 @@ describe("Given that the PUT and DELETE /editAnswer/:answerId route exists", () 
   });
 
   test("WHEN the path parameter for answerId is not a number, respond with 400 error code and an appropriate error message", async () => {
-    const db = await get_db();
     await request(app)
       .put("/editanswer/notAnumber")
       .set("Accept", "application/json")
@@ -125,7 +124,6 @@ describe("Given that the PUT and DELETE /editAnswer/:answerId route exists", () 
   });
 
   test("WHEN the path parameter for answerId is less than 1, respond with 400 error code and an appropriate error message", async () => {
-    const db = await get_db();
     await request(app)
       .put("/editanswer/0")
       .set("Accept", "application/json")
@@ -143,7 +141,6 @@ describe("Given that the PUT and DELETE /editAnswer/:answerId route exists", () 
   });
 
   test("WHEN the path parameter for answerId is greater than 999999998 as it is not a normal integer anymore, respond with 400 error code and an appropriate error message", async () => {
-    const db = await get_db();
     await request(app)
       .put("/editanswer/999999999")
       .set("Accept", "application/json")
@@ -161,7 +158,6 @@ describe("Given that the PUT and DELETE /editAnswer/:answerId route exists", () 
   });
 
   test("WHEN the path parameter for answerId is not mention. It should give a 404 error status code", async () => {
-    const db = await get_db();
     await request(app)
       .put("/editanswer/")
       .set("Accept", "application/json")
@@ -174,7 +170,6 @@ describe("Given that the PUT and DELETE /editAnswer/:answerId route exists", () 
   });
 
   test("WHEN the path parameter for answerId is valid but not correct as it does not exist in the database THEN It should give a 400 error status code with message", async () => {
-    const db = await get_db();
     await request(app)
       .put("/editanswer/999999")
       .set("Accept", "application/json")
@@ -193,7 +188,6 @@ describe("Given that the PUT and DELETE /editAnswer/:answerId route exists", () 
 
   //test for DELETE request
   test("WHEN the path parameter for answerId is not a number, respond with 400 error code and an appropriate error message", async () => {
-    const db = await get_db();
     await request(app)
       .delete("/editanswer/notAnumber")
       .set("Accept", "application/json")
@@ -217,7 +211,6 @@ describe("Given that the PUT and DELETE /editAnswer/:answerId route exists", () 
   });
 
   test("WHEN the path parameter for answerId is greater than 999999998 as it is not a normal integer anymore, respond with 400 error code and an appropriate error message", async () => {
-    const db = await get_db();
     await request(app)
       .delete("/editanswer/999999999")
       .set("Accept", "application/json")
@@ -230,7 +223,6 @@ describe("Given that the PUT and DELETE /editAnswer/:answerId route exists", () 
   });
 
   test("WHEN the path parameter for answerId is not mention. It should give a 404 error status code", async () => {
-    const db = await get_db();
     await request(app)
       .delete("/editanswer/")
       .set("Accept", "application/json")
@@ -238,7 +230,6 @@ describe("Given that the PUT and DELETE /editAnswer/:answerId route exists", () 
   });
 
   test("WHEN the path parameter for answerId is valid but not correct as it does not exist in the database THEN It should give a 400 error status code with message", async () => {
-    const db = await get_db();
     await request(app)
       .delete("/editanswer/999999")
       .set("Accept", "application/json")
@@ -248,5 +239,22 @@ describe("Given that the PUT and DELETE /editAnswer/:answerId route exists", () 
           "Invalid request. Answer does not exists"
         );
       });
+  });
+
+  // test for GET request
+  test("WHEN a GET req is made with answerId = 1  THEN retrun a answer object", async () => {
+    const expectedOutput = await answerRepo.getAnswer(1);
+    const response = await request(app)
+      .get("/editanswer/1")
+      .set("Accept", "application/json")
+      .expect(200);  
+    expect(response.body).toEqual(expectedOutput); 
+  });
+
+  test("WHEN the path parameter for answerId is not mention. It should give a 404 error status code", async () => {
+    await request(app)
+      .get("/editanswer/")
+      .set("Accept", "application/json")
+      .expect(404);
   });
 });
