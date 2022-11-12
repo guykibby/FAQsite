@@ -191,7 +191,7 @@ describe("Given that the PUT, DELETE and GET /editquestion/:questionId route exi
   // tests for the delete requests
   test("WHEN the path parameter for questionId is 1 THEN respond with 200 error code and an Delete Successful", async () => {
     await request(app)
-      .delete("/editquestion/1")
+      .delete("/editquestion/10")
       .expect(200)
       .expect((response) => {
         expect(response.body.message).toBe(
