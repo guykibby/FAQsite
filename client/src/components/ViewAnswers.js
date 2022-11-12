@@ -1,8 +1,7 @@
 import { useParams } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import EditButton from "./EditButton";
-// the scope of the user
-let scope = false;
+
 const ViewAnswers = () => {
   const { questionId } = useParams();
 
@@ -46,14 +45,10 @@ const ViewAnswers = () => {
       {answers.map((answer, key) => {
         return (
           <div key={key}>
-            <div
-              to={"/editanswers/" + answer.answerid}
-              className="list-item"
-              style={{ pointerEvents: scope ? "" : "none" }}
-            >
+            <div>
               {answer.answerdescription}
             </div>
-            <EditButton information={answer}>Edit Post</EditButton>
+            <EditButton information={answer}/>
           </div>
         );
       })}

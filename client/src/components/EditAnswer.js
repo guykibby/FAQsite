@@ -4,10 +4,27 @@ import styles from "./EditQuestion.module.css";
 
 const EditAnswer = () => {
   const { answerId } = useParams();
+  const [answer, setAnswer] = useState({});
   const [star, setStar] = useState(false);
   const [review, setReview] = useState(false);
   const [starFlag, setStarFlag] = useState(false);
   const navigate = useNavigate();
+
+  // to update the information as per the database
+  useEffect(() => {
+    const getAnswer = async () => {
+      const response = await fetch(
+        `${process.env.REACT_APP_API_URL}/editanswer/${answerId}`
+      );
+      const data = await response.json();
+      setAnswer(data);
+      setStar(data.isstarred);
+      setReview(data.isreviewed);
+    };
+    getAnswer();
+  }, [answerId]);
+
+  // to handle the user events
   const handleChange = (e) => {
     e.preventDefault();
     if (e.target.id === "star") {
@@ -18,6 +35,8 @@ const EditAnswer = () => {
       setReview(e.target.checked);
     }
   };
+
+  // handle delete post
   const handleDelete = async () => {
     const response = await fetch(
       `${process.env.REACT_APP_API_URL}/editanswer/${answerId}`,
@@ -28,9 +47,9 @@ const EditAnswer = () => {
         },
       }
     );
-    /*
+
     if (response.ok) {
-      navigate(`/answers/${questionId}`);
+      navigate(`/answers/${answer.questionid}`);
     } else {
       return (
         <div>
@@ -39,47 +58,43 @@ const EditAnswer = () => {
         </div>
       );
     }
-    */
   };
+
+  //handle updating the database as per the user events.
   useEffect(() => {
     const edit = async () => {
       if (starFlag) {
-        await fetch(
-          `${process.env.REACT_APP_API_URL}/editanswer/${answerId}`,
-          {
-            method: "PUT",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              starFlag,
-              isStarred: star,
-              isReviewed: review,
-            }),
-          }
-        );
+        await fetch(`${process.env.REACT_APP_API_URL}/editanswer/${answerId}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            starFlag,
+            isStarred: star,
+            isReviewed: review,
+          }),
+        });
       } else {
-        await fetch(
-          `${process.env.REACT_APP_API_URL}/editanswer/${answerId}`,
-          {
-            method: "PUT",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              starFlag,
-              isStarred: star,
-              isReviewed: review,
-            }),
-          }
-        );
+        await fetch(`${process.env.REACT_APP_API_URL}/editanswer/${answerId}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            starFlag,
+            isStarred: star,
+            isReviewed: review,
+          }),
+        });
       }
     };
     edit();
-  }, [star, review]);
+  }, [star, review, answerId, starFlag, answer]);
+
   return (
     <>
-      <p>description of the Answer to be displayed here</p>
+      <h2>{answer.description}</h2>
       <div className={styles.editbar}>
         <div>
           <label htmlFor="review">Review</label>

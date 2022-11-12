@@ -1,7 +1,6 @@
 const express = require("express");
 const router = express.Router();
 const Joi = require("joi");
-const get_db = require("../../db");
 const answerRepo = require("./editAnswers.respository");
 
 //path parameters validation middleware

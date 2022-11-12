@@ -1,13 +1,11 @@
 const express = require("express");
 const router = express.Router();
 const Joi = require("joi");
-const get_db = require("../../db");
 const questionsRepo = require("./editQuestions.respository");
 
 // path parameter validation middleware
 const pathParamValidationMiddleware = (schema) => (request, response, next) => {
   const { error } = schema.validate(request.params);
-
   if (error) {
     const { details } = error;
     const message = details.map((detail) => detail.message);
@@ -29,20 +27,16 @@ router.put(
     try {
       const { questionId } = request.params;
       const { starFlag, isStarred, isReviewed } = request.body;
-      const db = await get_db();
-      const question = await db.query(`SELECT * FROM questions WHERE id = $1`, [
+      const question = await questionsRepo.editQuestion(
         questionId,
-      ]);
-      if (question.rows[0]) {
-        await questionsRepo.editQuestion(
-          questionId,
-          starFlag,
-          isStarred,
-          isReviewed
-        );
+        starFlag,
+        isStarred,
+        isReviewed
+      );
+      if (question) {
         return response.status(200).json({ message: "Edit Successful" });
       }
-      if (!question.rows.length) {
+      if (!question) {
         return response
           .status(404)
           .json({ message: "Invalid request. Question does not exists" });
@@ -59,21 +53,34 @@ router.delete(
   async (request, response, next) => {
     try {
       const { questionId } = request.params;
-      const db = await get_db();
-      const question = await db.query(`SELECT * FROM questions WHERE id = $1`, [
-        questionId,
-      ]);
-      if (question.rows[0]) {
-        await questionsRepo.deleteQuestion(questionId);
+      const result = await questionsRepo.deleteQuestion(questionId);
+      if (result) {
         return response.status(200).json({ message: "Question Deleted" });
       }
-      if (!question.rows.length) {
+      if (!result) {
         return response
           .status(404)
           .json({ message: "Invalid request. Question does not exists" });
       }
     } catch (error) {
       next(error);
+    }
+  }
+);
+
+router.get(
+  "/:questionId",
+  pathParamValidationMiddleware(pathParamsSchema),
+  async (request, response, next) => {
+    const { questionId } = request.params;
+    const question = await questionsRepo.getQuestion(questionId);
+    if (question) {
+      return response.status(200).json(question);
+    }
+    if (!question) {
+      return response
+        .status(400)
+        .json({ messgae: "Invalid request. Question does not exists." });
     }
   }
 );

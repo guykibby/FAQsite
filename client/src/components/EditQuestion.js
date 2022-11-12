@@ -1,12 +1,29 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams, Link } from "react-router-dom";
 import styles from "./EditQuestion.module.css";
 
 const EditQuestion = () => {
   const { questionId } = useParams();
+  const [question, setQuestion] = useState({});
   const [star, setStar] = useState(false);
   const [review, setReview] = useState(false);
   const [starFlag, setStarFlag] = useState(false);
+  const navigate = useNavigate();
+  console.log(question);
+  // to update the information as per the database
+  useEffect(() => {
+    const getQuestion = async () => {
+      const response = await fetch(
+        `${process.env.REACT_APP_API_URL}/editquestion/${questionId}`
+      );
+      const data = await response.json();
+      setQuestion(data);
+      setStar(data.isstarred);
+      setReview(data.isreviewed);
+    };
+    getQuestion();
+  }, [questionId]);
+
   const handleChange = (e) => {
     e.preventDefault();
     if (e.target.id === "star") {
@@ -27,9 +44,9 @@ const EditQuestion = () => {
         },
       }
     );
-    /*
+
     if (response.ok) {
-      navigate("/");
+      navigate(`/questions/${question.topicid}`);
     } else {
       return (
         <div>
@@ -38,7 +55,6 @@ const EditQuestion = () => {
         </div>
       );
     }
-    */
   };
   useEffect(() => {
     const edit = async () => {
@@ -75,10 +91,10 @@ const EditQuestion = () => {
       }
     };
     edit();
-  }, [star, review]);
+  }, [star, review, questionId, starFlag, question]);
   return (
     <>
-      <p>description of the question to be displayed here</p>
+      <h2>{question.description}</h2>
       <div className={styles.editbar}>
         <div>
           <label htmlFor="review">Review</label>

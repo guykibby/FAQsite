@@ -3,6 +3,12 @@ module.exports = {
   editQuestion: async (questionId, starFlag, isStarred, isReviewed) => {
     try {
       const db = await get_db();
+      const question = await db.query(`SELECT * FROM questions WHERE id = $1`, [
+        questionId,
+      ]);
+      if (!question.rows[0]) {
+        return false;
+      }
       if (starFlag) {
         await db.query(
           `UPDATE questions 
@@ -18,6 +24,7 @@ module.exports = {
           [isReviewed, questionId]
         );
       }
+      return true
     } catch (error) {
       throw Error(error);
     }
@@ -25,9 +32,29 @@ module.exports = {
   deleteQuestion: async (questionId) => {
     try {
       const db = await get_db();
-      await db.query(`
-      DELETE FROM answers WHERE questionid = $1`, [questionId]);
-      await db.query(`DELETE FROM questions WHERE id = $1`, [questionId]);
+      const question = await db.query(`SELECT * FROM questions WHERE id = $1`, [
+        questionId,
+      ]);
+      if (question.rows[0]) {
+        await db.query(`DELETE FROM answers WHERE questionid = $1`, [
+          questionId,
+        ]);
+        await db.query(`DELETE FROM questions WHERE id = $1`, [questionId]);
+        return true;
+      } else return false;
+    } catch (error) {
+      throw Error(error);
+    }
+  },
+
+  getQuestion: async (questionId) => {
+    try {
+      const db = await get_db();
+      const result = await db.query(`SELECT * FROM questions WHERE id = $1`, [
+        questionId,
+      ]);
+      return result.rows[0];
+      console.log(result.rows[0]);
     } catch (error) {
       throw Error(error);
     }
