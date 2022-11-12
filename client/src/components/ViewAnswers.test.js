@@ -93,7 +93,9 @@ test("renders answers data using fakeAnswersData", async () => {
       container
     );
   });
-
+  // remove the mock to ensure tests are completely isolated
+  global.fetch.mockRestore();
+});
 
 /** UNHAPPY Path - if server is down or API fetch fails,
 it need to display "Oops, something went wrong!" error message 
