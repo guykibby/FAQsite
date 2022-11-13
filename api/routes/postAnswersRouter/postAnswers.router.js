@@ -37,7 +37,9 @@ router.post(
         description === undefined ||
         description === null
       ) {
-        return res.status(400).json({ error: "Bad Request" });
+        const error = new Error("Bad Request");
+        error.status(400);
+        throw error;
       }
 
       await repository.postAnswer(questionId, description);
@@ -45,14 +47,15 @@ router.post(
       const checkId = await repository.checkQuestionId(questionId);
 
       if (checkId.length === 0) {
-        return res.status(404).json({ error: "Bad request" });
+        const error = new Error("Not Found");
+        error.status(404);
+        throw error;
       }
 
       return res
         .status(201)
         .send({ message: "Post has been submitted successfully" });
     } catch (error) {
-      error.status = 400;
       next(error);
     }
   }

@@ -61,7 +61,7 @@ describe("GIVEN that the POST /postanswer/:questionId route exists", () => {
     };
 
     await request(app)
-      .post(`/postanswer/9999999`)
+      .post("/postanswer/9999999")
       .send(body)
       .expect(expectedStatus)
       .expect((response) => {
