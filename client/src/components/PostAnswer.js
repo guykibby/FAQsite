@@ -76,7 +76,7 @@ const PostAnswer = () => {
   return (
     <>
       <h1 className="title">Post Answer</h1>
-      <p className="question-title">{question.questiondescription}</p>
+      <p className="title">{question.questiondescription}</p>
 
       <form onSubmit={handleSubmit} className="main-container">
         <input

@@ -45,7 +45,7 @@ describe("When the user is on the HomePage,", () => {
       );
     });
 
-    let questionDescription = container.querySelector(".question-title");
+    let questionDescription = container.querySelector("p");
     expect(questionDescription.textContent).toBe(
       fakeData[0].questiondescription
     );
