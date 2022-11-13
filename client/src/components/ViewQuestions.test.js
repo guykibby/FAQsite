@@ -17,7 +17,9 @@ afterEach(() => {
 });
 
 it("renders a topic and a question", async () => {
-  const fakeData = [{ topicid: "CSS", description: "What is CSS?" }];
+
+  const fakeData = [{ id: 2, name: "CSS", description: "What is CSS?" }];
+
   jest.spyOn(global, "fetch").mockImplementation(() =>
     Promise.resolve({
       json: () => Promise.resolve(fakeData),
@@ -31,8 +33,13 @@ it("renders a topic and a question", async () => {
       </Router>,
       container
     );
-    global.fetch.mockRestore();
   });
+  const message = container.querySelector(".list-item");
+  expect(message.textContent).toBe("What is CSS?");
+  const topic = container.querySelector(".title");
+  expect(topic.textContent).toBe("CSS");
+
+  global.fetch.mockRestore();
 });
 
 it("renders an error message when fetch fails", async () => {
@@ -53,7 +60,7 @@ it("renders an error message when fetch fails", async () => {
     );
   });
 
-  let errorMessage = container.querySelector(".list-item");
+  const errorMessage = container.querySelector(".list-item");
   expect(errorMessage.textContent).toBe("Oops, something went wrong!");
 
   // remove the mock to ensure tests are completely isolated
