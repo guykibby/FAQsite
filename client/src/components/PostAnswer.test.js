@@ -1,3 +1,4 @@
+/* eslint-disable testing-library/no-unnecessary-act */
 import React from "react";
 import { unmountComponentAtNode, render } from "react-dom";
 import { BrowserRouter as Router } from "react-router-dom";
