@@ -42,6 +42,7 @@ describe("GIVEN that the POST /postanswer/:questionId route exists", () => {
         ORDER BY answers.createdon DESC`
     );
 
+    // comparing the first index of the array to match 'test' description
     expect(updatedAnswersList.rows[0].description).toBe("test");
   });
 

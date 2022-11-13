@@ -18,6 +18,7 @@ describe("When the user is on the HomePage,", () => {
   });
 
   it("renders a fake answer with a questionId and description, then checks to see if question description is being rendered", async () => {
+    // mock data to be mock fetched
     const fakeData = [
       {
         id: 1,
@@ -30,12 +31,14 @@ describe("When the user is on the HomePage,", () => {
       },
     ];
 
+    // data fetch mock
     jest.spyOn(global, "fetch").mockImplementation(() =>
       Promise.resolve({
         json: () => Promise.resolve(fakeData),
       })
     );
 
+    // an asynchronous act function that renders the PostAnswer component
     await act(async () => {
       render(
         <Router>
@@ -45,11 +48,13 @@ describe("When the user is on the HomePage,", () => {
       );
     });
 
+    //testing for the p tag to be 'What is HTML?'
     let questionDescription = container.querySelector("p");
     expect(questionDescription.textContent).toBe(
       fakeData[0].questiondescription
     );
 
+    //removes mock to ensure test is isolated
     global.fetch.mockRestore();
   });
 
@@ -68,6 +73,7 @@ describe("When the user is on the HomePage,", () => {
   });
 
   it("renders an error if fetched url is not valid", async () => {
+    // making an invalid fetch
     jest.spyOn(global, "fetch").mockImplementation(() =>
       Promise.resolve({
         ok: false,

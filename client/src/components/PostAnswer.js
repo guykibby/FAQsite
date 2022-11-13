@@ -16,12 +16,12 @@ const PostAnswer = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        // fetching the answers list
         const result = await fetch(
           `${process.env.REACT_APP_API_URL}/answers/${questionId}`
         );
 
         // fetch error handling
-
         if (result.ok === false) {
           setError(true);
           return;
@@ -55,6 +55,7 @@ const PostAnswer = () => {
         }
       );
 
+      // fetch error handling
       if (!response.ok) {
         console.log("Fetch not ok");
         setError(true);
@@ -78,6 +79,7 @@ const PostAnswer = () => {
       <h1 className="title">Post Answer</h1>
       <p className="title">{question.questiondescription}</p>
 
+      {/* query form for the user to enter their answer to a question */}
       <form onSubmit={handleSubmit} className="main-container">
         <input
           type="text"
