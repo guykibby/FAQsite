@@ -16,7 +16,7 @@ const pathParamValidationMiddleware = (schema) => (request, response, next) => {
 };
 // path parameter schema
 const pathParamsSchema = Joi.object().keys({
-  questionId: Joi.number().integer().min(1).max(999999998),
+  questionId: Joi.number().integer().min(1).max(32),
 });
 
 router.post(
@@ -27,7 +27,26 @@ router.post(
       const { questionId } = req.params;
       const { description } = req.body;
 
+      // check if description is string, not empty string, no body (undefined)
+
+      // checkId() if result.rows.length === 0, then id not found 404
+
+      if (
+        typeof description !== "string" ||
+        description === "" ||
+        description === undefined ||
+        description === null
+      ) {
+        return res.status(400).json({ error: "Bad Request" });
+      }
+
       await repository.postAnswer(questionId, description);
+
+      const checkId = await repository.checkQuestionId(questionId);
+
+      if (checkId.length === 0) {
+        return res.status(404).json({ error: "Bad request" });
+      }
 
       return res
         .status(201)

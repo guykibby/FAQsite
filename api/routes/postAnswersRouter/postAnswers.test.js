@@ -1,6 +1,7 @@
 const request = require("supertest");
 const app = require("../../app");
 const get_db = require("../../db");
+const repository = require("./postAnswers.repository");
 
 describe("GIVEN that the POST /postanswer/:questionId route exists", () => {
   afterAll(async () => {
@@ -19,10 +20,17 @@ describe("GIVEN that the POST /postanswer/:questionId route exists", () => {
 
     const expectedStatus = 201;
 
+    const postedAnswer = await repository.postAnswer(
+      body.questionId,
+      body.description
+    );
+
     // comparing the body's question id with the answer's questionid of the first item in the array
+    // the test below is failing (supposed to give status 201 but getting a 400)
+
     await request(app)
       .post(`/postanswer/${body.questionId}`)
-      .send(body)
+      .send(postedAnswer)
       .expect(expectedStatus)
       .expect((response) => {
         expect(response.body).toStrictEqual({
@@ -46,6 +54,46 @@ describe("GIVEN that the POST /postanswer/:questionId route exists", () => {
     expect(updatedAnswersList.rows[0].description).toBe("test");
   });
 
+  test("WHEN the path parameter for /:questionId is a undefined, respond with status code 400 and an appropriate error message", async () => {
+    const expectedStatus = 400;
+
+    const body = {
+      questionId: undefined,
+      description: "test",
+    };
+
+    await request(app)
+      .post(`/postanswer/${body.questionId}`)
+      .send(body)
+      .expect(expectedStatus)
+      .expect((response) => {
+        expect(response.body).toStrictEqual({
+          message: ['"questionId" must be a number'],
+        });
+      });
+  });
+
+  test("WHEN the path parameter for /:questionId is more than 32, which means it does not exist within the database, respond with status code 400 and an appropriate error message", async () => {
+    const expectedStatus = 400;
+
+    const body = {
+      questionId: 35,
+      description: "test",
+    };
+
+    await request(app)
+      .post(`/postanswer/${body.questionId}`)
+      .send(body)
+      .expect(expectedStatus)
+      .expect((response) => {
+        expect(response.body).toStrictEqual({
+          message: ['"questionId" must be less than or equal to 32'],
+        });
+      });
+
+    await request(app).post("/postanswer/incorrectId").expect(expectedStatus);
+  });
+
   test("WHEN the path parameter for /:questionId is a string, respond with status code 400 and an appropriate error message", async () => {
     const expectedStatus = 400;
 
@@ -64,7 +112,7 @@ describe("GIVEN that the POST /postanswer/:questionId route exists", () => {
     await request(app).post("/postanswer/-5").expect(expectedStatus);
   });
 
-  test("WHEN the path parameter for questionId is 9999, respond with status code 404 and an appropriate error message", async () => {
+  test("WHEN the path parameter for questionId is 9999, respond with status code 400 and an appropriate error message", async () => {
     const expectedStatus = 400;
 
     await request(app).post("/postanswer/9999").expect(expectedStatus);

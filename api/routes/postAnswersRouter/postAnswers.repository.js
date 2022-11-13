@@ -13,4 +13,15 @@ module.exports = {
 
     return result.rows;
   },
+
+  checkQuestionId: async (questionId) => {
+    const db = await get_db();
+    const result = await db.query(
+      `SELECT id FROM answers
+      WHERE questionid = $1`,
+      [questionId]
+    );
+
+    return result.rows;
+  },
 };
