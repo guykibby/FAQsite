@@ -41,11 +41,11 @@ const ViewQuestions = () => {
       <ul>
       {questions.map((e, i) => {
         return (
-          <div key={i} className="question">
+          <div key={i} className="main-container list-item">
           <Link className="link" to={"/answers/" + e.id} >
             {e.description}
           </Link>
-          <div><EditButton information={e}/></div>
+          <div className="link"><EditButton information={e}/></div>
           </div>
         );
       })}
