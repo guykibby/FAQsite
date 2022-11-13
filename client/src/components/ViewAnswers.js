@@ -32,6 +32,19 @@ const ViewAnswers = () => {
     fetchData();
   }, [questionId]);
 
+  const handleClick = () => {
+    // if (level === 2) {
+    //   const topic = theTopics.filter(
+    //     (e) => e.term === branch && e.topic === choice
+    //   );
+    //   navigate(`/questions/${topic[0].id}`);
+    // }
+    // branch = choice;
+    // setLevel((t) => t + 1);
+    console.log("hello")
+  };
+
+
   // Render a list of answers
 
   return (
@@ -52,9 +65,12 @@ const ViewAnswers = () => {
           </div>
         );
       })}
-      <Link to={`/postanswer/${questionId}`} className="list-item">
-        <b>POST ANSWERS</b>
-      </Link>
+      <button
+          onClick={handleClick}
+          className="list-item"
+        >
+          POST NEW ANSWER
+        </button>
     </>
   );
 };
