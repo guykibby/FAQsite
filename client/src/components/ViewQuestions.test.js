@@ -17,7 +17,9 @@ afterEach(() => {
 });
 
 it("renders a topic and a question", async () => {
+
   const fakeData = [{ id: 2, name: "CSS", description: "What is CSS?" }];
+
   jest.spyOn(global, "fetch").mockImplementation(() =>
     Promise.resolve({
       json: () => Promise.resolve(fakeData),
