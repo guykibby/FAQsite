@@ -27,10 +27,7 @@ router.post(
       const { questionId } = req.params;
       const { description } = req.body;
 
-      // check if description is string, not empty string, no body (undefined)
-
-      // checkId() if result.rows.length === 0, then id not found 404
-
+      // checking if description is not a string, an empty string, is undefined, or null
       if (
         typeof description !== "string" ||
         description === "" ||
@@ -44,6 +41,7 @@ router.post(
 
       await repository.postAnswer(questionId, description);
 
+      // checkId() if result.rows.length === 0, then id not found - 404
       const checkId = await repository.checkQuestionId(questionId);
 
       if (checkId.length === 0) {

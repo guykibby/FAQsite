@@ -1,7 +1,6 @@
 import { useParams } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-// let question = "TEST";
 
 const PostAnswer = () => {
   const [question, setQuestion] = useState({});
@@ -28,9 +27,7 @@ const PostAnswer = () => {
           return;
         }
         const data = await result.json();
-        // console.log(data[0].questiondescription);
         setQuestion(data[0]);
-        // question = data[0].questiondescription;
         setIsLoading(false);
         return;
       } catch (error) {
@@ -40,8 +37,6 @@ const PostAnswer = () => {
     };
     fetchData();
   }, [questionId]);
-
-  console.log("QUESTION: " + question);
 
   const handleSubmit = async (event) => {
     event.preventDefault();

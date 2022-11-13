@@ -45,8 +45,6 @@ describe("When the user is on the HomePage,", () => {
       );
     });
 
-    // test below should be getting 'This is an example answer' but instead it is getting an empty string ""
-
     let questionDescription = container.querySelector(".question-title");
     expect(questionDescription.textContent).toBe(
       fakeData[0].questiondescription
@@ -55,79 +53,53 @@ describe("When the user is on the HomePage,", () => {
     global.fetch.mockRestore();
   });
 
-  // it("renders a fake answer with a questionId and description", async () => {
-  //   const fakeData = {
-  //     questionId: "1",
-  //     description: "This is an example answer",
-  //   };
+  it("tests for the button to contain 'Submit' as its text", async () => {
+    await act(async () => {
+      render(
+        <Router>
+          <PostAnswer />
+        </Router>,
+        container
+      );
+    });
 
-  //   jest.spyOn(global, "fetch").mockImplementation(() =>
-  //     Promise.resolve({
-  //       json: () => Promise.resolve(fakeData),
-  //     })
-  //   );
+    let button = container.querySelector("button");
+    expect(button.textContent).toBe("Submit");
+  });
 
-  //   await act(async () => {
-  //     render(
-  //       <Router>
-  //         <PostAnswer />
-  //       </Router>,
-  //       container
-  //     );
+  it("renders an error if fetched url is not valid", async () => {
+    jest.spyOn(global, "fetch").mockImplementation(() =>
+      Promise.resolve({
+        ok: false,
+      })
+    );
 
-  //     let button = container.querySelector("button");
-  //     expect(button.textContent).toBe("Submit");
+    await act(async () => {
+      render(
+        <Router>
+          <PostAnswer />
+        </Router>,
+        container
+      );
+    });
 
-  //     // global.fetch.mockRestore();
-  //   });
-  // });
+    let errorMessage = container.querySelector(".list-item");
+    expect(errorMessage.textContent).toBe("Oops, something went wrong!");
 
-  // it("renders an error if fetched url is not valid", async () => {
-  //   jest.spyOn(global, "fetch").mockImplementation(() =>
-  //     Promise.resolve({
-  //       ok: false,
-  //     })
-  //   );
+    global.fetch.mockRestore();
+  });
 
-  //   await act(async () => {
-  //     render(
-  //       <Router>
-  //         <PostAnswer />
-  //       </Router>,
-  //       container
-  //     );
-  //   });
+  it("checks for the h1 tag and expects the text to be 'Post Answer'", async () => {
+    await act(async () => {
+      render(
+        <Router>
+          <PostAnswer />
+        </Router>,
+        container
+      );
+    });
 
-  //   let errorMessage = container.querySelector(".list-item");
-  //   expect(errorMessage.textContent).toBe("Oops, something went wrong!");
-
-  //   global.fetch.mockRestore();
-  // });
-
-  // it("checks for the h1 tag and expects the text to be 'Post Answer'", async () => {
-  //   const fakeData = {
-  //     questionId: "1",
-  //     description: "This is an example answer",
-  //   };
-
-  //   jest.spyOn(global, "fetch").mockImplementation(() =>
-  //     Promise.resolve({
-  //       json: () => Promise.resolve(fakeData),
-  //     })
-  //   );
-
-  //   await act(async () => {
-  //     render(
-  //       <Router>
-  //         <PostAnswer />
-  //       </Router>,
-  //       container
-  //     );
-
-  //     let heading = container.querySelector("h1");
-  //     expect(heading.textContent).toBe("Post Answer");
-
-  //     global.fetch.mockRestore();
-  //   });
-  // });
+    let heading = container.querySelector("h1");
+    expect(heading.textContent).toBe("Post Answer");
+  });
 });
