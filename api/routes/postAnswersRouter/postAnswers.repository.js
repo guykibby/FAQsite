@@ -17,7 +17,7 @@ module.exports = {
   checkQuestionId: async (questionId) => {
     const db = await get_db();
     const result = await db.query(
-      `SELECT id FROM answers
+      `SELECT id FROM questions
       WHERE questionid = $1`,
       [questionId]
     );
