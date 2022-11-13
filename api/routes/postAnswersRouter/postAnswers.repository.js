@@ -1,6 +1,7 @@
 const get_db = require("../../db");
 
 // export postAnswer function that adds a new POST to the answers table with a given questionId and description
+// export checkQuestionId function that selects a question based on a given id
 
 module.exports = {
   postAnswer: async (questionId, description) => {
