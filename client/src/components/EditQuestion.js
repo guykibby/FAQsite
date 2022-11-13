@@ -94,7 +94,7 @@ const EditQuestion = () => {
   }, [star, review, questionId, starFlag, question]);
   return (
     <>
-      <h2>{question.description}</h2>
+      <h2 className="list-item">{question.description}</h2>
       <div className={styles.editbar}>
         <div>
           <label htmlFor="review">Review</label>

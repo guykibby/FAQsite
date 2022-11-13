@@ -9,7 +9,7 @@ const EditButton = ({ information }) => {
       navigate(`/editanswer/${information.id}`);
     }
   };
-  return <button onClick={handleClick}>Edit Post</button>;
+  return <button onClick={handleClick} className="link">Edit Post</button>;
 };
 
 export default EditButton;

@@ -1,6 +1,8 @@
 import { useParams } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import EditButton from "./EditButton";
+import { useNavigate } from "react-router-dom";
+
 
 const ViewAnswers = () => {
   const { questionId } = useParams();
@@ -8,6 +10,8 @@ const ViewAnswers = () => {
   const [answers, setAnswers] = useState([{ answerdescription: "Loading" }]);
   const [error, setError] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -33,17 +37,8 @@ const ViewAnswers = () => {
   }, [questionId]);
 
   const handleClick = () => {
-    // if (level === 2) {
-    //   const topic = theTopics.filter(
-    //     (e) => e.term === branch && e.topic === choice
-    //   );
-    //   navigate(`/questions/${topic[0].id}`);
-    // }
-    // branch = choice;
-    // setLevel((t) => t + 1);
-    console.log("hello")
+    navigate(`/postanswer/${questionId}`);
   };
-
 
   // Render a list of answers
 
@@ -57,11 +52,11 @@ const ViewAnswers = () => {
       <p className="title">{answers[0].questiondescription}</p>
       {answers.map((answer, key) => {
         return (
-          <div key={key}>
-            <div>
+          <div key={key} className="list-item main-container">
+            <div className="link">
               {answer.answerdescription}
             </div>
-            <EditButton information={answer}/>
+            <EditButton information={answer} className="link"/>
           </div>
         );
       })}
