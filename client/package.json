@@ -27,12 +27,6 @@
     "prettier:check": "prettier --check '**/*.js'",
     "lint:js": "eslint ."
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
   "eslintIgnore": [
     "node_modules",
     "build/*"

@@ -65,7 +65,8 @@ test("renders questions data using fakeQuestionsData", async () => {
       container
     );
   });
-
+  const questionsTitle = container.querySelector(".questions-title");
+  expect(questionsTitle.textContent).toBe("Questions");
   const questionButton = container.querySelector(".question-list-item");
   expect(questionButton.textContent).toBe("What is HTML?");
   // remove the mock to ensure tests are completely isolated
@@ -114,6 +115,8 @@ test("renders answers data using fakeAnswersData", async () => {
     );
   });
 
+  const answersTitle = container.querySelector(".answers-title");
+  expect(answersTitle.textContent).toBe("Answers");
   const answerButton = container.querySelector(".answer-list-item");
   expect(answerButton.textContent).toBe(
     "Et eaque galisum ex nisi libero ad soluta repellat a internos culpa eum repellat officiis ad ullam consequatur."
@@ -179,12 +182,49 @@ test("renders questions & answers data using fakeQuestionsAnswersData", async ()
     );
   });
 
+  const questionsTitle = container.querySelector(".questions-title");
+  expect(questionsTitle.textContent).toBe("Questions");
+
   const questionButton = container.querySelector(".question-list-item");
   expect(questionButton.textContent).toBe("What is HTML?");
+
+  const answersTitle = container.querySelector(".answers-title");
+  expect(answersTitle.textContent).toBe("Answers");
 
   const answerButton = container.querySelector(".answer-list-item");
   expect(answerButton.textContent).toBe(
     "Et eaque galisum ex nisi libero ad soluta repellat a internos culpa eum repellat officiis ad ullam consequatur."
+  );
+  // remove the mock to ensure tests are completely isolated
+  global.fetch.mockRestore();
+});
+
+/* using both tables - no questions & answers with mocking data */
+test("renders 'No questions/Answers are found for review' message if no questions & answers are found using fakeQuestionsAnswersData", async () => {
+  const fakeQuestionsAnswersData = {
+    questions: [],
+    answers: [],
+  };
+
+  jest.spyOn(global, "fetch").mockImplementation(() =>
+    Promise.resolve({
+      json: () => Promise.resolve(fakeQuestionsAnswersData),
+    })
+  );
+
+  // Use the asynchronous version of act to apply resolved promises
+  await act(async () => {
+    render(
+      <Router>
+        <Dashboard />
+      </Router>,
+      container
+    );
+  });
+
+  const noDataFound = container.querySelector(".no-data-found");
+  expect(noDataFound.textContent).toBe(
+    "No questions/Answers are found for review"
   );
   // remove the mock to ensure tests are completely isolated
   global.fetch.mockRestore();
