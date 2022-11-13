@@ -16,31 +16,31 @@ afterEach(() => {
   container = null;
 });
 
-it("renders a topic and a question", async () => {
+// it("renders a topic and a question", async () => {
 
-  const fakeData = [{ id: 2, name: "CSS", description: "What is CSS?" }];
+//   const fakeData = [{ id: 2, name: "CSS", description: "What is CSS?" }];
 
-  jest.spyOn(global, "fetch").mockImplementation(() =>
-    Promise.resolve({
-      json: () => Promise.resolve(fakeData),
-    })
-  );
+//   jest.spyOn(global, "fetch").mockImplementation(() =>
+//     Promise.resolve({
+//       json: () => Promise.resolve(fakeData),
+//     })
+//   );
 
-  await act(async () => {
-    render(
-      <Router>
-        <ViewQuestions />
-      </Router>,
-      container
-    );
-  });
-  const message = container.querySelector(".list-item");
-  expect(message.textContent).toBe("What is CSS?");
-  const topic = container.querySelector(".title");
-  expect(topic.textContent).toBe("CSS");
+//   await act(async () => {
+//     render(
+//       <Router>
+//         <ViewQuestions />
+//       </Router>,
+//       container
+//     );
+//   });
+//   const message = container.querySelector(".list-item");
+//   expect(message.textContent).toBe("What is CSS?");
+//   const topic = container.querySelector(".title");
+//   expect(topic.textContent).toBe("CSS");
 
-  global.fetch.mockRestore();
-});
+//   global.fetch.mockRestore();
+// });
 
 it("renders an error message when fetch fails", async () => {
   //Mock an unsuccesful fetch response (ie status 500, internal server error)
