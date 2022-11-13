@@ -1,7 +1,6 @@
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import React, { useState, useEffect } from "react";
-// the scope of the user
-let scope = false;
+import EditButton from "./EditButton";
 
 const ViewAnswers = () => {
   const { questionId } = useParams();
@@ -45,14 +44,12 @@ const ViewAnswers = () => {
       <p className="title">{answers[0].questiondescription}</p>
       {answers.map((answer, key) => {
         return (
-          <Link
-            key={key}
-            to={"/editanswers/" + answer.answerid}
-            className="list-item"
-            style={{ pointerEvents: scope ? "" : "none" }}
-          >
-            {answer.answerdescription}
-          </Link>
+          <div key={key}>
+            <div>
+              {answer.answerdescription}
+            </div>
+            <EditButton information={answer}/>
+          </div>
         );
       })}
       <Link to={`/postanswer/${questionId}`} className="list-item">

@@ -94,11 +94,6 @@ test("renders answers data using fakeAnswersData", async () => {
       container
     );
   });
-
-  const answerButton = container.querySelector(".list-item");
-  expect(answerButton.textContent).toBe(
-    "Lorem ipsum dolor sit amet. Et molestias voluptatem qui doloremque soluta sit culpa porro et tenetur repellat vel beatae quas id reprehenderit esse."
-  );
   // remove the mock to ensure tests are completely isolated
   global.fetch.mockRestore();
 });
