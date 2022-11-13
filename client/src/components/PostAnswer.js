@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+// let question = "TEST";
 
 const PostAnswer = () => {
   const [question, setQuestion] = useState({});
@@ -9,7 +10,7 @@ const PostAnswer = () => {
 
   const [answer, setAnswer] = useState("");
   const [error, setError] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const navigate = useNavigate();
 
@@ -26,9 +27,12 @@ const PostAnswer = () => {
           setError(true);
           return;
         }
-        setIsLoading(false);
         const data = await result.json();
+        // console.log(data[0].questiondescription);
         setQuestion(data[0]);
+        // question = data[0].questiondescription;
+        setIsLoading(false);
+        return;
       } catch (error) {
         setError(true);
         console.log("Error fetching products");
@@ -36,6 +40,8 @@ const PostAnswer = () => {
     };
     fetchData();
   }, [questionId]);
+
+  console.log("QUESTION: " + question);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -75,7 +81,7 @@ const PostAnswer = () => {
   return (
     <>
       <h1 className="title">Post Answer</h1>
-      <p className="title">{question.questiondescription}</p>
+      <p className="question-title">{question.questiondescription}</p>
 
       <form onSubmit={handleSubmit} className="main-container">
         <input

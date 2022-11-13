@@ -16,7 +16,7 @@ const pathParamValidationMiddleware = (schema) => (request, response, next) => {
 };
 // path parameter schema
 const pathParamsSchema = Joi.object().keys({
-  questionId: Joi.number().integer().min(1).max(32),
+  questionId: Joi.number().integer().min(1).max(9999998),
 });
 
 router.post(

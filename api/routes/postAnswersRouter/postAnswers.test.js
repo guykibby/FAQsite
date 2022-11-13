@@ -14,23 +14,22 @@ describe("GIVEN that the POST /postanswer/:questionId route exists", () => {
 
     // body to be compared with the newly posted answer
     const body = {
-      questionId: 3,
       description: "test",
     };
 
     const expectedStatus = 201;
 
-    const postedAnswer = await repository.postAnswer(
-      body.questionId,
-      body.description
-    );
+    // const postedAnswer = await repository.postAnswer(
+    //   body.questionId,
+    //   body.description
+    // );
 
     // comparing the body's question id with the answer's questionid of the first item in the array
     // the test below is failing (supposed to give status 201 but getting a 400)
 
     await request(app)
-      .post(`/postanswer/${body.questionId}`)
-      .send(postedAnswer)
+      .post(`/postanswer/5`)
+      .send(body)
       .expect(expectedStatus)
       .expect((response) => {
         expect(response.body).toStrictEqual({
@@ -54,68 +53,55 @@ describe("GIVEN that the POST /postanswer/:questionId route exists", () => {
     expect(updatedAnswersList.rows[0].description).toBe("test");
   });
 
-  test("WHEN the path parameter for /:questionId is a undefined, respond with status code 400 and an appropriate error message", async () => {
+  test("WHEN the path parameter for /:questionId is more than 9999998, which means it does not exist within the database, respond with status code 400 and an appropriate error message", async () => {
     const expectedStatus = 400;
 
     const body = {
-      questionId: undefined,
       description: "test",
     };
 
     await request(app)
-      .post(`/postanswer/${body.questionId}`)
+      .post(`/postanswer/9999999`)
       .send(body)
       .expect(expectedStatus)
       .expect((response) => {
         expect(response.body).toStrictEqual({
-          message: ['"questionId" must be a number'],
+          message: ['"questionId" must be less than or equal to 9999998'],
         });
       });
-  });
-
-  test("WHEN the path parameter for /:questionId is more than 32, which means it does not exist within the database, respond with status code 400 and an appropriate error message", async () => {
-    const expectedStatus = 400;
-
-    const body = {
-      questionId: 35,
-      description: "test",
-    };
-
-    await request(app)
-      .post(`/postanswer/${body.questionId}`)
-      .send(body)
-      .expect(expectedStatus)
-      .expect((response) => {
-        expect(response.body).toStrictEqual({
-          message: ['"questionId" must be less than or equal to 32'],
-        });
-      });
-
-    await request(app).post("/postanswer/incorrectId").expect(expectedStatus);
   });
 
   test("WHEN the path parameter for /:questionId is a string, respond with status code 400 and an appropriate error message", async () => {
     const expectedStatus = 400;
 
-    await request(app).post("/postanswer/incorrectId").expect(expectedStatus);
+    const body = {
+      description: "test",
+    };
+
+    await request(app)
+      .post("/postanswer/incorrectId")
+      .send(body)
+      .expect(expectedStatus);
   });
 
   test("WHEN the path parameter for questionId is 0, respond with status code 400 and an appropriate error message", async () => {
     const expectedStatus = 400;
 
-    await request(app).post("/postanswer/0").expect(expectedStatus);
+    const body = {
+      description: "test",
+    };
+
+    await request(app).post("/postanswer/0").send(body).expect(expectedStatus);
   });
 
   test("WHEN the path parameter for questionId is a negative value, respond with status code 400 and an appropriate error message", async () => {
     const expectedStatus = 400;
 
-    await request(app).post("/postanswer/-5").expect(expectedStatus);
-  });
+    const body = {
+      description: "test",
+    };
 
-  test("WHEN the path parameter for questionId is 9999, respond with status code 400 and an appropriate error message", async () => {
-    const expectedStatus = 400;
-
-    await request(app).post("/postanswer/9999").expect(expectedStatus);
+    await request(app).post("/postanswer/-5").send(body).expect(expectedStatus);
   });
 
   test("WHEN the path parameter for questionId is not provided, respond with status code 404 and an appropriate error message", async () => {
