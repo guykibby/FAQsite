@@ -10,9 +10,8 @@ import { Link } from "react-router-dom";
  * */
 const Dashboard = () => {
   const [newPosts, setNewPosts] = useState({ questions: [] }, { answers: [] });
-  // const [questions, setQuestions] = useState({ questions: [] });
   const [isQuestionsEmpty, setIsQuestionsEmpty] = useState(false);
-  // const [answers, setAnswers] = useState({ answers: [] });
+  const [noReviews, setNoReviews] = useState(false);
   const [isAnswersEmpty, setIsAnswersEmpty] = useState(false);
   const [error, setError] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
@@ -36,8 +35,11 @@ const Dashboard = () => {
         setNewPosts(data);
         data.questions.length > 0 && setIsQuestionsEmpty(true);
         data.answers.length > 0 && setIsAnswersEmpty(true);
+        if (data.questions.length <= 0 && data.answers.length <= 0) {
+          setNoReviews(true);
+          return;
+        }
       } catch (error) {
-        // setError(true);
         setIsLoading(false);
         console.log("Error fetching products");
       }
@@ -57,30 +59,42 @@ const Dashboard = () => {
        * to <Question /> component to reuse it in other modules
        * but implmented to keep it in sync with other usestories
        */}
-      {isQuestionsEmpty && <h2>Questions</h2>}
-      {isQuestionsEmpty &&
-        newPosts["questions"].map((question, index) => (
-          <Link
-            key={index}
-            to={"/editquestion/" + question.id}
-            state={question}
-            className="question-list-item list-item"
-          >
-            {question.description}
-          </Link>
-        ))}
-      {isAnswersEmpty && <h2>Answers</h2>}
-      {isAnswersEmpty &&
-        newPosts["answers"].map((answer, index) => (
-          <Link
-            key={index}
-            to={"/editanswer/" + answer.answerid}
-            state={answer}
-            className="answer-list-item list-item"
-          >
-            {answer.answerdescription}
-          </Link>
-        ))}
+      {noReviews && (
+        <p className="no-data-found list-item">
+          No questions/Answers are found for review
+        </p>
+      )}
+      {isQuestionsEmpty && (
+        <>
+          <h2 className="questions-title">Questions</h2>
+          {newPosts["questions"].map((question, index) => (
+            <Link
+              key={index}
+              to={"/editquestion/" + question.id}
+              state={question}
+              className="question-list-item list-item"
+            >
+              {question.description}
+            </Link>
+          ))}
+        </>
+      )}
+      {isAnswersEmpty && (
+        <>
+          <h2 className="answers-title">Answers</h2>
+          {newPosts["answers"].map((answer, index) => (
+            <Link
+              key={index}
+              to={"/editanswer/" + answer.id}
+              state={answer}
+              className="answer-list-item list-item"
+            >
+              {answer.answerdescription}
+            </Link>
+          ))}
+        </>
+      )}
+      moved
     </>
   );
 };
