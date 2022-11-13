@@ -34,14 +34,8 @@ const Dashboard = () => {
         setIsLoading(false);
         const data = await result.json();
         setNewPosts(data);
-        // setQuestions(data["questions"]);
-        // console.log("questions : " + JSON.stringify(questions));
-        // console.log("Questions Array length : " + questions.length);
         data.questions.length > 0 && setIsQuestionsEmpty(true);
-        // setAnswers(data["answers"]);
         data.answers.length > 0 && setIsAnswersEmpty(true);
-        // console.log("Answers Array length : " + answers.length);
-        // console.log("answers : " + JSON.stringify(answers));
       } catch (error) {
         // setError(true);
         setIsLoading(false);
