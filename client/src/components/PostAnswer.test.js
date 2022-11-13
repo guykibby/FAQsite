@@ -16,7 +16,7 @@ afterEach(() => {
   container = null;
 });
 
-it("renders a fake answer with a questionId and description ", async () => {
+it("renders a fake answer with a questionId and description", async () => {
   const fakeData = {
     questionId: "1",
     description: "This is an example answer",
@@ -63,4 +63,33 @@ it("renders an error if fetched url is not valid", async () => {
   expect(errorMessage.textContent).toBe("Oops, something went wrong!");
 
   global.fetch.mockRestore();
+});
+
+it("renders a fake answer with a questionId and description, then checks to see if question description is being rendered", async () => {
+  const fakeData = {
+    questionId: "1",
+    description: "This is an example answer",
+  };
+
+  jest.spyOn(global, "fetch").mockImplementation(() =>
+    Promise.resolve({
+      json: () => Promise.resolve(fakeData),
+    })
+  );
+
+  await act(async () => {
+    render(
+      <Router>
+        <PostAnswer />
+      </Router>,
+      container
+    );
+
+    // test below should be getting 'This is an example answer' but instead it is getting an empty string ""
+
+    const questionDescription = container.querySelector(".title");
+    expect(questionDescription.textContent).toBe(fakeData.description);
+
+    global.fetch.mockRestore();
+  });
 });
