@@ -57,6 +57,7 @@ const ViewQuestions = () => {
           return (
             <div key={i} className="main-container list-item">
               <Link className="link" to={"/answers/" + e.id}>
+                {e.isstarred === true ? " 🔥  " : ""}
                 {e.description}
               </Link>
 
