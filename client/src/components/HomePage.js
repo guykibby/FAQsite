@@ -44,17 +44,6 @@ const HomePage = () => {
         setLevel(-2);
         return;
       }
-
-      const result = await fetch(`${process.env.REACT_APP_API_URL}/topics`);
-
-      if (result.ok === false) {
-        setLevel(-2);
-        return;
-      }
-
-      const data = await result.json();
-      theTopics = data;
-      setLevel(0);
     };
     fetchData();
   }, []);
