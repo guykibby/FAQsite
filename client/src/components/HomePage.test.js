@@ -20,6 +20,8 @@ describe("When the user is on the HomePage,", () => {
     container = null;
   });
 
+  // Test Happy path, browsing tree is functional after successful fetch request
+
   it("they can select the year, then the term, then the topic.", async () => {
     const fakeTopicsData = [
       { id: 1, year: "Year 1", term: "Client Side", topic: "HTML" },
@@ -69,13 +71,40 @@ describe("When the user is on the HomePage,", () => {
     global.fetch.mockRestore();
   });
 
-  it("it renders an error message when fetch fails", async () => {
+  // Test error message is rendered if DB is not finctioning
+
+  it("renders an error message when fetch returns a 500", async () => {
     //Mock an unsuccesful fetch response (ie status 500, internal server error)
     jest.spyOn(global, "fetch").mockImplementation(() =>
       Promise.resolve({
         ok: false,
       })
     );
+
+    // Use the asynchronous version of act to apply resolved promises
+    await act(async () => {
+      render(
+        <Router>
+          <HomePage />
+        </Router>,
+        container
+      );
+    });
+
+    let errorMessage = container.querySelector(".list-item");
+    expect(errorMessage.textContent).toBe("Oops, something went wrong!");
+
+    // remove the mock to ensure tests are completely isolated
+    global.fetch.mockRestore();
+  });
+
+  // Test error message is rendered if API is not finctioning
+
+  it("renders an error message when fetch throws an error", async () => {
+    //Mock an unsuccesful fetch response (ie status 500, internal server error)
+    jest.spyOn(global, "fetch").mockImplementation(() => {
+      throw new Error();
+    });
 
     // Use the asynchronous version of act to apply resolved promises
     await act(async () => {

@@ -4,15 +4,15 @@ import { useNavigate } from "react-router-dom";
 // the topics array to be fetched from the DB
 let theTopics = [];
 
-// theTopics will be filtered with the use of keys
-const levelKeys = ["year", "term", "topic"];
-
 // the branch will be determined by the users menu selections
 let branch = "";
 
 const HomePage = () => {
   const [level, setLevel] = useState(-1);
   const navigate = useNavigate(10);
+
+  // theTopics will be filtered with the use of keys
+  const levelKeys = ["year", "term", "topic"];
 
   // Filtering through the array depending on the level and branch the user is on
   const branchArray = theTopics.filter((x) =>
@@ -26,25 +26,30 @@ const HomePage = () => {
   displayArray = [...new Set(displayArray)];
 
   // Fetching the topics data from DB
-  
+
   useEffect(() => {
     const fetchData = async () => {
-      const result = await fetch(`${process.env.REACT_APP_API_URL}/topics`);
+      try {
+        const result = await fetch(`${process.env.REACT_APP_API_URL}/topics`);
 
-      if (result.ok === false) {
+        if (result.ok === false) {
+          setLevel(-2);
+          return;
+        }
+
+        const data = await result.json();
+        theTopics = data;
+        setLevel(0);
+      } catch (err) {
         setLevel(-2);
         return;
       }
-
-      const data = await result.json();
-      theTopics = data;
-      setLevel(0);
     };
     fetchData();
   }, []);
 
   // handling menu selections
- 
+
   const handleClick = (choice) => {
     if (level === 2) {
       const topic = theTopics.filter(
