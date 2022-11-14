@@ -118,7 +118,7 @@ const EditQuestion = () => {
             data-testid="star-checkbox"
           />
         </div>
-        <EditButton information={question} onClick={handleDelete} />
+        <button onClick={handleDelete}>Delete Question</button >
       </div>
     </>
   );
