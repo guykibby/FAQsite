@@ -46,13 +46,14 @@ module.exports = {
   getAnswer: async (answerId) => {
     try {
       const db = await get_db();
-      const result = await db.query(`SELECT answers.id AS id, answers.description AS description, answers.isstarred AS isstarred, answers.isreviewed AS isreviewed, questionid, answers.userid AS userid, questions.description AS questionDescription FROM 
-      answers JOIN questions ON questions.id = answers.questionid WHERE answers.id = $1`, [
-        answerId,
-      ]);
+      const result = await db.query(
+        `SELECT answers.id AS id, answers.description AS description, answers.isstarred AS isstarred, answers.isreviewed AS isreviewed, questionid, answers.userid AS userid, questions.description AS questionDescription FROM 
+      answers JOIN questions ON questions.id = answers.questionid WHERE answers.id = $1`,
+        [answerId]
+      );
       return result.rows[0];
     } catch (error) {
-      throw Error(error);
+      throw new Error("server down");
     }
   },
 };
