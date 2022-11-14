@@ -20,7 +20,7 @@ describe("When the user is on the HomePage,", () => {
   it("test that it renders a mock question with topicId", async () => {
     const fakeData = {
       description: "Test",
-      topicId: 6,
+      name: "HTML"
     };
 
     jest.spyOn(global, "fetch").mockImplementation(() =>

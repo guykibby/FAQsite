@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 const PostQuestion = () => {
   const { topicId } = useParams();
-  const { setTopicId } = useState("");
+  const [ topic, setTopic ] = useState("");
   const [question, setQuestion] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
@@ -25,8 +25,7 @@ const PostQuestion = () => {
           return;
         }
         const data = await result.json();
-        setQuestion(data[0]);
-        //  setTopicId(data[0]);
+        setTopic(data[0]);
         setIsLoading(false);
         return;
       } catch (error) {
@@ -72,7 +71,7 @@ const PostQuestion = () => {
   return (
     <>
       <h1>Post Question</h1>
-      ////<p className="title">{question.questiondescription}</p>//}
+     <p className="title">{topic.name}</p>
       <form onSubmit={handelSubmit} className="main-container">
         <input
           type="text"
