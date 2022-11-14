@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import EditButton from "./EditButton";
 import { useNavigate } from "react-router-dom";
 
+let scope = false;
 
 const ViewQuestions = () => {
   const { topicId } = useParams();
@@ -40,7 +41,6 @@ const ViewQuestions = () => {
     return <p className="list-item">Oops, something went wrong!</p>;
   }
 
-
   const handleClick = () => {
     navigate(`/postquestion/${topicId}`);
   };
@@ -50,29 +50,25 @@ const ViewQuestions = () => {
       {loading && <p className="title">Loading....</p>}
       <p className="title">{questions[0].name}</p>
 
-        {questions[0].description === null ? (
-          <></>
-        ) : (
-          questions.map((e, i) => {
-            return (
-              <div key={i} className="main-container list-item">
-                <Link className="link" to={"/answers/" + e.id}>
-                  {e.description}
-                </Link>
-                <div className="link">
-                  <EditButton information={e} />
-                </div>
-              </div>
-            );
-          })
-        )}
-     
-      <button
-          onClick={handleClick}
-          className="list-item"
-        >
-          POST NEW QUESTION
-        </button>
+      {questions[0].description === null ? (
+        <></>
+      ) : (
+        questions.map((e, i) => {
+          return (
+            <div key={i} className="main-container list-item">
+              <Link className="link" to={"/answers/" + e.id}>
+                {e.description}
+              </Link>
+
+              {scope ? <EditButton className="link" information={e} /> : <></>}
+            </div>
+          );
+        })
+      )}
+
+      <button onClick={handleClick} className="list-item">
+        POST NEW QUESTION
+      </button>
     </>
   );
 };

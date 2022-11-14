@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import EditButton from "./EditButton";
 import { useNavigate } from "react-router-dom";
 
+let scope = false;
 
 const ViewAnswers = () => {
   const { questionId } = useParams();
@@ -29,9 +30,7 @@ const ViewAnswers = () => {
         setIsLoading(false);
         const data = await result.json();
         setAnswers(data);
-      } catch (error) {
-        console.log("Error fetching products");
-      }
+      } catch (error) {}
     };
     fetchData();
   }, [questionId]);
@@ -39,6 +38,11 @@ const ViewAnswers = () => {
   const handleClick = () => {
     navigate(`/postanswer/${questionId}`);
   };
+  if (error) {
+    return (
+      <p className="error-list-item list-item">Oops, something went wrong!</p>
+    );
+  }
 
   // Render a list of answers
 
@@ -46,26 +50,28 @@ const ViewAnswers = () => {
     <>
       <h1>Answers</h1>
       {isLoading && <p className="loading-list-item list-item">Loading....</p>}
-      {error && (
-        <p className="error-list-item list-item">Oops, something went wrong!</p>
-      )}
+
       <p className="title">{answers[0].questiondescription}</p>
-      {answers.map((answer, key) => {
-        return (
-          <div key={key} className="list-item main-container">
-            <div className="link">
-              {answer.answerdescription}
+
+      {answers[0].answerdescription === null ? (
+        <></>
+      ) : (
+        answers.map((answer, key) => {
+          return (
+            <div key={key} className="list-item main-container">
+              <div className="link">{answer.answerdescription}</div>
+              {scope ? (
+                <EditButton information={answer} className="link" />
+              ) : (
+                <></>
+              )}
             </div>
-            <EditButton information={answer} className="link"/>
-          </div>
-        );
-      })}
-      <button
-          onClick={handleClick}
-          className="list-item"
-        >
-          POST NEW ANSWER
-        </button>
+          );
+        })
+      )}
+      <button onClick={handleClick} className="list-item">
+        POST NEW ANSWER
+      </button>
     </>
   );
 };
