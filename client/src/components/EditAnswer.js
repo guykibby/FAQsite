@@ -1,9 +1,7 @@
-
 import { useEffect, useState } from "react";
 import { useNavigate, useParams, Link } from "react-router-dom";
 import EditButton from "./EditButton";
 import styles from "./EditQuestion.module.css";
-
 
 const EditAnswer = () => {
   const { answerId } = useParams();
@@ -97,7 +95,8 @@ const EditAnswer = () => {
 
   return (
     <>
-      <h2>{answer.description}</h2>
+      <h1 className="title">{answer.questiondescription}</h1>
+      <p className="list-item">{answer.description}</p>
       <div className={styles.editbar}>
         <div>
           <label htmlFor="review">Review</label>
@@ -121,7 +120,7 @@ const EditAnswer = () => {
             data-testid="star-checkbox"
           />
         </div>
-        <button onClick={handleDelete}>Delete Answer</button >
+        <button onClick={handleDelete}>Delete Answer</button>
       </div>
     </>
   );
