@@ -16,9 +16,17 @@ afterEach(() => {
   container = null;
 });
 
-it("renders a topic and a question", async () => {
-
-  const fakeData = [{ id: 2, name: "CSS", description: "What is CSS?" }];
+it("renders questions & answers data using fakeQuestionsAnswersData", async () => {
+  const fakeData = [
+    {
+      id: 1,
+      description: "What is HTML?",
+      topicid: 1,
+      isstarred: false,
+      isreviewed: false,
+      name: "HTML",
+    },
+  ];
 
   jest.spyOn(global, "fetch").mockImplementation(() =>
     Promise.resolve({
@@ -34,23 +42,23 @@ it("renders a topic and a question", async () => {
       container
     );
   });
-  const message = container.querySelector(".list-item");
-  expect(message.textContent).toBe("What is CSS?");
-  const topic = container.querySelector(".title");
-  expect(topic.textContent).toBe("CSS");
+
+  const questionsTitle = container.querySelector(".title");
+  expect(questionsTitle.textContent).toBe(fakeData[0].name);
+
+  const questionsDescription = container.querySelector(".list-item");
+  expect(questionsDescription.textContent).toBe(fakeData[0].description);
 
   global.fetch.mockRestore();
 });
 
 it("renders an error message when fetch fails", async () => {
-  //Mock an unsuccesful fetch response (ie status 500, internal server error)
   jest.spyOn(global, "fetch").mockImplementation(() =>
     Promise.resolve({
       ok: false,
     })
   );
 
-  // Use the asynchronous version of act to apply resolved promises
   await act(async () => {
     render(
       <Router>
@@ -63,6 +71,5 @@ it("renders an error message when fetch fails", async () => {
   const errorMessage = container.querySelector(".list-item");
   expect(errorMessage.textContent).toBe("Oops, something went wrong!");
 
-  // remove the mock to ensure tests are completely isolated
   global.fetch.mockRestore();
 });
