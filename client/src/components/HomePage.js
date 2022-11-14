@@ -4,15 +4,15 @@ import { useNavigate } from "react-router-dom";
 // the topics array to be fetched from the DB
 let theTopics = [];
 
-// theTopics will be filtered with the use of keys
-const levelKeys = ["year", "term", "topic"];
-
 // the branch will be determined by the users menu selections
 let branch = "";
 
 const HomePage = () => {
   const [level, setLevel] = useState(-1);
   const navigate = useNavigate(10);
+
+  // theTopics will be filtered with the use of keys
+  const levelKeys = ["year", "term", "topic"];
 
   // Filtering through the array depending on the level and branch the user is on
   const branchArray = theTopics.filter((x) =>
