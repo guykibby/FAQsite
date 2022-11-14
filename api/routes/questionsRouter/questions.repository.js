@@ -10,7 +10,7 @@ module.exports = {
       RIGHT JOIN topics
       ON questions.topicId = topics.id
       WHERE topics.id = ${topicId}
-      ORDER BY questions.createdon DESC`
+      ORDER BY isStarred DESC, questions.createdon DESC`
       );
 
       return getQuestions.rows;

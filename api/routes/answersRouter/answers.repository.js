@@ -9,7 +9,7 @@ module.exports = {
       LEFT JOIN answers 
       ON questions.id = answers.questionid 
       WHERE questions.id = ${questionId}
-      ORDER BY answers.createdon DESC`
+      ORDER BY answers.isStarred DESC, answers.createdon DESC `
     );
     return getAnswers.rows;
   },

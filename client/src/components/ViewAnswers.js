@@ -59,7 +59,10 @@ const ViewAnswers = () => {
         answers.map((answer, key) => {
           return (
             <div key={key} className="list-item main-container">
-              <div className="link">{answer.answerdescription}</div>
+              <div className="link">
+                {answer.isstarred === true ? " ✅ " : ""}
+                {answer.answerdescription}
+              </div>
               {scope ? (
                 <EditButton information={answer} className="link" />
               ) : (
