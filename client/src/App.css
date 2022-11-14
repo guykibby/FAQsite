@@ -25,3 +25,16 @@ body {
   color: black;
   text-align: center;
 }
+
+.question {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  grid-template-rows: auto;
+  column-gap: 2rem;
+}
+.link {
+  text-decoration: none;
+  color: black;
+  text-align: center;
+  padding: 0.3rem;
+}
