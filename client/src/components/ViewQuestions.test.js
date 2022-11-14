@@ -48,7 +48,7 @@ it("renders a topic and a question", async () => {
   const questionsTitle = container.querySelector(".title");
   expect(questionsTitle.textContent).toBe(fakeData[0].name);
 
-  const questionsDescription = container.querySelector(".list-item");
+  const questionsDescription = container.querySelector(".link");
   expect(questionsDescription.textContent).toBe(fakeData[0].description);
   // remove the mock to ensure tests are completely isolated
   global.fetch.mockRestore();
