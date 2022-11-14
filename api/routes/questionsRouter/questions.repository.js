@@ -2,16 +2,34 @@ const get_db = require("../../db");
 
 module.exports = {
   getQuestions: async (topicId) => {
-    const db = await get_db();
-    const getQuestions = await db.query(
-      `SELECT questions.id, description, topicId, isStarred, isReviewed, topics.name  
+    try {
+      const db = await get_db();
+      const getQuestions = await db.query(
+        `SELECT questions.id, description, topicId, isStarred, isReviewed, topics.name  
       FROM questions
-      JOIN topics
+      RIGHT JOIN topics
       ON questions.topicId = topics.id
-      WHERE topicId = ${topicId}
+      WHERE topics.id = ${topicId}
       ORDER BY questions.createdon DESC`
-    );
+      );
 
-    return getQuestions.rows;
+      return getQuestions.rows;
+    } catch (error) {
+      next(error);
+    }
+  },
+
+  checkTopicId: async (topicId) => {
+    try {
+      const db = await get_db();
+      const checkTopicId = await db.query(
+        `SELECT id FROM topics WHERE id = $1`,
+        [topicId]
+      );
+
+      return checkTopicId;
+    } catch (error) {
+      next(error);
+    }
   },
 };

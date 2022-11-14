@@ -33,14 +33,8 @@ const App = () => {
             path="/postanswer/:questionId"
             element={<PostAnswer answerObject={answerObject} />}
           />
-          <Route
-            path="/editquestion/:questionId"
-            element={<EditQuestion questionObject={questionObject} />}
-          />
-          <Route
-            path="/editanswer/:answerId"
-            element={<EditAnswer answerObject={answerObject} />}
-          />
+          <Route path="/editquestion/:questionId" element={<EditQuestion />} />
+          <Route path="/editanswer/:answerId" element={<EditAnswer />} />
           <Route
             path="/dashboard"
             element={

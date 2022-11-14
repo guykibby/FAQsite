@@ -6,18 +6,30 @@ import ViewQuestions from "./ViewQuestions";
 
 let container = null;
 beforeEach(() => {
+  // setup a DOM element as a render target
   container = document.createElement("div");
   document.body.appendChild(container);
 });
 
 afterEach(() => {
+  // cleanup on exiting
   unmountComponentAtNode(container);
   container.remove();
   container = null;
 });
 
 it("renders a topic and a question", async () => {
-  const fakeData = [{ topic: "CSS", description: "What is CSS?" }];
+  const fakeData = [
+    {
+      id: 1,
+      description: "What is HTML?",
+      topicid: 1,
+      isstarred: false,
+      isreviewed: false,
+      name: "HTML",
+    },
+  ];
+
   jest.spyOn(global, "fetch").mockImplementation(() =>
     Promise.resolve({
       json: () => Promise.resolve(fakeData),
@@ -31,19 +43,24 @@ it("renders a topic and a question", async () => {
       </Router>,
       container
     );
-    global.fetch.mockRestore();
   });
+
+  const questionsTitle = container.querySelector(".title");
+  expect(questionsTitle.textContent).toBe(fakeData[0].name);
+
+  const questionsDescription = container.querySelector(".link");
+  expect(questionsDescription.textContent).toBe(fakeData[0].description);
+  // remove the mock to ensure tests are completely isolated
+  global.fetch.mockRestore();
 });
 
 it("renders an error message when fetch fails", async () => {
-  //Mock an unsuccesful fetch response (ie status 500, internal server error)
   jest.spyOn(global, "fetch").mockImplementation(() =>
     Promise.resolve({
       ok: false,
     })
   );
 
-  // Use the asynchronous version of act to apply resolved promises
   await act(async () => {
     render(
       <Router>
@@ -53,9 +70,8 @@ it("renders an error message when fetch fails", async () => {
     );
   });
 
-  let errorMessage = container.querySelector(".list-item");
+  const errorMessage = container.querySelector(".list-item");
   expect(errorMessage.textContent).toBe("Oops, something went wrong!");
 
-  // remove the mock to ensure tests are completely isolated
   global.fetch.mockRestore();
 });
