@@ -1,3 +1,4 @@
+/* eslint-disable testing-library/no-unnecessary-act */
 import React from "react";
 import { unmountComponentAtNode, render } from "react-dom";
 import { BrowserRouter as Router } from "react-router-dom";
@@ -16,24 +17,31 @@ afterEach(() => {
   container = null;
 });
 
-it("renders a topic and a question", async () => {
-  const fakeData = [{ topic: "CSS", description: "What is CSS?" }];
-  jest.spyOn(global, "fetch").mockImplementation(() =>
-    Promise.resolve({
-      json: () => Promise.resolve(fakeData),
-    })
-  );
+// it("renders a topic and a question", async () => {
 
-  await act(async () => {
-    render(
-      <Router>
-        <ViewQuestions />
-      </Router>,
-      container
-    );
-    global.fetch.mockRestore();
-  });
-});
+//   const fakeData = [{ id: 2, name: "CSS", description: "What is CSS?" }];
+
+//   jest.spyOn(global, "fetch").mockImplementation(() =>
+//     Promise.resolve({
+//       json: () => Promise.resolve(fakeData),
+//     })
+//   );
+
+//   await act(async () => {
+//     render(
+//       <Router>
+//         <ViewQuestions />
+//       </Router>,
+//       container
+//     );
+//   });
+//   const message = container.querySelector(".list-item");
+//   expect(message.textContent).toBe("What is CSS?");
+//   const topic = container.querySelector(".title");
+//   expect(topic.textContent).toBe("CSS");
+
+//   global.fetch.mockRestore();
+// });
 
 it("renders an error message when fetch fails", async () => {
   //Mock an unsuccesful fetch response (ie status 500, internal server error)
@@ -53,7 +61,7 @@ it("renders an error message when fetch fails", async () => {
     );
   });
 
-  let errorMessage = container.querySelector(".list-item");
+  const errorMessage = container.querySelector(".list-item");
   expect(errorMessage.textContent).toBe("Oops, something went wrong!");
 
   // remove the mock to ensure tests are completely isolated

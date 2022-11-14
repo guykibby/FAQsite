@@ -1,16 +1,16 @@
-const { Client } = require('pg')
+const { Client } = require("pg");
 
-let client = null
+let client = null;
 async function get_db() {
-    if (client !== null) {
-        return client
-    }
+  if (client !== null) {
+    return client;
+  }
 
-    client = new Client({ connectionString: process.env.DATABASE_URL })
+  client = new Client({ connectionString: process.env.DATABASE_URL });
 
-    await client.connect()
+  await client.connect();
 
-    return client
+  return client;
 }
 
-module.exports = get_db
+module.exports = get_db;
