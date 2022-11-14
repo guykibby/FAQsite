@@ -16,7 +16,7 @@ afterEach(() => {
   container = null;
 });
 
-it("renders questions & answers data using fakeQuestionsAnswersData", async () => {
+it("renders a topic and a question", async () => {
   const fakeData = [
     {
       id: 1,
