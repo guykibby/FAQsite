@@ -51,7 +51,7 @@ module.exports = {
     try {
       const db = await get_db();
       const result = await db.query(
-        `SELECT id, description, isstarred, isreviewed, userid FROM questions WHERE id = $1`,
+        `SELECT id, description, isstarred, isreviewed, userid, topicid FROM questions WHERE id = $1`,
         [questionId]
       );
       return result.rows[0];
