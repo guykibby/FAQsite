@@ -32,15 +32,7 @@ test("renders answers data using fakeQuestionsData", async () => {
       isstarred: false,
       isreviewed: false,
     },
-    {
-      id: 2,
-      questionid: 1,
-      questiondescription: "What is HTML?",
-      answerdescription:
-        "Aut quibusdam incidunt ea error aliquam 33 atque odio At corrupti Quis et recusandae impedit sit exercitationem distinctio.",
-      isstarred: false,
-      isreviewed: false,
-    },
+   
   ];
 
   jest.spyOn(global, "fetch").mockImplementation(() =>
@@ -61,7 +53,7 @@ test("renders answers data using fakeQuestionsData", async () => {
 
   const questionButton = container.querySelector(".title");
 
-  expect(questionButton.textContent).toBe("What is HTML?");
+  expect(questionButton.textContent).toBe(fakeQuestionsData[0].questiondescription);
 
   // remove the mock to ensure tests are completely isolated
   global.fetch.mockRestore();
@@ -94,6 +86,8 @@ test("renders answers data using fakeAnswersData", async () => {
       container
     );
   });
+  const questionButton = container.querySelector(".link ");
+  expect(questionButton.textContent).toBe(fakeAnswersData[0].answerdescription);
   // remove the mock to ensure tests are completely isolated
   global.fetch.mockRestore();
 });
