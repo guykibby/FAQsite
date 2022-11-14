@@ -30,7 +30,7 @@ const ViewAnswers = () => {
         const data = await result.json();
         setAnswers(data);
       } catch (error) {
-        console.log("Error fetching products");
+        
       }
     };
     fetchData();
