@@ -2,7 +2,7 @@ const request = require("supertest");
 const app = require("../../app");
 const get_db = require("../../db");
 
-describe("app", () => {
+describe("GIVEN that the POST /question/:topicId route exists", () => {
   afterAll(async () => {
     const db = await get_db();
     db.end();

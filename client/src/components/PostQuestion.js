@@ -1,51 +1,70 @@
 import { useParams } from "react-router-dom";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 const PostQuestion = () => {
   const { topicId } = useParams();
-
-  const [description, setDescription] = useState("");
+  const [question, setQuestion] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [isError, setIsError] = useState(false);
-  const [errorStatus, setErrorStatus] = useState("");
+  const [error, setError] = useState(false);
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const result = await fetch(
+          `${process.env.REACT_APP_API_URL}/question/${topicId}`
+        );
+
+        // fetch error handling
+
+        if (result.ok === false) {
+          setError(true);
+          return;
+        }
+        const data = await result.json();
+        setQuestion(data[0]);
+        setIsLoading(false);
+        return;
+      } catch (error) {
+        setError(true);
+        console.log("Error fetching products");
+      }
+    };
+    fetchData();
+  }, [topicId]);
 
   const handelSubmit = async (event) => {
     event.preventDefault();
     setIsLoading(true);
-    const body = {
-      description,
-    };
+
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_API_URL}/${topicId}`,
+        `${process.env.REACT_APP_API_URL}/postQuestion/${topicId}`,
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(body),
+          body: JSON.stringify({ description: question }),
         }
       );
 
       if (!response.ok) {
         console.log("Fetch not ok");
-        setIsError(true);
-        setErrorStatus(response.status);
+        setError(true);
       } else {
         setIsLoading(false);
         navigate(`/questions/${topicId}`);
       }
     } catch (error) {
-      setIsError(true);
-      setErrorStatus("unknown");
+      setError(true);
     }
   };
 
-  if (isError) {
-    return <>An error has occurred. {errorStatus}.</>;
+  if (error) {
+    return <p className="list-item">Oops, something went wrong!</p>;
   }
 
   return (
@@ -58,10 +77,10 @@ const PostQuestion = () => {
           id="question-description"
           name="question-description"
           className="list-item"
-          value={description}
+          value={question}
           onChange={(event) => {
             const value = event.target.value;
-            setDescription(value);
+            setQuestion(value);
           }}
         />
 
