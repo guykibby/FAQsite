@@ -7,9 +7,9 @@ module.exports = {
       const getQuestions = await db.query(
         `SELECT questions.id, description, topicId, isStarred, isReviewed, topics.name  
       FROM questions
-      JOIN topics
+      RIGHT JOIN topics
       ON questions.topicId = topics.id
-      WHERE topicId = ${topicId}
+      WHERE topics.id = ${topicId}
       ORDER BY questions.createdon DESC`
       );
 
