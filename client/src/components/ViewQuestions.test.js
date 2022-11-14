@@ -1,4 +1,3 @@
-/* eslint-disable testing-library/no-unnecessary-act */
 import React from "react";
 import { unmountComponentAtNode, render } from "react-dom";
 import { BrowserRouter as Router } from "react-router-dom";
@@ -7,51 +6,61 @@ import ViewQuestions from "./ViewQuestions";
 
 let container = null;
 beforeEach(() => {
+  // setup a DOM element as a render target
   container = document.createElement("div");
   document.body.appendChild(container);
 });
 
 afterEach(() => {
+  // cleanup on exiting
   unmountComponentAtNode(container);
   container.remove();
   container = null;
 });
 
-// it("renders a topic and a question", async () => {
+it("renders a topic and a question", async () => {
+  const fakeData = [
+    {
+      id: 1,
+      description: "What is HTML?",
+      topicid: 1,
+      isstarred: false,
+      isreviewed: false,
+      name: "HTML",
+    },
+  ];
 
-//   const fakeData = [{ id: 2, name: "CSS", description: "What is CSS?" }];
+  jest.spyOn(global, "fetch").mockImplementation(() =>
+    Promise.resolve({
+      json: () => Promise.resolve(fakeData),
+    })
+  );
 
-//   jest.spyOn(global, "fetch").mockImplementation(() =>
-//     Promise.resolve({
-//       json: () => Promise.resolve(fakeData),
-//     })
-//   );
+  await act(async () => {
+    render(
+      <Router>
+        <ViewQuestions />
+      </Router>,
+      container
+    );
+  });
 
-//   await act(async () => {
-//     render(
-//       <Router>
-//         <ViewQuestions />
-//       </Router>,
-//       container
-//     );
-//   });
-//   const message = container.querySelector(".list-item");
-//   expect(message.textContent).toBe("What is CSS?");
-//   const topic = container.querySelector(".title");
-//   expect(topic.textContent).toBe("CSS");
+  const questionsTitle = container.querySelector(".title");
+  expect(questionsTitle.textContent).toBe(fakeData[0].name);
 
-//   global.fetch.mockRestore();
-// });
+  const questionsDescription = container.querySelector(".link");
+  expect(questionsDescription.textContent).toBe(fakeData[0].description);
+  // remove the mock to ensure tests are completely isolated
+  global.fetch.mockRestore();
+});
 
 it("renders an error message when fetch fails", async () => {
-  //Mock an unsuccesful fetch response (ie status 500, internal server error)
   jest.spyOn(global, "fetch").mockImplementation(() =>
     Promise.resolve({
       ok: false,
     })
   );
 
-  // Use the asynchronous version of act to apply resolved promises
   await act(async () => {
     render(
       <Router>
@@ -64,6 +73,5 @@ it("renders an error message when fetch fails", async () => {
   const errorMessage = container.querySelector(".list-item");
   expect(errorMessage.textContent).toBe("Oops, something went wrong!");
 
-  // remove the mock to ensure tests are completely isolated
   global.fetch.mockRestore();
 });
