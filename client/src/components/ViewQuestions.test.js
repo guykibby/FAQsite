@@ -6,11 +6,13 @@ import ViewQuestions from "./ViewQuestions";
 
 let container = null;
 beforeEach(() => {
+  // setup a DOM element as a render target
   container = document.createElement("div");
   document.body.appendChild(container);
 });
 
 afterEach(() => {
+  // cleanup on exiting
   unmountComponentAtNode(container);
   container.remove();
   container = null;
@@ -48,7 +50,7 @@ it("renders a topic and a question", async () => {
 
   const questionsDescription = container.querySelector(".list-item");
   expect(questionsDescription.textContent).toBe(fakeData[0].description);
-
+  // remove the mock to ensure tests are completely isolated
   global.fetch.mockRestore();
 });
 
