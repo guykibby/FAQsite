@@ -41,17 +41,21 @@ const Dashboard = () => {
         }
       } catch (error) {
         setIsLoading(false);
+        setError(true);
         console.log("Error fetching products");
       }
     };
     fetchData();
   }, []);
 
+  if (isLoading) return <p className="loading-list-item">Loading....</p>;
+
+  if (error)
+    return <p className="error-list-item">Oops, something went wrong!</p>;
+
   return (
     <>
       <h1 className="dashboard-title">Dashboard</h1>
-      {isLoading && <p className="loading-list-item">Loading....</p>}
-      {error && <p className="error-list-item">Oops, something went wrong!</p>}
       {/**  questions waiting for review by instructor
        * line #54- #63 can be done by creating
        * <Questions /> componet by passing newPosts[0] as props
@@ -94,7 +98,6 @@ const Dashboard = () => {
           ))}
         </>
       )}
-      moved
     </>
   );
 };
