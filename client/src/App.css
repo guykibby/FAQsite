@@ -6,7 +6,7 @@ body {
   display: grid;
   max-width: 25rem;
   width: 100%;
-  margin: auto;
+  margin: 0 auto;
   place-items: center;
 }
 
@@ -16,13 +16,14 @@ body {
 }
 
 .list-item {
-  width: 100%;
+  width: 85%;
   border-radius: 1rem;
   border: black 1px solid;
   padding: 1rem;
-  margin: 1rem 0;
+  margin: 1rem;
   text-decoration: none;
   color: black;
+  /* background-color: red; */
   text-align: center;
 }
 
@@ -37,4 +38,10 @@ body {
   color: black;
   text-align: center;
   padding: 0.3rem;
+}
+
+@media only screen and (min-width: 30rem) {
+  .list-item {
+    width: 100%;
+  }
 }
