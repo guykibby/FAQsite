@@ -1,53 +1,55 @@
 import { useState } from "react";
-
-const LogInPage = () => {
-  const [email, setEmail] = useState("bla bla");
-
-  const handleSubmit = async (event) => {
-    // event.preventDefault();
-    // setIsLoading(true);
-    // try {
-    //   const response = await fetch(
-    //     `${process.env.REACT_APP_API_URL}/postQuestion/${topicId}`,
-    //     {
-    //       method: "POST",
-    //       headers: {
-    //         "Content-Type": "application/json",
-    //       },
-    //       body: JSON.stringify({ description: question }),
-    //     }
-    //   );
-    //   if (!response.ok) {
-    //     console.log("Fetch not ok");
-    //     setError(true);
-    //   } else {
-    //     setIsLoading(false);
-    //     navigate(`/questions/${topicId}`);
-    //   }
-    // } catch (error) {
-    //   setError(true);
-    // }
+import { useNavigate } from "react-router-dom";
+import styles from "./LoginPage.module.css";
+const LoginPage = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const response = await fetch(
+      `${process.env.REACT_APP_API_URL}/users?email=${email}?&password=${password}`
+    );
+    const user = await response.json();
+    if (!user.token) {
+      alert("Invalid Login Details");
+      navigate("/LogIn");
+    } else {
+      localStorage.setItem("x-auth-token", JSON.stringify(user.token));
+      localStorage.setItem("user", JSON.stringify(user.user));
+      navigate("/");
+    }
   };
-
   return (
-    <>
-      <p className="list-item">UNDER CONSTRUCTION. </p>
-      <form onSubmit={handleSubmit} className="main-container">
-        <input
-          type="text"
-          required
-          id="email"
-          name="email"
-          className="list-item"
-          value={email}
-          onChange={(e) => {
-            setAnswer(e.target.value);
-          }}
-        />
-        <button className="list-item">Submit</button>
+    <div>
+      <form className={styles.logInForm} method="POST" onSubmit={handleSubmit}>
+        <div>
+          <label htmlFor="email">
+            <p className={styles.inputs}>Email</p>
+          </label>
+          <input
+            id="email"
+            type="email"
+            name="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+        </div>
+        <div>
+          <label htmlFor="password">
+            <p className={styles.inputs}>Password</p>
+          </label>
+          <input
+            id="password"
+            type="password"
+            name="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </div>
+        <button type="submit">Log In</button>
       </form>
-    </>
+    </div>
   );
 };
-
-export default LogInPage;
+export default LoginPage;

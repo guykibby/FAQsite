@@ -46,7 +46,7 @@ router.post(
 
       if (checkId.length === 0) {
         const error = new Error("Not Found");
-        error.status(404);
+        error.status = 404;
         throw error;
       }
 
