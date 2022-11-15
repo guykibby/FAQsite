@@ -4,5 +4,5 @@ WORKDIR /api
 COPY . /api
 
 # run these commands
-RUN ["npm", "ci"]
+RUN ["npm", "i"]
 CMD ["npm", "start"]
