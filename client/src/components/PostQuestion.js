@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 const PostQuestion = () => {
   const { topicId } = useParams();
-  const [ topic, setTopic ] = useState("");
+  const [topic, setTopic] = useState("");
   const [question, setQuestion] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
@@ -71,9 +71,10 @@ const PostQuestion = () => {
   return (
     <>
       <h1>Post Question</h1>
-     <p className="title">{topic.name}</p>
+      <p className="title">{topic.name}</p>
       <form onSubmit={handelSubmit} className="main-container">
         <input
+          placeholder="Enter a question..."
           type="text"
           required
           id="question-description"
@@ -86,7 +87,7 @@ const PostQuestion = () => {
           }}
         />
 
-        <button className="list-item" disabled={isLoading}>
+        <button className="navbtn" disabled={isLoading}>
           Submit
         </button>
       </form>
