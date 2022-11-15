@@ -10,7 +10,7 @@ input.list-item {
   display: grid;
   max-width: 25rem;
   width: 100%;
-  margin: auto;
+  margin: 0 auto;
   place-items: center;
 }
 
@@ -25,9 +25,10 @@ input.list-item {
   border-bottom-right-radius: 2rem;
   border-top-right-radius: 2rem;
   padding: 1rem;
-  margin: 1rem 0;
+  margin: 1rem;
   text-decoration: none;
   color: black;
+  /* background-color: red; */
   text-align: center;
   box-shadow: 0.1rem 0.5rem 0.5rem grey;
   border: none;
