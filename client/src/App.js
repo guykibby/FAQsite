@@ -19,6 +19,7 @@ const App = () => {
     <>
       <div className="main-container">
         <Routes>
+          <Route path="/LogIn" element={<LogInPage />} />
           <Route path="/" element={<HomePage />} />
           <Route
             path="/questions/:topicId"
