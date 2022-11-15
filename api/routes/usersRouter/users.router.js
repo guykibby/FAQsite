@@ -5,26 +5,40 @@ const repository = require("./users.repository");
 const bcrypt = require("bcrypt");
 router.get("/", async (request, response, next) => {
   try {
-    console.log(request.query.email);
-    console.log(request.query.password);
-    // const { email, password } = request.query;
-    // if (!email || !password) {
-    //   return response
-    //     .status(400)
-    //     .json({ message: "Please enter a valid email and password." });
-    // }
-    // const user = await UserModel.findOne({ email });
-    // if (!user) {
-    //   return response.status(404).json({ message: "User does not exists." });
-    // }
-    // if (user) {
-    //   const authenticationStatus = bcrypt.compare(password, user.password);
-    //   if (!authenticationStatus) {
-    //     return response.status(400).json({ message: "Password is invalid" });
-    //   }
-    //   const token = jwt.sign({ id: user._id }, config.jwtsecret, {
-    //     expiresIn: 3600,
-    //   });
+    // console.log(request.query.email);
+    // console.log(request.query.password);
+
+    const { email, password } = request.query;
+    if (!email || !password) {
+      return response
+        .status(400)
+        .json({ message: "Please enter a valid email and password." });
+    }
+
+    const existingEmail = await repository.checkEmail(email);
+
+    if (existingEmail.length === 0) {
+      const error = new Error("Email doesnt exist");
+      error.status = 404;
+      throw error;
+    }
+
+    const result = await repository.getUser(email);
+
+    const authenticationStatus = await bcrypt.compare(
+      password,
+      result[0].passwordkey
+    );
+    console.log(authenticationStatus);
+
+    if (!authenticationStatus) {
+      const error = new Error("Invalid Password");
+      error.status = 400;
+      throw error;
+    }
+    const token = jwt.sign({ id: user._id }, config.jwtsecret, {
+      expiresIn: 3600,
+    });
     //   return response.json({
     //     token,
     //     user: {
@@ -34,6 +48,7 @@ router.get("/", async (request, response, next) => {
     //     },
     //   });
     // }
+    response.status(200).send({ message: "WOOOOHOOOOOOO" });
   } catch (error) {
     next(error);
   }
@@ -61,7 +76,7 @@ router.post("/", async (req, res, next) => {
     console.log(hashedPassword);
 
     const result = await repository.postNewUser(name, email, hashedPassword);
-
+    // console.log(result);
     // newUser.password = hashedPassword;
     // const savedUser = await newUser.save();
     // // create a JWT token
@@ -77,7 +92,7 @@ router.post("/", async (req, res, next) => {
     //     id: savedUser._id,
     //   },
     // });
-    res.status(200).send("WOOOOHOOOOOOO");
+    res.status(200).send({ message: "WOOOOHOOOOOOO" });
   } catch (error) {
     next(error);
   }

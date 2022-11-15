@@ -10,15 +10,22 @@ const LoginPage = () => {
     const response = await fetch(
       `${process.env.REACT_APP_API_URL}/users?email=${email}?&password=${password}`
     );
-    const user = await response.json();
-    if (!user.token) {
-      alert("Invalid Login Details");
-      navigate("/LogIn");
-    } else {
-      localStorage.setItem("x-auth-token", JSON.stringify(user.token));
-      localStorage.setItem("user", JSON.stringify(user.user));
-      navigate("/");
+    console.log(response);
+
+    if (response.status === 404) {
+      alert("Email not Found, please sign up!");
+      navigate("/SignUp");
     }
+
+    // const user = await response.json();
+    // if (!user.token) {
+    //   // alert("Invalid Login Details");
+    //   navigate("/LogIn");
+    // } else {
+    //   localStorage.setItem("x-auth-token", JSON.stringify(user.token));
+    //   localStorage.setItem("user", JSON.stringify(user.user));
+    //   navigate("/");
+    // }
   };
   return (
     <div>
@@ -30,6 +37,7 @@ const LoginPage = () => {
           <input
             id="email"
             type="email"
+            required
             name="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
@@ -42,6 +50,7 @@ const LoginPage = () => {
           <input
             id="password"
             type="password"
+            required
             name="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}

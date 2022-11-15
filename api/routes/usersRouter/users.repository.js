@@ -24,4 +24,15 @@ module.exports = {
 
     return result.rows;
   },
+  getUser: async (email) => {
+    const db = await get_db();
+    const result = await db.query(
+      `SELECT *
+      FROM users
+      WHERE email = '${email}'
+    `
+    );
+
+    return result.rows;
+  },
 };
