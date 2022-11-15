@@ -1,9 +1,7 @@
 FROM node:16-alpine
-WORKDIR /app
+WORKDIR /api
 
 COPY . /app
-
-EXPOSE 5001
 
 # run these commands
 RUN ["npm", "ci"]
