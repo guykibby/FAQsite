@@ -8,24 +8,26 @@ const LoginPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const response = await fetch(
-      `${process.env.REACT_APP_API_URL}/users?email=${email}?&password=${password}`
+      `${process.env.REACT_APP_API_URL}/users?email=${email}&password=${password}`
     );
     console.log(response);
 
     if (response.status === 404) {
       alert("Email not Found, please sign up!");
       navigate("/SignUp");
+      return;
     }
 
-    // const user = await response.json();
-    // if (!user.token) {
-    //   // alert("Invalid Login Details");
-    //   navigate("/LogIn");
-    // } else {
-    //   localStorage.setItem("x-auth-token", JSON.stringify(user.token));
-    //   localStorage.setItem("user", JSON.stringify(user.user));
-    //   navigate("/");
-    // }
+    const user = await response.json();
+    if (!user.token) {
+      alert("Wrong Password");
+      navigate("/LogIn");
+      return;
+    } else {
+      localStorage.setItem("x-auth-token", JSON.stringify(user.token));
+      localStorage.setItem("user", JSON.stringify(user.user));
+      navigate("/");
+    }
   };
   return (
     <div>

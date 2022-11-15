@@ -2,7 +2,10 @@ const express = require("express");
 const { request } = require("../dashboardRouter/dashboard.router");
 const router = express.Router();
 const repository = require("./users.repository");
+const config = require("../../config");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+
 router.get("/", async (request, response, next) => {
   try {
     // console.log(request.query.email);
@@ -25,10 +28,9 @@ router.get("/", async (request, response, next) => {
 
     const result = await repository.getUser(email);
 
-    const authenticationStatus = await bcrypt.compare(
-      password,
-      result[0].passwordkey
-    );
+    const { passwordkey, name, id, scope } = result;
+
+    const authenticationStatus = await bcrypt.compare(password, passwordkey);
     console.log(authenticationStatus);
 
     if (!authenticationStatus) {
@@ -36,19 +38,23 @@ router.get("/", async (request, response, next) => {
       error.status = 400;
       throw error;
     }
-    const token = jwt.sign({ id: user._id }, config.jwtsecret, {
+    // console.log(result);
+
+    const token = jwt.sign({ id: id }, config.secret, {
       expiresIn: 3600,
     });
-    //   return response.json({
-    //     token,
-    //     user: {
-    //       name: user.name,
-    //       email: user.email,
-    //       id: user._id,
-    //     },
-    //   });
+    // console.log(token);
+
+    return response.json({
+      token,
+      user: {
+        name,
+        id,
+        scope,
+      },
+    });
     // }
-    response.status(200).send({ message: "WOOOOHOOOOOOO" });
+    // response.status(200).send({ message: "WOOOOHOOOOOOO" });
   } catch (error) {
     next(error);
   }
