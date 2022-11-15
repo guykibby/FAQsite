@@ -10,6 +10,16 @@ describe("GET /topics route", () => {
   });
 
   test("return status 200 and an array of topics from the DB", async () => {
+    repository.getTopics = jest.fn();
+    repository.getTopics.mockReturnValue([{ year: "Year 1" }]);
+    const response = await request(app)
+      .get("/topics")
+      .set("Accept", "application/json");
+    expect(response.status).toBe(200);
+    expect(response.body).toEqual([{ year: "Year 1" }]);
+  });
+
+  test("return status 200 and an array of topics from the DB", async () => {
     const expectedResponseData = await repository.getTopics();
     const response = await request(app)
       .get("/topics")
