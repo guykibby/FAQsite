@@ -17,6 +17,7 @@ const App = () => {
 
   return (
     <>
+      <header className="header">HOME</header>
       <div className="main-container">
         <Routes>
           <Route path="/" element={<HomePage />} />

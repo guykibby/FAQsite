@@ -72,7 +72,7 @@ const ViewAnswers = () => {
           );
         })
       )}
-      <button onClick={handleClick} className="list-item">
+      <button onClick={handleClick} className="navbtn">
         POST NEW ANSWER
       </button>
     </>
