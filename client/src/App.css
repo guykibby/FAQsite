@@ -21,9 +21,7 @@ input.list-item {
 }
 
 .list-item {
-  width: 100%;
-  /* border-radius: 1rem; */
-  /* border: black 1px solid; */
+  width: 85%;
   border-bottom-right-radius: 2rem;
   border-top-right-radius: 2rem;
   padding: 1rem;
@@ -54,9 +52,7 @@ input.list-item {
   background-color: rgb(83, 79, 79);
   color: white;
 }
-/* .subtitle {
-  font-size: smaller;
-} */
+
 .header {
   background-color: black;
   width: 100%;
