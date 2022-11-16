@@ -26,51 +26,51 @@ const SignUpPage = () => {
     }
   };
   return (
-    <div>
-      <p className="list-item">PLEASE GIVE US YOUR DETAILS. </p>
+    <>
+      <h1 className="title">PLEASE GIVE US YOUR DETAILS. </h1>
       <form className="main-container" method="POST" onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="name">
-            <p className="">Name</p>
-          </label>
-          <input
-            id="name"
-            required
-            type="text"
-            name="name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-        </div>
-        <div>
-          <label htmlFor="email">
-            <p className="">Email</p>
-          </label>
-          <input
-            id="email"
-            required
-            type="email"
-            name="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </div>
-        <div>
-          <label htmlFor="password">
-            <p className="">Password</p>
-          </label>
-          <input
-            id="password"
-            required
-            type="password"
-            name="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </div>
+        <label htmlFor="name" className="title">
+          Name
+        </label>
+        <input
+          id="name"
+          required
+          className="list-item"
+          type="text"
+          name="name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
+
+        <label htmlFor="email" className="title">
+          Email
+        </label>
+        <input
+          id="email"
+          required
+          className="list-item"
+          type="email"
+          name="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+
+        <label htmlFor="password" className="title">
+          Password
+        </label>
+        <input
+          id="password"
+          required
+          className="list-item"
+          type="password"
+          name="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+
         <button type="submit">SignUp</button>
       </form>
-    </div>
+    </>
   );
 };
 

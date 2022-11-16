@@ -30,37 +30,40 @@ const LoginPage = () => {
     }
   };
   return (
-    <div>
-      <form className={styles.logInForm} method="POST" onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="email">
-            <p className={styles.inputs}>Email</p>
-          </label>
-          <input
-            id="email"
-            type="email"
-            required
-            name="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </div>
-        <div>
-          <label htmlFor="password">
-            <p className={styles.inputs}>Password</p>
-          </label>
-          <input
-            id="password"
-            type="password"
-            required
-            name="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </div>
-        <button type="submit">Log In</button>
+    <>
+      <form className="main-container" method="POST" onSubmit={handleSubmit}>
+        <h1 className="title">PLEASE LOG IN</h1>
+        <label htmlFor="email" className="title">
+          Email
+        </label>
+        <input
+          id="email"
+          type="email"
+          required
+          className="list-item"
+          name="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+
+        <label htmlFor="password" className="title">
+          Password
+        </label>
+        <input
+          id="password"
+          type="password"
+          required
+          className="list-item"
+          name="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+
+        <button className="title" type="submit">
+          Log In
+        </button>
       </form>
-    </div>
+    </>
   );
 };
 export default LoginPage;
