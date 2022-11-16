@@ -1,44 +1,55 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import styles from "./LoginPage.module.css";
-const LoginPage = () => {
+
+const SignUpPage = () => {
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
   const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const response = await fetch(
-      `${process.env.REACT_APP_API_URL}/users?email=${email}&password=${password}`
-    );
-    if (response.status === 404) {
-      alert("Email not Found, please sign up!");
-      navigate("/SignUp");
-      return;
-    }
-
-    const user = await response.json();
-    if (!user.token) {
-      alert("Wrong Password");
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/users`, {
+      method: "POST",
+      headers: {
+        "CONTENT-TYPE": "application/json",
+      },
+      body: JSON.stringify({ name, email, password }),
+    });
+    if (response.ok) {
       navigate("/LogIn");
-      return;
     } else {
-      localStorage.setItem("x-auth-token", JSON.stringify(user.token));
-      localStorage.setItem("user", JSON.stringify(user.user));
-      navigate("/");
+      window.alert("please try again");
+      setName("");
+      setEmail("");
+      setPassword("");
     }
   };
   return (
     <>
+      <h1 className="title">PLEASE GIVE US YOUR DETAILS. </h1>
       <form className="main-container" method="POST" onSubmit={handleSubmit}>
-        <h1 className="title">PLEASE LOG IN</h1>
+        <label htmlFor="name" className="title">
+          Name
+        </label>
+        <input
+          id="name"
+          required
+          className="list-item"
+          type="text"
+          name="name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
+
         <label htmlFor="email" className="title">
           Email
         </label>
         <input
           id="email"
-          type="email"
           required
           className="list-item"
+          type="email"
           name="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
@@ -49,19 +60,18 @@ const LoginPage = () => {
         </label>
         <input
           id="password"
-          type="password"
           required
           className="list-item"
+          type="password"
           name="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
 
-        <button className="title" type="submit">
-          Log In
-        </button>
+        <button type="submit">SignUp</button>
       </form>
     </>
   );
 };
-export default LoginPage;
+
+export default SignUpPage;

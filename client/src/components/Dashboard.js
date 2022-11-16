@@ -15,6 +15,11 @@ const Dashboard = () => {
   const [isAnswersEmpty, setIsAnswersEmpty] = useState(false);
   const [error, setError] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const token = localStorage.getItem("x-auth-token");
+  if (!token) {
+    navigate(`/LogIn`);
+  }
+
   useEffect(() => {
     setIsLoading(true);
     setIsQuestionsEmpty(false);
@@ -22,8 +27,18 @@ const Dashboard = () => {
     const fetchData = async () => {
       try {
         const result = await fetch(
-          `${process.env.REACT_APP_API_URL}/dashboard`
+          `${process.env.REACT_APP_API_URL}/dashboard`,
+          {
+            headers: {
+              "Content-Type": "application/json",
+              token: token,
+            },
+          }
         );
+        if (response.status === 422) {
+          localStorage.clear();
+          navigate(`/LogIn`);
+        }
 
         if (result.ok === false) {
           setIsLoading(false);

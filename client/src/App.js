@@ -10,6 +10,7 @@ import EditQuestion from "./components/EditQuestion";
 import EditAnswer from "./components/EditAnswer";
 import ViewAnswers from "./components/ViewAnswers";
 import LogInPage from "./components/LogInPage";
+import SignUpPage from "./components/SignUpPage";
 
 const App = () => {
   const [questionObject, setQuestionObject] = useState({});
@@ -27,6 +28,8 @@ const App = () => {
       </header>
       <div className="main-container">
         <Routes>
+          <Route path="/SignUp" element={<SignUpPage />} />
+          <Route path="/LogIn" element={<LogInPage />} />
           <Route path="/" element={<HomePage />} />
           <Route
             path="/questions/:topicId"

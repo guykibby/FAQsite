@@ -23,6 +23,12 @@ exports.setup = function (options, seedLink) {
 
 exports.up = function (db) {
   db.runSql(`
+
+  INSERT INTO users (name,email,scope,passwordKey) values 
+  ('IntructorGadget', '12345@DI.com', true, '$2b$12$PxvqEQWOjsWZBiwS7B3ogeD7t.iE1isip.U2bnrkrYvohUTC76Jkm'), 
+  ('StudentEmptyBrain', '67890@DI.com', false, '$2b$12$z4.NMZK.gTI5Qbv3XTjgVefQ.qlWO6u3.GvlgOSGy7Kj/h.aK8JKG'); 
+
+
   INSERT INTO terms (name,year) values 
   ('Client Side', 'Year 1'), 
   ('Server Side', 'Year 1'), 

@@ -1,20 +1,33 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams, Link } from "react-router-dom";
 import styles from "./EditQuestion.module.css";
-import EditButton from "./EditButton";
 const EditQuestion = () => {
   const { questionId } = useParams();
   const [question, setQuestion] = useState({});
   const [star, setStar] = useState(false);
   const [review, setReview] = useState(false);
   const [starFlag, setStarFlag] = useState(false);
-  
+  const token = localStorage.getItem("x-auth-token");
+  if (!token) {
+    navigate(`/LogIn`);
+  }
+
   // to update the information as per the database
   useEffect(() => {
     const getQuestion = async () => {
       const response = await fetch(
-        `${process.env.REACT_APP_API_URL}/editquestion/${questionId}`
+        `${process.env.REACT_APP_API_URL}/editquestion/${questionId}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            token: token,
+          },
+        }
       );
+      if (response.status === 422) {
+        localStorage.clear();
+        navigate(`/LogIn`);
+      }
       const data = await response.json();
       setQuestion(data);
       setStar(data.isstarred);
@@ -41,9 +54,14 @@ const EditQuestion = () => {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
+          token: token,
         },
       }
     );
+    if (response.status === 422) {
+      localStorage.clear();
+      navigate(`/LogIn`);
+    }
 
     if (response.ok) {
       navigate(`/questions/${question.topicid}`);
@@ -59,12 +77,13 @@ const EditQuestion = () => {
   useEffect(() => {
     const edit = async () => {
       if (starFlag) {
-        await fetch(
+        const response = await fetch(
           `${process.env.REACT_APP_API_URL}/editquestion/${questionId}`,
           {
             method: "PUT",
             headers: {
               "Content-Type": "application/json",
+              token: token,
             },
             body: JSON.stringify({
               starFlag,
@@ -73,13 +92,18 @@ const EditQuestion = () => {
             }),
           }
         );
+        if (response.status === 422) {
+          localStorage.clear();
+          navigate(`/LogIn`);
+        }
       } else {
-        await fetch(
+        const response = await fetch(
           `${process.env.REACT_APP_API_URL}/editquestion/${questionId}`,
           {
             method: "PUT",
             headers: {
               "Content-Type": "application/json",
+              token: token,
             },
             body: JSON.stringify({
               starFlag,
@@ -88,6 +112,10 @@ const EditQuestion = () => {
             }),
           }
         );
+        if (response.status === 422) {
+          localStorage.clear();
+          navigate(`/LogIn`);
+        }
       }
     };
     edit();
@@ -118,7 +146,7 @@ const EditQuestion = () => {
             data-testid="star-checkbox"
           />
         </div>
-        <button onClick={handleDelete}>Delete Question</button >
+        <button onClick={handleDelete}>Delete Question</button>
       </div>
     </>
   );

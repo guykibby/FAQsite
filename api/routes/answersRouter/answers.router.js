@@ -3,6 +3,7 @@ const router = express.Router();
 const repository = require("./answers.repository");
 const Joi = require("joi");
 const get_db = require("../../db");
+const checkJWT = require("../../middleware/checkJWT")
 
 // path parameters validation middleware
 const pathParamValidationMiddleware = (schema) => (request, response, next) => {
@@ -21,7 +22,7 @@ const pathParamsSchema = Joi.object().keys({
 });
 
 router.get(
-  "/:questionId",
+  "/:questionId", checkJWT,
   pathParamValidationMiddleware(pathParamsSchema),
   async (req, res, next) => {
     try {

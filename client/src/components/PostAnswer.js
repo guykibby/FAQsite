@@ -12,16 +12,30 @@ const PostAnswer = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   const navigate = useNavigate();
+  const token = localStorage.getItem("x-auth-token");
+  if (!token) {
+    navigate(`/LogIn`);
+  }
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         // fetching the answers list
         const result = await fetch(
-          `${process.env.REACT_APP_API_URL}/answers/${questionId}`
+          `${process.env.REACT_APP_API_URL}/answers/${questionId}`,
+          {
+            headers: {
+              "Content-Type": "application/json",
+              token: token,
+            },
+          }
         );
 
         // fetch error handling
+        if (result.status === 422) {
+          localStorage.clear();
+          navigate(`/LogIn`);
+        }
         if (result.ok === false) {
           setError(true);
           return;
@@ -50,12 +64,17 @@ const PostAnswer = () => {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            token: token,
           },
           body: JSON.stringify({ description: answer }),
         }
       );
 
       // fetch error handling
+      if (response.status === 422) {
+        localStorage.clear();
+        navigate(`/LogIn`);
+      }
       if (!response.ok) {
         console.log("Fetch not ok");
         setError(true);

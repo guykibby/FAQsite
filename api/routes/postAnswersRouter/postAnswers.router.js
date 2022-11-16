@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const Joi = require("joi");
 const repository = require("./postAnswers.repository");
+const checkJWT = require("../../middleware/checkJWT");
 
 // path parameters validation middleware
 const pathParamValidationMiddleware = (schema) => (request, response, next) => {
@@ -21,6 +22,7 @@ const pathParamsSchema = Joi.object().keys({
 
 router.post(
   "/:questionId",
+  checkJWT,
   pathParamValidationMiddleware(pathParamsSchema),
   async (req, res, next) => {
     try {
@@ -46,7 +48,7 @@ router.post(
 
       if (checkId.length === 0) {
         const error = new Error("Not Found");
-        error.status(404);
+        error.status = 404;
         throw error;
       }
 
