@@ -10,6 +10,11 @@ const ViewQuestions = () => {
   const [questions, setQuestions] = useState([{}]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
+  const token = localStorage.getItem("x-auth-token");
+  
+  if (!token) {
+    navigate(`/LogIn`);
+  }
 
   const navigate = useNavigate();
 
@@ -18,8 +23,18 @@ const ViewQuestions = () => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `${process.env.REACT_APP_API_URL}/questions/${topicId}`
+          `${process.env.REACT_APP_API_URL}/questions/${topicId}`,
+          {
+            headers: {
+              "Content-Type": "application/json",
+              token: token,
+            },
+          }
         );
+        
+        if (response.status === 422) {
+          navigate(`/LogIn`);
+        }
         if (response.ok === false) {
           setLoading(false);
           setError(true);

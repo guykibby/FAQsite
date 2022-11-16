@@ -11,17 +11,29 @@ const ViewAnswers = () => {
   const [answers, setAnswers] = useState([{ answerdescription: "Loading" }]);
   const [error, setError] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-
+  const token = localStorage.getItem("x-auth-token");
   const navigate = useNavigate();
+  if (!token) {
+    navigate(`/LogIn`);
+  }
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const result = await fetch(
-          `${process.env.REACT_APP_API_URL}/answers/${questionId}`
+          `${process.env.REACT_APP_API_URL}/answers/${questionId}`,
+          {
+            headers: {
+              "Content-Type": "application/json",
+              token: token,
+            },
+          }
         );
 
         // fetch error handling
+        if (result.status === 422) {
+          navigate(`/LogIn`);
+        }
 
         if (result.ok === false) {
           setError(true);
