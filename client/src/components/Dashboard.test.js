@@ -32,20 +32,6 @@ test("renders questions data using fakeQuestionsData", async () => {
         isreviewed: false,
         topicid: 1,
       },
-      {
-        id: 2,
-        description: "What is CSS?",
-        isstarred: false,
-        isreviewed: false,
-        topicid: 2,
-      },
-      {
-        id: 3,
-        description: "How do i pull a branch?",
-        isstarred: false,
-        isreviewed: false,
-        topicid: 3,
-      },
     ],
     answers: [],
   };
@@ -68,7 +54,9 @@ test("renders questions data using fakeQuestionsData", async () => {
   const questionsTitle = container.querySelector(".questions-title");
   expect(questionsTitle.textContent).toBe("Questions");
   const questionButton = container.querySelector(".question-list-item");
-  expect(questionButton.textContent).toBe("What is HTML?");
+  expect(questionButton.textContent).toBe(
+    fakeQuestionsData["questions"][0].description
+  );
   // remove the mock to ensure tests are completely isolated
   global.fetch.mockRestore();
 });
@@ -84,15 +72,6 @@ test("renders answers data using fakeAnswersData", async () => {
         questiondescription: "What is HTML?",
         answerdescription:
           "Et eaque galisum ex nisi libero ad soluta repellat a internos culpa eum repellat officiis ad ullam consequatur.",
-        isstarred: false,
-        isreviewed: false,
-      },
-      {
-        id: 2,
-        questionid: 1,
-        questiondescription: "What is HTML?",
-        answerdescription:
-          "Aut quibusdam incidunt ea error aliquam 33 atque odio At corrupti Quis et recusandae impedit sit exercitationem distinctio.",
         isstarred: false,
         isreviewed: false,
       },
@@ -119,8 +98,9 @@ test("renders answers data using fakeAnswersData", async () => {
   expect(answersTitle.textContent).toBe("Answers");
   const answerButton = container.querySelector(".answer-list-item");
   expect(answerButton.textContent).toBe(
-    "Et eaque galisum ex nisi libero ad soluta repellat a internos culpa eum repellat officiis ad ullam consequatur."
+    fakeAnswersData["answers"][0].answerdescription
   );
+
   // remove the mock to ensure tests are completely isolated
   global.fetch.mockRestore();
 });
