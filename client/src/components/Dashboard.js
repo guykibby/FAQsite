@@ -35,7 +35,7 @@ const Dashboard = () => {
             },
           }
         );
-        if (response.status === 422) {
+        if (result.status === 422) {
           localStorage.clear();
           navigate(`/LogIn`);
         }
