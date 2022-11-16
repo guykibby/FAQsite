@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 /** Fetch API, will fetch questions waiting for review from questions table
  *  and answers waiting for review from answers table
@@ -15,6 +15,7 @@ const Dashboard = () => {
   const [isAnswersEmpty, setIsAnswersEmpty] = useState(false);
   const [error, setError] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const navigate = useNavigate();
   const token = localStorage.getItem("x-auth-token");
   if (!token) {
     navigate(`/LogIn`);
