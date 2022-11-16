@@ -87,7 +87,7 @@ const PostAnswer = () => {
           required
           id="answer-description"
           name="answer-description"
-          className="list-item"
+          className="list-item1"
           value={answer}
           onChange={(e) => {
             setAnswer(e.target.value);
