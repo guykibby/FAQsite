@@ -69,32 +69,4 @@ describe("EditQuestion Page", () => {
     const afterClick = screen.getByTestId("star-checkbox").checked;
     expect(beforeClick).toBe(!afterClick);
   });
-  test("It should display the question and answer description upon visiting the page", async () => {
-    const mockData = {
-      id: 1,
-      description: "What is HTML?",
-      isstarred: false,
-      isreviewed: false,
-      userid: null,
-      topicid: 1
-    };
-
-    //Mock a succesful fetch response (ie status 200)
-    jest.spyOn(global, "fetch").mockImplementation(() =>
-      Promise.resolve({
-        ok: true,
-        json: () => Promise.resolve(mockData),
-      })
-    );
-    await act(async () => {
-      render(
-        <Router>
-          <EditQuestion />
-        </Router>,
-        container
-      );
-    });
-    expect(screen.getByText("What is HTML?")).toBeInTheDocument();
-    global.fetch.mockRestore();
-  });
 });
