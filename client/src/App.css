@@ -20,7 +20,7 @@ body {
   margin: 2rem 0 1rem 0;
 }
 
-.list-item {
+.list-item, .list-item-input {
   width: 85%;
   border-bottom-right-radius: 2rem;
   border-top-right-radius: 2rem;
