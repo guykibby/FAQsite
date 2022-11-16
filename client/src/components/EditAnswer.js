@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams, Link } from "react-router-dom";
-import EditButton from "./EditButton";
 import styles from "./EditQuestion.module.css";
 
 const EditAnswer = () => {
@@ -9,6 +8,7 @@ const EditAnswer = () => {
   const [star, setStar] = useState(false);
   const [review, setReview] = useState(false);
   const [starFlag, setStarFlag] = useState(false);
+  const [error, setError] = useState(false);
   const navigate = useNavigate();
 
   // to update the information as per the database
@@ -17,10 +17,14 @@ const EditAnswer = () => {
       const response = await fetch(
         `${process.env.REACT_APP_API_URL}/editanswer/${answerId}`
       );
-      const data = await response.json();
-      setAnswer(data);
-      setStar(data.isstarred);
-      setReview(data.isreviewed);
+      if (response.ok) {
+        const data = await response.json();
+        setAnswer(data);
+        setStar(data.isstarred);
+        setReview(data.isreviewed);
+      } else {
+        setError(true);
+      }
     };
     getAnswer();
   }, [answerId]);
@@ -92,7 +96,14 @@ const EditAnswer = () => {
     };
     edit();
   }, [star, review, answerId, starFlag, answer]);
-
+  if (error) {
+    return (
+      <p>
+        The content does not exists. Please check that the answerId in the URL
+        is correct
+      </p>
+    );
+  }
   return (
     <>
       <h1 className="title">{answer.questiondescription}</h1>

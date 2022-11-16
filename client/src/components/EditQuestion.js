@@ -1,24 +1,27 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams, Link } from "react-router-dom";
 import styles from "./EditQuestion.module.css";
-import EditButton from "./EditButton";
 const EditQuestion = () => {
   const { questionId } = useParams();
   const [question, setQuestion] = useState({});
   const [star, setStar] = useState(false);
   const [review, setReview] = useState(false);
   const [starFlag, setStarFlag] = useState(false);
-  
+
   // to update the information as per the database
   useEffect(() => {
     const getQuestion = async () => {
       const response = await fetch(
         `${process.env.REACT_APP_API_URL}/editquestion/${questionId}`
       );
-      const data = await response.json();
-      setQuestion(data);
-      setStar(data.isstarred);
-      setReview(data.isreviewed);
+      if (response.ok) {
+        const data = await response.json();
+        setQuestion(data);
+        setStar(data.isstarred);
+        setReview(data.isreviewed);
+      } else {
+        setError(true);
+      }
     };
     getQuestion();
   }, [questionId]);
@@ -92,6 +95,14 @@ const EditQuestion = () => {
     };
     edit();
   }, [star, review, questionId, starFlag, question]);
+  if (error) {
+    return (
+      <p>
+        The content does not exists. Please check that the questionId in the URL
+        is correct
+      </p>
+    );
+  }
   return (
     <>
       <h2 className="list-item">{question.description}</h2>
@@ -118,7 +129,7 @@ const EditQuestion = () => {
             data-testid="star-checkbox"
           />
         </div>
-        <button onClick={handleDelete}>Delete Question</button >
+        <button onClick={handleDelete}>Delete Question</button>
       </div>
     </>
   );
