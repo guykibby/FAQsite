@@ -35,7 +35,7 @@ const SignUpPage = () => {
         <input
           id="name"
           required
-          className="list-item"
+          className="list-item-input"
           type="text"
           name="name"
           value={name}
@@ -48,7 +48,7 @@ const SignUpPage = () => {
         <input
           id="email"
           required
-          className="list-item"
+          className="list-item-input"
           type="email"
           name="email"
           value={email}
@@ -61,7 +61,7 @@ const SignUpPage = () => {
         <input
           id="password"
           required
-          className="list-item"
+          className="list-item-input"
           type="password"
           name="password"
           value={password}
