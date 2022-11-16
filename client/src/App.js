@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Link } from "react-router-dom";
 import Dashboard from "./components/Dashboard";
 import HomePage from "./components/HomePage";
 import PostAnswer from "./components/PostAnswer";
@@ -17,7 +17,14 @@ const App = () => {
 
   return (
     <>
-      <header className="header">HOME</header>
+      <header className="header">
+        <Link to="/" className="header-btn">
+          Home
+        </Link>
+        <Link to="/dashboard" className="header-btn dashboard">
+          Dashboard
+        </Link>
+      </header>
       <div className="main-container">
         <Routes>
           <Route path="/" element={<HomePage />} />
