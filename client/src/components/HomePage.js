@@ -11,7 +11,7 @@ const HomePage = () => {
   const [level, setLevel] = useState(-1);
   const navigate = useNavigate(10);
   const token = localStorage.getItem("x-auth-token");
-  console.log(token);
+
   if (!token) {
     navigate(`/LogIn`);
   }
@@ -34,7 +34,14 @@ const HomePage = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const result = await fetch(`${process.env.REACT_APP_API_URL}/topics`);
+        const result = await fetch(`${process.env.REACT_APP_API_URL}/topics`, {
+          headers: {
+            "Content-Type": "application/json",
+            token: token,
+          },
+        });
+
+        console.log(result);
 
         if (result.ok === false) {
           setLevel(-2);
@@ -45,6 +52,8 @@ const HomePage = () => {
         theTopics = data;
         setLevel(0);
       } catch (err) {
+        console.log(err.message);
+
         setLevel(-2);
         return;
       }

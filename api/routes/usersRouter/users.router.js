@@ -8,9 +8,6 @@ const jwt = require("jsonwebtoken");
 
 router.get("/", async (request, response, next) => {
   try {
-    // console.log(request.query.email);
-    // console.log(request.query.password);
-
     const { email, password } = request.query;
     if (!email || !password) {
       return response
@@ -41,7 +38,7 @@ router.get("/", async (request, response, next) => {
     // console.log(result);
 
     const token = jwt.sign({ id: id }, config.secret, {
-      expiresIn: 3600,
+      expiresIn: 1200,
     });
     // console.log(token);
 
