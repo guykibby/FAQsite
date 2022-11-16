@@ -40,6 +40,9 @@ const HomePage = () => {
             token: token,
           },
         });
+        if(result.status === 422) {
+          navigate(`/LogIn`);
+        }
         if (result.ok === false) {
           setLevel(-2);
           return;
