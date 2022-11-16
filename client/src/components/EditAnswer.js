@@ -9,13 +9,20 @@ const EditAnswer = () => {
   const [star, setStar] = useState(false);
   const [review, setReview] = useState(false);
   const [starFlag, setStarFlag] = useState(false);
+  const token = localStorage.getItem("x-auth-token");
   const navigate = useNavigate();
 
   // to update the information as per the database
   useEffect(() => {
     const getAnswer = async () => {
       const response = await fetch(
-        `${process.env.REACT_APP_API_URL}/editanswer/${answerId}`
+        `${process.env.REACT_APP_API_URL}/editanswer/${answerId}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            token: token,
+          },
+        }
       );
       const data = await response.json();
       setAnswer(data);
@@ -45,6 +52,7 @@ const EditAnswer = () => {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
+          token: token,
         },
       }
     );
@@ -69,6 +77,7 @@ const EditAnswer = () => {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
+            token: token,
           },
           body: JSON.stringify({
             starFlag,
@@ -81,6 +90,7 @@ const EditAnswer = () => {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
+            token: token,
           },
           body: JSON.stringify({
             starFlag,

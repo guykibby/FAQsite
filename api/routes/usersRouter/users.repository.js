@@ -35,4 +35,14 @@ module.exports = {
 
     return result.rows[0];
   },
+  getScope: async (id) => {
+    const db = await get_db();
+    const result = await db.query(
+      `SELECT scope
+      FROM users
+      WHERE id = '${id}'
+    `
+    );
+    return result.rows[0];
+  }
 };

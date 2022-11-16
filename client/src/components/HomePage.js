@@ -40,9 +40,6 @@ const HomePage = () => {
             token: token,
           },
         });
-
-        console.log(result);
-
         if (result.ok === false) {
           setLevel(-2);
           return;

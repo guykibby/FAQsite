@@ -28,7 +28,7 @@ router.get("/", async (request, response, next) => {
     const { passwordkey, name, id, scope } = result;
 
     const authenticationStatus = await bcrypt.compare(password, passwordkey);
-    console.log(authenticationStatus);
+    
 
     if (!authenticationStatus) {
       const error = new Error("Invalid Password");

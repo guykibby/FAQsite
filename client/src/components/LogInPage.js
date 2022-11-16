@@ -10,8 +10,6 @@ const LoginPage = () => {
     const response = await fetch(
       `${process.env.REACT_APP_API_URL}/users?email=${email}&password=${password}`
     );
-    console.log(response);
-
     if (response.status === 404) {
       alert("Email not Found, please sign up!");
       navigate("/SignUp");
