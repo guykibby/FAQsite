@@ -7,7 +7,7 @@ const EditQuestion = () => {
   const [star, setStar] = useState(false);
   const [review, setReview] = useState(false);
   const [starFlag, setStarFlag] = useState(false);
-
+  const [error, setError] = useState(false);
   // to update the information as per the database
   useEffect(() => {
     const getQuestion = async () => {
