@@ -91,11 +91,12 @@ const PostQuestion = () => {
       <p className="title">{topic.name}</p>
       <form onSubmit={handelSubmit} className="main-container">
         <input
+          placeholder="Enter a question..."
           type="text"
           required
           id="question-description"
           name="question-description"
-          className="list-item"
+          className="list-item1"
           value={question}
           onChange={(event) => {
             const value = event.target.value;
@@ -103,7 +104,7 @@ const PostQuestion = () => {
           }}
         />
 
-        <button className="list-item" disabled={isLoading}>
+        <button className="navbtn" disabled={isLoading}>
           Submit
         </button>
       </form>

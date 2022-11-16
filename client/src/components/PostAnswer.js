@@ -101,17 +101,18 @@ const PostAnswer = () => {
       {/* query form for the user to enter their answer to a question */}
       <form onSubmit={handleSubmit} className="main-container">
         <input
+          placeholder="Enter your answer..."
           type="text"
           required
           id="answer-description"
           name="answer-description"
-          className="list-item"
+          className="list-item1"
           value={answer}
           onChange={(e) => {
             setAnswer(e.target.value);
           }}
         />
-        <button className="list-item" disabled={isLoading}>
+        <button className="navbtn" disabled={isLoading}>
           Submit
         </button>
       </form>

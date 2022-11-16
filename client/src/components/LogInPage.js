@@ -4,6 +4,7 @@ import styles from "./LoginPage.module.css";
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  localStorage.clear();
   const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -38,7 +39,7 @@ const LoginPage = () => {
           id="email"
           type="email"
           required
-          className="list-item"
+          className="list-item-input"
           name="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
@@ -51,7 +52,7 @@ const LoginPage = () => {
           id="password"
           type="password"
           required
-          className="list-item"
+          className="list-item-input"
           name="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
