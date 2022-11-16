@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams, Link } from "react-router-dom";
-import EditButton from "./EditButton";
 import styles from "./EditQuestion.module.css";
 
 const EditAnswer = () => {
@@ -9,8 +8,11 @@ const EditAnswer = () => {
   const [star, setStar] = useState(false);
   const [review, setReview] = useState(false);
   const [starFlag, setStarFlag] = useState(false);
-  const token = localStorage.getItem("x-auth-token");
   const navigate = useNavigate();
+  const token = localStorage.getItem("x-auth-token");
+  if (!token) {
+    navigate(`/LogIn`);
+  }
 
   // to update the information as per the database
   useEffect(() => {
@@ -24,6 +26,10 @@ const EditAnswer = () => {
           },
         }
       );
+      if (response.status === 422) {
+        localStorage.clear();
+        navigate(`/LogIn`);
+      }
       const data = await response.json();
       setAnswer(data);
       setStar(data.isstarred);
@@ -56,7 +62,10 @@ const EditAnswer = () => {
         },
       }
     );
-
+    if (response.status === 422) {
+      localStorage.clear();
+      navigate(`/LogIn`);
+    }
     if (response.ok) {
       navigate(`/answers/${answer.questionid}`);
     } else {
@@ -73,31 +82,45 @@ const EditAnswer = () => {
   useEffect(() => {
     const edit = async () => {
       if (starFlag) {
-        await fetch(`${process.env.REACT_APP_API_URL}/editanswer/${answerId}`, {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-            token: token,
-          },
-          body: JSON.stringify({
-            starFlag,
-            isStarred: star,
-            isReviewed: review,
-          }),
-        });
+        const response = await fetch(
+          `${process.env.REACT_APP_API_URL}/editanswer/${answerId}`,
+          {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+              token: token,
+            },
+            body: JSON.stringify({
+              starFlag,
+              isStarred: star,
+              isReviewed: review,
+            }),
+          }
+        );
+        if (response.status === 422) {
+          localStorage.clear();
+          navigate(`/LogIn`);
+        }
       } else {
-        await fetch(`${process.env.REACT_APP_API_URL}/editanswer/${answerId}`, {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-            token: token,
-          },
-          body: JSON.stringify({
-            starFlag,
-            isStarred: star,
-            isReviewed: review,
-          }),
-        });
+        const response = await fetch(
+          `${process.env.REACT_APP_API_URL}/editanswer/${answerId}`,
+          {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+              token: token,
+            },
+            body: JSON.stringify({
+              starFlag,
+              isStarred: star,
+              isReviewed: review,
+            }),
+          }
+        );
+        if (response.status === 422) {
+          localStorage.clear();
+          navigate(`/LogIn`);
+        }
       }
     };
     edit();

@@ -41,6 +41,7 @@ const HomePage = () => {
           },
         });
         if(result.status === 422) {
+          localStorage.clear();
           navigate(`/LogIn`);
         }
         if (result.ok === false) {

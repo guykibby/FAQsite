@@ -35,6 +35,10 @@ const Dashboard = () => {
             },
           }
         );
+        if (response.status === 422) {
+          localStorage.clear();
+          navigate(`/LogIn`);
+        }
 
         if (result.ok === false) {
           setIsLoading(false);

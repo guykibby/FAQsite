@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const Joi = require("joi");
 const repository = require("./postQuestions.repository");
+const checkJWT = require("../../middleware/checkJWT");
 
 // path parameters validation middleware
 const pathParamValidationMiddleware = (schema) => (request, response, next) => {
@@ -20,7 +21,7 @@ const pathParamsSchema = Joi.object().keys({
 });
 
 router.post(
-  `/:topicId`,
+  `/:topicId`, checkJWT,
   pathParamValidationMiddleware(pathParamsSchema),
   async (req, res, next) => {
     try {

@@ -33,6 +33,7 @@ const ViewQuestions = () => {
         );
         
         if (response.status === 422) {
+          localStorage.clear();
           navigate(`/LogIn`);
         }
         if (response.ok === false) {

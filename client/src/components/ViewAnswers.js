@@ -32,6 +32,7 @@ const ViewAnswers = () => {
 
         // fetch error handling
         if (result.status === 422) {
+          localStorage.clear();
           navigate(`/LogIn`);
         }
 

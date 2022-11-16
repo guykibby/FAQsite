@@ -4,22 +4,34 @@ import { useNavigate } from "react-router-dom";
 
 const PostQuestion = () => {
   const { topicId } = useParams();
-  const [ topic, setTopic ] = useState("");
+  const [topic, setTopic] = useState("");
   const [question, setQuestion] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
-
   const navigate = useNavigate();
+  const token = localStorage.getItem("x-auth-token");
+  if (!token) {
+    navigate(`/LogIn`);
+  }
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const result = await fetch(
-          `${process.env.REACT_APP_API_URL}/questions/${topicId}`
+          `${process.env.REACT_APP_API_URL}/questions/${topicId}`,
+          {
+            headers: {
+              "Content-Type": "application/json",
+              token: token,
+            },
+          }
         );
 
         // fetch error handling
-
+        if (result.status === 422) {
+          localStorage.clear();
+          navigate(`/LogIn`);
+        }
         if (result.ok === false) {
           setError(true);
           return;
@@ -47,10 +59,15 @@ const PostQuestion = () => {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            token: token,
           },
           body: JSON.stringify({ description: question }),
         }
       );
+      if (response.status === 422) {
+        localStorage.clear();
+        navigate(`/LogIn`);
+      }
 
       if (!response.ok) {
         console.log("Fetch not ok");
@@ -71,7 +88,7 @@ const PostQuestion = () => {
   return (
     <>
       <h1>Post Question</h1>
-     <p className="title">{topic.name}</p>
+      <p className="title">{topic.name}</p>
       <form onSubmit={handelSubmit} className="main-container">
         <input
           type="text"
