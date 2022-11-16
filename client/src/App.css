@@ -1,9 +1,9 @@
 body {
   margin: 0;
   font-family: Arial, Helvetica, sans-serif;
-}
-input.list-item {
-  background-color: rgb(194, 193, 193);
+  background-image: url(./components/Q.png);
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
 .main-container {
@@ -39,6 +39,28 @@ input.list-item {
   transition: transform ease 0.3s;
 }
 
+.list-item1 {
+  width: 85%;
+  padding: 1rem;
+  margin: 1rem;
+  text-decoration: none;
+  color: black;
+  text-align: center;
+  box-shadow: 0.1rem 0.5rem 0.5rem grey;
+  border: none;
+  background-color: rgb(213, 212, 212);
+}
+.list-item2 {
+  width: 85%;
+  padding: 1rem;
+  margin: 1rem;
+  text-decoration: none;
+  color: black;
+  text-align: center;
+  box-shadow: 0.1rem 0.5rem 0.5rem grey;
+  border: none;
+  background-color: rgb(213, 212, 212);
+}
 .question {
   display: grid;
   grid-template-columns: 3fr 1fr;

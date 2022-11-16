@@ -96,7 +96,7 @@ const PostQuestion = () => {
           required
           id="question-description"
           name="question-description"
-          className="list-item"
+          className="list-item1"
           value={question}
           onChange={(event) => {
             const value = event.target.value;
