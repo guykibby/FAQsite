@@ -11,6 +11,7 @@ describe("When the user is on the HomePage,", () => {
     // setup a DOM element as a render target
     container = document.createElement("div");
     document.body.appendChild(container);
+    localStorage.setItem("x-auth-token", 1);
   });
 
   afterEach(() => {
@@ -18,6 +19,7 @@ describe("When the user is on the HomePage,", () => {
     unmountComponentAtNode(container);
     container.remove();
     container = null;
+    localStorage.setItem("x-auth-token", null);
   });
 
   // Test Happy path, browsing tree is functional after successful fetch request

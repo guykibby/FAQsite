@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 /** Fetch API, will fetch questions waiting for review from questions table
  *  and answers waiting for review from answers table
@@ -15,6 +15,12 @@ const Dashboard = () => {
   const [isAnswersEmpty, setIsAnswersEmpty] = useState(false);
   const [error, setError] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const navigate = useNavigate();
+  const token = localStorage.getItem("x-auth-token");
+  useEffect(()=>{ if (!token) {
+    navigate(`/LogIn`);
+  }},[])
+
   useEffect(() => {
     setIsLoading(true);
     setIsQuestionsEmpty(false);
@@ -22,8 +28,18 @@ const Dashboard = () => {
     const fetchData = async () => {
       try {
         const result = await fetch(
-          `${process.env.REACT_APP_API_URL}/dashboard`
+          `${process.env.REACT_APP_API_URL}/dashboard`,
+          {
+            headers: {
+              "Content-Type": "application/json",
+              token: token,
+            },
+          }
         );
+        if (result.status === 422) {
+          localStorage.clear();
+          navigate(`/LogIn`);
+        }
 
         if (result.ok === false) {
           setIsLoading(false);

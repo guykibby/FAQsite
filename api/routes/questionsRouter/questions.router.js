@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const Joi = require("joi");
 const questionsRepository = require("./questions.repository");
-
+const checkJWT = require("../../middleware/checkJWT");
 const pathParamValidationMiddleware = (schema) => (req, res, next) => {
   const { error } = schema.validate(req.params);
 
@@ -21,14 +21,15 @@ const pathParamsSchema = Joi.object().keys({
 });
 
 router.get(
-  "/:topicId",
-  pathParamValidationMiddleware(pathParamsSchema),
+  "/:topicId", checkJWT,
+  pathParamValidationMiddleware(pathParamsSchema), 
   async (req, res, next) => {
     try {
       const { topicId } = req.params;
-
+      
       const checkId = await questionsRepository.checkTopicId(topicId);
       if (checkId.rows.length === 0) {
+        
         return res.status(404).json({ error: "ID not found" });
       }
 

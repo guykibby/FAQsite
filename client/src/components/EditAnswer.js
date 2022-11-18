@@ -10,21 +10,34 @@ const EditAnswer = () => {
   const [starFlag, setStarFlag] = useState(false);
   const [error, setError] = useState(false);
   const navigate = useNavigate();
+  const token = localStorage.getItem("x-auth-token");
+  useEffect(()=>{ if (!token) {
+    navigate(`/LogIn`);
+  }},[])
 
   // to update the information as per the database
   useEffect(() => {
     const getAnswer = async () => {
       const response = await fetch(
-        `${process.env.REACT_APP_API_URL}/editanswer/${answerId}`
+        `${process.env.REACT_APP_API_URL}/editanswer/${answerId}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            token: token,
+          },
+        }
       );
-      if (response.ok) {
-        const data = await response.json();
-        setAnswer(data);
-        setStar(data.isstarred);
-        setReview(data.isreviewed);
-      } else {
-        setError(true);
+      if (response.status === 422) {
+        localStorage.clear();
+        navigate(`/LogIn`);
       }
+      if (!response.ok) {
+          setError(true);
+      }
+      const data = await response.json();
+      setAnswer(data);
+      setStar(data.isstarred);
+      setReview(data.isreviewed);
     };
     getAnswer();
   }, [answerId]);
@@ -49,10 +62,14 @@ const EditAnswer = () => {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
+          token: token,
         },
       }
     );
-
+    if (response.status === 422) {
+      localStorage.clear();
+      navigate(`/LogIn`);
+    }
     if (response.ok) {
       navigate(`/answers/${answer.questionid}`);
     } else {
@@ -69,29 +86,45 @@ const EditAnswer = () => {
   useEffect(() => {
     const edit = async () => {
       if (starFlag) {
-        await fetch(`${process.env.REACT_APP_API_URL}/editanswer/${answerId}`, {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            starFlag,
-            isStarred: star,
-            isReviewed: review,
-          }),
-        });
+        const response = await fetch(
+          `${process.env.REACT_APP_API_URL}/editanswer/${answerId}`,
+          {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+              token: token,
+            },
+            body: JSON.stringify({
+              starFlag,
+              isStarred: star,
+              isReviewed: review,
+            }),
+          }
+        );
+        if (response.status === 422) {
+          localStorage.clear();
+          navigate(`/LogIn`);
+        }
       } else {
-        await fetch(`${process.env.REACT_APP_API_URL}/editanswer/${answerId}`, {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            starFlag,
-            isStarred: star,
-            isReviewed: review,
-          }),
-        });
+        const response = await fetch(
+          `${process.env.REACT_APP_API_URL}/editanswer/${answerId}`,
+          {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+              token: token,
+            },
+            body: JSON.stringify({
+              starFlag,
+              isStarred: star,
+              isReviewed: review,
+            }),
+          }
+        );
+        if (response.status === 422) {
+          localStorage.clear();
+          navigate(`/LogIn`);
+        }
       }
     };
     edit();

@@ -2,6 +2,8 @@ const express = require("express");
 const router = express.Router();
 const Joi = require("joi");
 const questionsRepo = require("./editQuestions.respository");
+const checkJWT = require("../../middleware/checkJWT");
+const checkScope = require("../../middleware/checkScope");
 
 // path parameter validation middleware
 const pathParamValidationMiddleware = (schema) => (request, response, next) => {
@@ -22,6 +24,8 @@ const pathParamsSchema = Joi.object().keys({
 
 router.put(
   "/:questionId",
+  checkJWT,
+  checkScope,
   pathParamValidationMiddleware(pathParamsSchema),
   async (request, response, next) => {
     try {
@@ -50,6 +54,8 @@ router.put(
 router.delete(
   "/:questionId",
   pathParamValidationMiddleware(pathParamsSchema),
+  checkJWT,
+  checkScope,
   async (request, response, next) => {
     try {
       const { questionId } = request.params;
@@ -71,6 +77,8 @@ router.delete(
 router.get(
   "/:questionId",
   pathParamValidationMiddleware(pathParamsSchema),
+  checkJWT,
+  checkScope,
   async (request, response, next) => {
     const { questionId } = request.params;
     const question = await questionsRepo.getQuestion(questionId);

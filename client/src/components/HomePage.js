@@ -10,7 +10,12 @@ let branch = "";
 const HomePage = () => {
   const [level, setLevel] = useState(-1);
   const navigate = useNavigate(10);
+  const token = localStorage.getItem("x-auth-token");
 
+  useEffect(()=>{ if (!token) {
+    navigate(`/LogIn`);
+  }},[])
+ 
   // theTopics will be filtered with the use of keys
   const levelKeys = ["year", "term", "topic"];
 
@@ -30,8 +35,16 @@ const HomePage = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const result = await fetch(`${process.env.REACT_APP_API_URL}/topics`);
-
+        const result = await fetch(`${process.env.REACT_APP_API_URL}/topics`, {
+          headers: {
+            "Content-Type": "application/json",
+            token: token,
+          },
+        });
+        if(result.status === 422) {
+          localStorage.clear();
+          navigate(`/LogIn`);
+        }
         if (result.ok === false) {
           setLevel(-2);
           return;
@@ -41,6 +54,8 @@ const HomePage = () => {
         theTopics = data;
         setLevel(0);
       } catch (err) {
+        console.log(err.message);
+
         setLevel(-2);
         return;
       }

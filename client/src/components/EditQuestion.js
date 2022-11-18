@@ -7,21 +7,37 @@ const EditQuestion = () => {
   const [star, setStar] = useState(false);
   const [review, setReview] = useState(false);
   const [starFlag, setStarFlag] = useState(false);
-  const [error, setError] = useState(false);
+const [error, setError] = useState(false);
+
+  const token = localStorage.getItem("x-auth-token");
+  useEffect(()=>{ if (!token) {
+    navigate(`/LogIn`);
+  }},[])
+
   // to update the information as per the database
   useEffect(() => {
     const getQuestion = async () => {
       const response = await fetch(
-        `${process.env.REACT_APP_API_URL}/editquestion/${questionId}`
+        `${process.env.REACT_APP_API_URL}/editquestion/${questionId}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            token: token,
+          },
+        }
       );
-      if (response.ok) {
-        const data = await response.json();
-        setQuestion(data);
-        setStar(data.isstarred);
-        setReview(data.isreviewed);
-      } else {
-        setError(true);
+      if (response.status === 422) {
+        localStorage.clear();
+        navigate(`/LogIn`);
       }
+      const data = await response.json();
+      setQuestion(data);
+      setStar(data.isstarred);
+      setReview(data.isreviewed);
+
+      if (!response.ok) {
+   setError(true);
+      } 
     };
     getQuestion();
   }, [questionId]);
@@ -44,9 +60,14 @@ const EditQuestion = () => {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
+          token: token,
         },
       }
     );
+    if (response.status === 422) {
+      localStorage.clear();
+      navigate(`/LogIn`);
+    }
 
     if (response.ok) {
       navigate(`/questions/${question.topicid}`);
@@ -62,12 +83,13 @@ const EditQuestion = () => {
   useEffect(() => {
     const edit = async () => {
       if (starFlag) {
-        await fetch(
+        const response = await fetch(
           `${process.env.REACT_APP_API_URL}/editquestion/${questionId}`,
           {
             method: "PUT",
             headers: {
               "Content-Type": "application/json",
+              token: token,
             },
             body: JSON.stringify({
               starFlag,
@@ -76,13 +98,18 @@ const EditQuestion = () => {
             }),
           }
         );
+        if (response.status === 422) {
+          localStorage.clear();
+          navigate(`/LogIn`);
+        }
       } else {
-        await fetch(
+        const response = await fetch(
           `${process.env.REACT_APP_API_URL}/editquestion/${questionId}`,
           {
             method: "PUT",
             headers: {
               "Content-Type": "application/json",
+              token: token,
             },
             body: JSON.stringify({
               starFlag,
@@ -91,6 +118,10 @@ const EditQuestion = () => {
             }),
           }
         );
+        if (response.status === 422) {
+          localStorage.clear();
+          navigate(`/LogIn`);
+        }
       }
     };
     edit();

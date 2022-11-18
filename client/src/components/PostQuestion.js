@@ -8,18 +8,29 @@ const PostQuestion = () => {
   const [question, setQuestion] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
-
   const navigate = useNavigate();
-
+  const token = localStorage.getItem("x-auth-token");
+  useEffect(()=>{ if (!token) {
+    navigate(`/LogIn`);
+  }},[])
   useEffect(() => {
     const fetchData = async () => {
       try {
         const result = await fetch(
-          `${process.env.REACT_APP_API_URL}/questions/${topicId}`
+          `${process.env.REACT_APP_API_URL}/questions/${topicId}`,
+          {
+            headers: {
+              "Content-Type": "application/json",
+              token: token,
+            },
+          }
         );
 
         // fetch error handling
-
+        if (result.status === 422) {
+          localStorage.clear();
+          navigate(`/LogIn`);
+        }
         if (result.ok === false) {
           setError(true);
           return;
@@ -47,10 +58,15 @@ const PostQuestion = () => {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            token: token,
           },
           body: JSON.stringify({ description: question }),
         }
       );
+      if (response.status === 422) {
+        localStorage.clear();
+        navigate(`/LogIn`);
+      }
 
       if (!response.ok) {
         console.log("Fetch not ok");
@@ -79,7 +95,7 @@ const PostQuestion = () => {
           required
           id="question-description"
           name="question-description"
-          className="list-item"
+          className="list-item1"
           value={question}
           onChange={(event) => {
             const value = event.target.value;

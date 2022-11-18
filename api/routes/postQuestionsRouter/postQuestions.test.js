@@ -1,6 +1,9 @@
 const request = require("supertest");
 const app = require("../../app");
 const get_db = require("../../db");
+const checkJWT = require("../../middleware/checkJWT");
+jest.mock("../../middleware/checkJWT");
+checkJWT.mockImplementation((req, res, next) => next());
 
 describe("GIVEN that the POST /question/:topicId route exists", () => {
   afterAll(async () => {

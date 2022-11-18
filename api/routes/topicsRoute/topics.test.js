@@ -2,6 +2,9 @@ const request = require("supertest");
 const app = require("../../app");
 const get_db = require("../../db");
 const repository = require("./topics.repository");
+const checkJWT = require("../../middleware/checkJWT");
+jest.mock("../../middleware/checkJWT");
+checkJWT.mockImplementation((req, res, next) => next());
 
 describe("GET /topics route", () => {
   afterAll(async () => {
