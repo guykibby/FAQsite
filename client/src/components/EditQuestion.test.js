@@ -51,7 +51,6 @@ describe("EditQuestion Page", () => {
     expect(beforeClick).toBe(!afterClick);
   });
 
-
   test("Alter the value of the Star Checkbox upon click", async () => {
     await act(async () => {
       render(
@@ -70,6 +69,4 @@ describe("EditQuestion Page", () => {
     const afterClick = screen.getByTestId("star-checkbox").checked;
     expect(beforeClick).toBe(!afterClick);
   });
-
-
 });
