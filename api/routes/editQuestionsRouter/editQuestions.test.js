@@ -2,6 +2,14 @@ const request = require("supertest");
 const app = require("../../app");
 const get_db = require("../../db");
 const questionRepo = require("./editQuestions.respository");
+const checkJWT = require("../../middleware/checkJWT");
+const checkScope = require("../../middleware/checkScope");
+
+jest.mock("../../middleware/checkJWT");
+checkJWT.mockImplementation((req, res, next) => next());
+
+jest.mock("../../middleware/checkScope");
+checkScope.mockImplementation((req, res, next) => next());
 
 describe("Given that the PUT, DELETE and GET /editquestion/:questionId route exists", () => {
   afterAll(async () => {
@@ -68,6 +76,7 @@ describe("Given that the PUT, DELETE and GET /editquestion/:questionId route exi
     const isReviewedBeforeEdit = await db.query(
       `SELECT isReviewed FROM questions WHERE id = 1`
     );
+
     // fetching the isStarred value before the put request
     const isStarredBeforeEdit = await db.query(
       `SELECT isStarred FROM questions WHERE id = 1`
@@ -194,9 +203,7 @@ describe("Given that the PUT, DELETE and GET /editquestion/:questionId route exi
       .delete("/editquestion/10")
       .expect(200)
       .expect((response) => {
-        expect(response.body.message).toBe(
-          `Question Deleted`
-        );
+        expect(response.body.message).toBe(`Question Deleted`);
       });
   });
 
@@ -257,7 +264,10 @@ describe("Given that the PUT, DELETE and GET /editquestion/:questionId route exi
   // test for GET requests
   test("WHEN a GET req is made with questionId = 1 THEN retrun a question object", async () => {
     const expectedOutput = await questionRepo.getQuestion(1);
-    const response = await request(app).get("/editquestion/1").set("Accept", "application/json").expect(200);
+    const response = await request(app)
+      .get("/editquestion/1")
+      .set("Accept", "application/json")
+      .expect(200);
     expect(response.body).toEqual(expectedOutput);
   });
 
@@ -272,7 +282,7 @@ describe("Given that the PUT, DELETE and GET /editquestion/:questionId route exi
     await request(app)
       .get("/editquestion/999999")
       .set("Accept", "application/json")
-      .expect(400)
+      .expect(400);
   });
 
   test("WHEN the path parameter for questionId is greater than 999999998 as it is not a normal integer anymore THEN respond with 400 error code and an appropriate error message", async () => {
@@ -293,7 +303,9 @@ describe("Given that the PUT, DELETE and GET /editquestion/:questionId route exi
       .set("Accept", "application/json")
       .expect(400)
       .expect((response) => {
-        expect(response.body.message[0]).toBe(`\"questionId\" must be a number`);
+        expect(response.body.message[0]).toBe(
+          `\"questionId\" must be a number`
+        );
       });
   });
 

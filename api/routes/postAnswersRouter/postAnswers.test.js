@@ -2,6 +2,10 @@ const request = require("supertest");
 const app = require("../../app");
 const get_db = require("../../db");
 const repository = require("./postAnswers.repository");
+const checkJWT = require("../../middleware/checkJWT");
+
+jest.mock("../../middleware/checkJWT");
+checkJWT.mockImplementation((req, res, next) => next());
 
 describe("GIVEN that the POST /postanswer/:questionId route exists", () => {
   afterAll(async () => {
