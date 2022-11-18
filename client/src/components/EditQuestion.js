@@ -8,9 +8,9 @@ const EditQuestion = () => {
   const [review, setReview] = useState(false);
   const [starFlag, setStarFlag] = useState(false);
   const token = localStorage.getItem("x-auth-token");
-  if (!token) {
+  useEffect(()=>{ if (!token) {
     navigate(`/LogIn`);
-  }
+  }},[])
 
   // to update the information as per the database
   useEffect(() => {

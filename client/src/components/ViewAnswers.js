@@ -13,9 +13,9 @@ const ViewAnswers = () => {
   const [isLoading, setIsLoading] = useState(true);
   const token = localStorage.getItem("x-auth-token");
   const navigate = useNavigate();
-  if (!token) {
+  useEffect(()=>{ if (!token) {
     navigate(`/LogIn`);
-  }
+  }},[])
 
   useEffect(() => {
     const fetchData = async () => {

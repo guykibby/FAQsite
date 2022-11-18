@@ -10,10 +10,9 @@ const PostQuestion = () => {
   const [error, setError] = useState(false);
   const navigate = useNavigate();
   const token = localStorage.getItem("x-auth-token");
-  if (!token) {
+  useEffect(()=>{ if (!token) {
     navigate(`/LogIn`);
-  }
-
+  }},[])
   useEffect(() => {
     const fetchData = async () => {
       try {

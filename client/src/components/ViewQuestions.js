@@ -13,9 +13,9 @@ const ViewQuestions = () => {
   const [error, setError] = useState(false);
   const token = localStorage.getItem("x-auth-token");
   
-  if (!token) {
+  useEffect(()=>{ if (!token) {
     navigate(`/LogIn`);
-  }
+  }},[])
 
   const navigate = useNavigate();
 

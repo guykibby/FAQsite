@@ -17,9 +17,9 @@ const Dashboard = () => {
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
   const token = localStorage.getItem("x-auth-token");
-  if (!token) {
+  useEffect(()=>{ if (!token) {
     navigate(`/LogIn`);
-  }
+  }},[])
 
   useEffect(() => {
     setIsLoading(true);

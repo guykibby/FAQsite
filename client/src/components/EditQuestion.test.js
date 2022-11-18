@@ -3,10 +3,7 @@ import { BrowserRouter as Router } from "react-router-dom";
 import { unmountComponentAtNode } from "react-dom";
 import { act } from "react-dom/test-utils";
 import EditQuestion from "./EditQuestion";
-const token = localStorage.getItem("x-auth-token");
-if (!token) {
-  navigate(`/LogIn`);
-}
+
 describe("EditQuestion Page", () => {
   let container = null;
   beforeEach(() => {
