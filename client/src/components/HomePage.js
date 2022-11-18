@@ -12,9 +12,10 @@ const HomePage = () => {
   const navigate = useNavigate(10);
   const token = localStorage.getItem("x-auth-token");
 
-  if (!token) {
+  useEffect(()=>{ if (!token) {
     navigate(`/LogIn`);
-  }
+  }},[])
+ 
   // theTopics will be filtered with the use of keys
   const levelKeys = ["year", "term", "topic"];
 
