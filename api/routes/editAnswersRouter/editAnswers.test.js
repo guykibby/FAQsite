@@ -2,6 +2,14 @@ const request = require("supertest");
 const app = require("../../app");
 const get_db = require("../../db");
 const answerRepo = require("./editAnswers.respository");
+const checkJWT = require("../../middleware/checkJWT");
+const checkScope = require("../../middleware/checkScope");
+
+jest.mock("../../middleware/checkJWT");
+checkJWT.mockImplementation((req, res, next) => next());
+
+jest.mock("../../middleware/checkScope");
+checkScope.mockImplementation((req, res, next) => next());
 
 describe("Given that the PUT and DELETE /editAnswer/:answerId route exists", () => {
   afterAll(async () => {
@@ -273,7 +281,7 @@ describe("Given that the PUT and DELETE /editAnswer/:answerId route exists", () 
     await request(app)
       .get("/editanswer/999999")
       .set("Accept", "application/json")
-      .expect(400)
+      .expect(400);
   });
 
   test("WHEN the path parameter for answerId is greater than 999999998 as it is not a normal integer anymore, respond with 400 error code and an appropriate error message", async () => {

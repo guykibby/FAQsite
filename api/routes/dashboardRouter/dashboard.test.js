@@ -2,6 +2,14 @@ const request = require("supertest");
 const app = require("../../app");
 const get_db = require("../../db");
 const { getNewQuestions, getNewAnswers } = require("./dashboard.repository");
+const checkJWT = require("../../middleware/checkJWT");
+const checkScope = require("../../middleware/checkScope");
+
+jest.mock("../../middleware/checkJWT");
+checkJWT.mockImplementation((req, res, next) => next());
+
+jest.mock("../../middleware/checkScope");
+checkScope.mockImplementation((req, res, next) => next());
 
 describe("FAQ Dashboard API", () => {
   afterAll(async () => {

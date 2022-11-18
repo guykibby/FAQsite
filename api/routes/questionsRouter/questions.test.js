@@ -2,6 +2,9 @@ const request = require("supertest");
 const app = require("../../app");
 const get_db = require("../../db");
 const questionsRepository = require("./questions.repository");
+const checkJWT = require("../../middleware/checkJWT");
+jest.mock("../../middleware/checkJWT");
+checkJWT.mockImplementation((req, res, next) => next());
 
 describe("GIVEN that the GET /questions route exists", () => {
   afterAll(async () => {

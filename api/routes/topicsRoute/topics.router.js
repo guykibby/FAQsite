@@ -1,8 +1,9 @@
 const express = require("express");
 const router = express.Router();
 const repository = require("./topics.repository");
+const checkJWT = require("../../middleware/checkJWT");
 
-router.get("/", async (req, res, next) => {
+router.get("/", checkJWT, async (req, res, next) => {
   try {
     const response = await repository.getTopics();
     res.json(response);

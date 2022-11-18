@@ -31,9 +31,9 @@ exports.up = function (db) {
   CREATE TABLE users (
     id SERIAL PRIMARY KEY,
     name varchar,
-    email varchar NOT NULL,
-    passwordKey varchar NOT NULL,
-    scope varchar     
+    email varchar UNIQUE,
+    passwordKey varchar,
+    scope bool DEFAULT false
   );
   
   CREATE TABLE questions (
