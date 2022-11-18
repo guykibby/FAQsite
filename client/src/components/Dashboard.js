@@ -15,6 +15,13 @@ const Dashboard = () => {
   const [isAnswersEmpty, setIsAnswersEmpty] = useState(false);
   const [error, setError] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const navigate = useNavigate();
+  const token = localStorage.getItem("x-auth-token");
+  
+  useEffect(()=>{ if (!token) {
+    navigate(`/LogIn`);
+  }},[])
+
   useEffect(() => {
     setIsLoading(true);
     setIsQuestionsEmpty(false);
