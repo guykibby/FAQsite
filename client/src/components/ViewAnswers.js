@@ -71,7 +71,7 @@ const ViewAnswers = () => {
       ) : (
         answers.map((answer, key) => {
           return (
-            <div key={key} className="list-item main-container">
+            <div key={key} className="list-item2 main-container">
               <div className="link">
                 {answer.isstarred === true ? " ✅ " : ""}
                 {answer.answerdescription}
@@ -85,7 +85,7 @@ const ViewAnswers = () => {
           );
         })
       )}
-      <button onClick={handleClick} className="list-item">
+      <button onClick={handleClick} className="navbtn">
         POST NEW ANSWER
       </button>
     </>

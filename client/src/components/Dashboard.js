@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 /** Fetch API, will fetch questions waiting for review from questions table
  *  and answers waiting for review from answers table
@@ -15,6 +15,7 @@ const Dashboard = () => {
   const [isAnswersEmpty, setIsAnswersEmpty] = useState(false);
   const [error, setError] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const navigate = useNavigate();
   const token = localStorage.getItem("x-auth-token");
   if (!token) {
     navigate(`/LogIn`);
@@ -56,7 +57,8 @@ const Dashboard = () => {
         }
       } catch (error) {
         setIsLoading(false);
-        console.log("Error fetching products");
+        setError(true);
+        console.log("Error fetching questions & answers");
       }
     };
     fetchData();
@@ -65,8 +67,6 @@ const Dashboard = () => {
   return (
     <>
       <h1 className="dashboard-title">Dashboard</h1>
-      {isLoading && <p className="loading-list-item">Loading....</p>}
-      {error && <p className="error-list-item">Oops, something went wrong!</p>}
       {/**  questions waiting for review by instructor
        * line #54- #63 can be done by creating
        * <Questions /> componet by passing newPosts[0] as props
@@ -74,6 +74,10 @@ const Dashboard = () => {
        * to <Question /> component to reuse it in other modules
        * but implmented to keep it in sync with other usestories
        */}
+      {isLoading && <p className="loading-list-item list-item">Loading....</p>}
+      {error && (
+        <p className="error-list-item list-item">Oops, something went wrong!</p>
+      )}
       {noReviews && (
         <p className="no-data-found list-item">
           No questions/Answers are found for review
@@ -109,7 +113,6 @@ const Dashboard = () => {
           ))}
         </>
       )}
-      moved
     </>
   );
 };

@@ -2,6 +2,7 @@ import { Link, useParams } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import EditButton from "./EditButton";
 import { useNavigate } from "react-router-dom";
+// import { FaPlusCircle } from "react-icons/fa";
 
 let scope = false;
 
@@ -83,7 +84,7 @@ const ViewQuestions = () => {
         })
       )}
 
-      <button onClick={handleClick} className="list-item">
+      <button onClick={handleClick} className="navbtn">
         POST NEW QUESTION
       </button>
     </>
