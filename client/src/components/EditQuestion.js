@@ -7,6 +7,8 @@ const EditQuestion = () => {
   const [star, setStar] = useState(false);
   const [review, setReview] = useState(false);
   const [starFlag, setStarFlag] = useState(false);
+const [error, setError] = useState(false);
+
   const token = localStorage.getItem("x-auth-token");
   useEffect(()=>{ if (!token) {
     navigate(`/LogIn`);
@@ -32,6 +34,10 @@ const EditQuestion = () => {
       setQuestion(data);
       setStar(data.isstarred);
       setReview(data.isreviewed);
+
+      if (!response.ok) {
+   setError(true);
+      } 
     };
     getQuestion();
   }, [questionId]);
@@ -120,6 +126,14 @@ const EditQuestion = () => {
     };
     edit();
   }, [star, review, questionId, starFlag, question]);
+  if (error) {
+    return (
+      <p>
+        The content does not exists. Please check that the questionId in the URL
+        is correct
+      </p>
+    );
+  }
   return (
     <>
       <h2 className="list-item">{question.description}</h2>

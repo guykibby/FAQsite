@@ -8,6 +8,7 @@ const EditAnswer = () => {
   const [star, setStar] = useState(false);
   const [review, setReview] = useState(false);
   const [starFlag, setStarFlag] = useState(false);
+  const [error, setError] = useState(false);
   const navigate = useNavigate();
   const token = localStorage.getItem("x-auth-token");
   useEffect(()=>{ if (!token) {
@@ -29,6 +30,9 @@ const EditAnswer = () => {
       if (response.status === 422) {
         localStorage.clear();
         navigate(`/LogIn`);
+      }
+      if (!response.ok) {
+          setError(true);
       }
       const data = await response.json();
       setAnswer(data);
@@ -125,7 +129,14 @@ const EditAnswer = () => {
     };
     edit();
   }, [star, review, answerId, starFlag, answer]);
-
+  if (error) {
+    return (
+      <p>
+        The content does not exists. Please check that the answerId in the URL
+        is correct
+      </p>
+    );
+  }
   return (
     <>
       <h1 className="title">{answer.questiondescription}</h1>
