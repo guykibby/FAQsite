@@ -10,9 +10,9 @@ Site is deployed here:
 
 Or run it locally:
 Required - Node, Docker
-Terminal commands to run:
-- docker-compose up -build
-- docker-compose exec api npm run db-migrations:up
+- Terminal commands to run:
+  - docker-compose up -build
+  - docker-compose exec api npm run db-migrations:up
 Then open localhost:3000 in browser
 
 You can sign in as 12345@DI.com, password 'DIROCKS', this user has an instructors scope.
