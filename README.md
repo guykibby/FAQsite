@@ -1,7 +1,7 @@
 
 # PERN Stack application 
 
-It is a mock FAQ website set up for an educational institute. Students can browse FAQs by year/term/topic. They can also post new questions and post answers to questions. Instructors, who have an instructors scope, can review all new posts on a dashboard, and either delete the post, star the post (so it is highlighted and displayed at the top) and remove the post from the dashboard.
+A mock FAQ website set up for an educational institute. Students can browse FAQs by year/term/topic. They can also post new questions and post answers to questions. Instructors, who have an instructors scope, can review all new posts on a dashboard, and either delete the post, star the post (so it is highlighted and displayed at the top) and/or remove the post from the dashboard.
 
 Site is deployed here:
 
