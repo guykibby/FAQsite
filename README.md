@@ -3,19 +3,16 @@
 
 A mock FAQ website set up for an educational institute. Students can browse FAQs by year/term/topic. They can also post new questions and post answers to questions. Instructors, who have an instructors scope, can review all new posts on a dashboard, and either delete the post, star the post (so it is highlighted and displayed at the top) and/or remove the post from the dashboard.
 
-Site is deployed here:
+Site is deployed here: https://client-g0hy.onrender.com/
 
-- https://client-g0hy.onrender.com/
-- Please be patient with the loading as the DB takes a while to start becuase it is hosted by Render on a free tier service.
-
-Or run it locally:
+To run locally:
 Required - Node, Docker
-- Terminal commands to run:
+- Terminal commands:
   - docker-compose up -build
   - docker-compose exec api npm run db-migrations:up
-Then open localhost:3000 in browser
+  - see localhost:3000 in browser
 
-You can sign in as 12345@DI.com, password 'DIROCKS', this user has an instructors scope.
+You can sign with email - 12345@DI.com, password 'DIROCKS', this user has an instructors scope.
 
 If you wish to sign in as a student simply try to login, you will be directed to a sign up page and go from there.
 
@@ -30,7 +27,7 @@ GitHub Workflow for continuous intergration.
 Render.yaml file for deployment.
 - https://github.com/guykibby/FAQsite/blob/main/render.yaml
 
-Docker compose to run all three containers, the DB, the API, and the React app.
+Docker compose to run all three containers: the DB, the API, and the React app.
 - https://github.com/guykibby/FAQsite/blob/main/docker-compose.yaml
 
 React app route structure
