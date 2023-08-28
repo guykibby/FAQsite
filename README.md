@@ -36,7 +36,6 @@ React app route structure
 Use of bcrypt to hash passwords and Json Web Tokens for authentication.
 - https://github.com/guykibby/FAQsite/blob/main/api/routes/usersRouter/users.router.js
 
-  <img src="diagrams/ER-Diagram.png" alt="ER Diagram">
 ##
 
 <summary>Architecture Diagram</summary>
