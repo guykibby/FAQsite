@@ -5,14 +5,14 @@ A mock FAQ website set up for an educational institute. Students can browse FAQs
 
 Site is deployed here: https://client-g0hy.onrender.com/
 
+You can sign with email - 12345@DI.com, password 'DIROCKS', this user has an instructors scope.
+
 To run locally:
 Required - Node, Docker
 - Terminal commands:
   - docker-compose up -build
   - docker-compose exec api npm run db-migrations:up
   - see localhost:3000 in browser
-
-You can sign with email - 12345@DI.com, password 'DIROCKS', this user has an instructors scope.
 
 If you wish to sign in as a student simply try to login, you will be directed to a sign up page and go from there.
 
