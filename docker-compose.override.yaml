@@ -9,6 +9,8 @@ services:
       - ./api:/app
       - /app/node_modules
   client:
+    environment:
+      - REACT_APP_API_URL=http://localhost:5001
     volumes:
       - ./client:/app/
       - /app/node_modules
