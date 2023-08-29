@@ -29,6 +29,9 @@ Render.yaml file for deployment.
 Docker compose to run all three containers: the DB, the API, and the React app.
 - https://github.com/guykibby/FAQsite/blob/main/docker-compose.yaml
 
+Docker compose override for dev only.
+- https://github.com/guykibby/FAQsite/blob/main/docker-compose.override.yaml
+
 React app route structure
 - https://github.com/guykibby/FAQsite/blob/main/client/src/App.js
 
