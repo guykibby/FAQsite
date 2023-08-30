@@ -2,7 +2,7 @@ import { Link, useParams } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import EditButton from "./EditButton";
 import { useNavigate } from "react-router-dom";
-// import { FaPlusCircle } from "react-icons/fa";
+import Header from "./Header";
 
 let scope = false;
 
@@ -64,6 +64,7 @@ const ViewQuestions = () => {
 
   return (
     <>
+      <Header />
       {loading && <p className="title">Loading....</p>}
       <p className="title">{questions[0].name}</p>
 

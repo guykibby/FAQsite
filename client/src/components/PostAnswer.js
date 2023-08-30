@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import Header from "./Header";
 
 const PostAnswer = () => {
   const [question, setQuestion] = useState({});
@@ -95,6 +96,7 @@ const PostAnswer = () => {
 
   return (
     <>
+      <Header />
       <h1 className="title">Post Answer</h1>
       <p className="title">{question.questiondescription}</p>
 

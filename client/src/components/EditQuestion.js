@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams, Link } from "react-router-dom";
 import styles from "./EditQuestion.module.css";
+import Header from "./Header";
+
 const EditQuestion = () => {
   const { questionId } = useParams();
   const [question, setQuestion] = useState({});
@@ -136,6 +138,7 @@ const [error, setError] = useState(false);
   }
   return (
     <>
+      <Header />
       <h2 className="list-item">{question.description}</h2>
       <div className={styles.editbar}>
         <div>

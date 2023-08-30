@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import Header from "./Header";
 
 // the topics array to be fetched from the DB
 let theTopics = [];
@@ -90,6 +91,7 @@ const HomePage = () => {
 
   return (
     <>
+      <Header />
       <p className="title">Home Page</p>
       {displayArray.map((e, i) => (
         <button
