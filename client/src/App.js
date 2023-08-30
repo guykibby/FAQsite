@@ -10,22 +10,13 @@ import EditAnswer from "./components/EditAnswer";
 import ViewAnswers from "./components/ViewAnswers";
 import LogInPage from "./components/LogInPage";
 import SignUpPage from "./components/SignUpPage";
+import Header from "./components/Header";
 
 const App = () => {
+  const token = localStorage.getItem("x-auth-token");
+
   return (
     <>
-      <header className="header">
-        <Link to="/" className="header-btn">
-          Home
-        </Link>
-
-        <Link to="/dashboard" className="header-btn dashboard">
-          Dashboard
-        </Link>
-        <Link to="/login" className="header-btn dashboard">
-          Sign Out
-        </Link>
-      </header>
       <div className="main-container">
         <Routes>
           <Route path="/SignUp" element={<SignUpPage />} />

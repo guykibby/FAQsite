@@ -1,7 +1,8 @@
 import { useParams } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import EditButton from "./EditButton";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom"; 
+import Header from "./Header";
 
 let scope = false;
 
@@ -61,6 +62,7 @@ const ViewAnswers = () => {
 
   return (
     <>
+      <Header />
       <h1>Answers</h1>
       {isLoading && <p className="loading-list-item list-item">Loading....</p>}
 

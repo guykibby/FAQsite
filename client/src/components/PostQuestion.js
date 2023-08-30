@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import Header from "./Header";
 
 const PostQuestion = () => {
   const { topicId } = useParams();
@@ -86,6 +87,7 @@ const PostQuestion = () => {
 
   return (
     <>
+      <Header />
       <h1>Post Question</h1>
       <p className="title">{topic.name}</p>
       <form onSubmit={handelSubmit} className="main-container">

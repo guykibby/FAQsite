@@ -89,6 +89,7 @@ body {
   padding-left: 2rem;
   padding: 0.5rem;
   background-image: linear-gradient(to right, black, white);
+  border-radius: 30px;
 }
 .header-btn {
   color: black;

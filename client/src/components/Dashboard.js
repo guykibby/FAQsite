@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import Header from "./Header";
 
 /** Fetch API, will fetch questions waiting for review from questions table
  *  and answers waiting for review from answers table
@@ -15,6 +16,7 @@ const Dashboard = () => {
   const [isAnswersEmpty, setIsAnswersEmpty] = useState(false);
   const [error, setError] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [isAdmin, setIsAdmin] = useState(false);
   const navigate = useNavigate();
   const token = localStorage.getItem("x-auth-token");
   useEffect(()=>{ if (!token) {
@@ -41,12 +43,19 @@ const Dashboard = () => {
           navigate(`/LogIn`);
         }
 
+        if (result.status === 404) {
+          setIsLoading(false); 
+          setIsAdmin(false);
+          return; 
+        }
+
         if (result.ok === false) {
           setIsLoading(false);
           setError(true);
           return;
         }
         setIsLoading(false);
+        setIsAdmin(true);
         const data = await result.json();
         setNewPosts(data);
         data.questions.length > 0 && setIsQuestionsEmpty(true);
@@ -66,15 +75,10 @@ const Dashboard = () => {
 
   return (
     <>
+      <Header />
       <h1 className="dashboard-title">Dashboard</h1>
-      {/**  questions waiting for review by instructor
-       * line #54- #63 can be done by creating
-       * <Questions /> componet by passing newPosts[0] as props
-       * in <Questions /> componet, by passing individual answer as props
-       * to <Question /> component to reuse it in other modules
-       * but implmented to keep it in sync with other usestories
-       */}
       {isLoading && <p className="loading-list-item list-item">Loading....</p>}
+      {!isAdmin && <p className="error-list-item list-item">Must be Admin to access. Sorry</p>}
       {error && (
         <p className="error-list-item list-item">Oops, something went wrong!</p>
       )}
